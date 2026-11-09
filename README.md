@@ -56,6 +56,18 @@ flutter build apk --debug --target-platform android-arm64
 
 The debug APK is written to `build/app/outputs/flutter-apk/app-debug.apk`. A Supabase-configured APK embeds only the public client key supplied at build time; do not share a build configured with a project you do not control.
 
+## Build a signed release APK
+
+Release builds use the ignored `android/key.properties` file and an ignored keystore under `android/app/`. Never commit either file. Back up the keystore and its credentials securely; losing the signing key prevents updates signed with that key.
+
+```powershell
+flutter build apk --release --target-platform android-arm64 `
+  --dart-define=SUPABASE_URL=https://<project-ref>.supabase.co `
+  --dart-define=SUPABASE_ANON_KEY=<public-client-key>
+```
+
+The signed release APK is written to `build/app/outputs/flutter-apk/app-release.apk`.
+
 ## Project map
 
 ```text

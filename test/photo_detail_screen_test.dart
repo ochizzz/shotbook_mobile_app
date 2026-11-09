@@ -8,6 +8,7 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(ProviderScope(child: ShotbookApp()));
+    await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(const ValueKey('photo-portrait-studio-light')));
     await tester.pumpAndSettle();

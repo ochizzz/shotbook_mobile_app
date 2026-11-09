@@ -18,6 +18,11 @@ void main() {
     await tester.tap(find.byKey(const Key('camera-device-samsung-s23-ultra')));
     await tester.pumpAndSettle();
     expect(find.text('10 MP periscope · 230 mm'), findsOneWidget);
+    await tester.scrollUntilVisible(
+      find.text('Photo examples'),
+      160,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(find.text('Photo examples'), findsOneWidget);
     await tester.pageBack();
     await tester.pumpAndSettle();
