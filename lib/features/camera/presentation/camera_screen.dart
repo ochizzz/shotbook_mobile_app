@@ -34,7 +34,9 @@ class _CameraScreenState extends State<CameraScreen> {
       final matchesBrand = _brand == 'All' || device.brand == _brand;
       final matchesQuery =
           query.isEmpty ||
-          '${device.brand} ${device.model}'.toLowerCase().contains(query);
+          '${device.brand} ${device.model} ${device.year}'
+              .toLowerCase()
+              .contains(query);
       return matchesBrand && matchesQuery;
     }).toList();
 
@@ -82,7 +84,8 @@ class _CameraScreenState extends State<CameraScreen> {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      'Device recommendations · not camera controls',
+                      'Phones from 2022 to today · guidance only, not camera controls. '
+                      'Specs are approximate; check the maker for exact figures.',
                       style: Theme.of(context).textTheme.labelSmall
                           ?.copyWith(color: ShotbookColors.secondary),
                     ),
@@ -114,7 +117,11 @@ class _CameraScreenState extends State<CameraScreen> {
                         ),
                         leading: const Icon(Icons.camera_alt_outlined),
                         title: Text(device.model),
-                        subtitle: Text(device.brand),
+                        subtitle: Text(
+                          device.year == 0
+                              ? device.brand
+                              : '${device.brand} · ${device.year}',
+                        ),
                         trailing: const Icon(Icons.arrow_forward_ios, size: 15),
                         onTap: () => context.push('/camera/${device.id}'),
                       ),

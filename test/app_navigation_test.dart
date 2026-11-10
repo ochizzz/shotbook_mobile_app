@@ -14,6 +14,8 @@ void main() {
     await tester.tap(find.text('Camera').last);
     await tester.pumpAndSettle();
     expect(find.text('Camera guide'), findsOneWidget);
+    await tester.enterText(find.byType(TextField), 'S23 Ultra');
+    await tester.pumpAndSettle();
     expect(find.text('Galaxy S23 Ultra'), findsOneWidget);
     await tester.tap(find.byKey(const Key('camera-device-samsung-s23-ultra')));
     await tester.pumpAndSettle();
