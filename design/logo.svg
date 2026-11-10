@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <rect width="1024" height="1024" fill="#0E0E0E"/>
+  <!-- viewfinder framing marks -->
+  <g fill="none" stroke="#FFFFFF" stroke-width="44" stroke-linecap="square">
+    <path d="M250 400 V250 H400"/>
+    <path d="M624 250 H774 V400"/>
+    <path d="M774 624 V774 H624"/>
+    <path d="M400 774 H250 V624"/>
+  </g>
+  <!-- lens -->
+  <circle cx="512" cy="512" r="108" fill="none" stroke="#FFFFFF" stroke-width="30"/>
+  <circle cx="512" cy="512" r="46" fill="#FFFFFF"/>
+  <circle cx="548" cy="476" r="14" fill="#0E0E0E"/>
+</svg>
