@@ -65,7 +65,15 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                 ? _username.text
                 : _displayName.text,
           );
-          if (mounted && response.session != null) {
+          // For an already registered address Supabase answers with success
+          // but an empty identities list, and sends no email.
+          final alreadyRegistered = response.user?.identities?.isEmpty ?? false;
+          if (mounted && alreadyRegistered) {
+            setState(
+              () => _error =
+                  'This email is already registered. Sign in instead, or use "Forgot password?".',
+            );
+          } else if (mounted && response.session != null) {
             context.pop();
           } else if (mounted) {
             setState(
