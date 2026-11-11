@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
+import '../../../l10n/tr.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
 import '../../discover/data/seed_photo_references.dart';
 import '../domain/camera_device.dart';
@@ -41,7 +42,7 @@ class _CameraScreenState extends State<CameraScreen> {
     }).toList();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Camera guide')),
+      appBar: AppBar(title: Text(context.tr('Camera guide'))),
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
@@ -52,7 +53,9 @@ class _CameraScreenState extends State<CameraScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Find a better frame with the camera you have.',
+                      context.tr(
+                        'Find a better frame with the camera you have.',
+                      ),
                       style: Theme.of(context).textTheme.bodyLarge
                           ?.copyWith(color: ShotbookColors.secondary),
                     ),
@@ -60,9 +63,9 @@ class _CameraScreenState extends State<CameraScreen> {
                     TextField(
                       controller: _search,
                       onChanged: (_) => setState(() {}),
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.search),
-                        hintText: 'Search a phone model',
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.search),
+                        hintText: context.tr('Search a phone model'),
                       ),
                     ),
                     const SizedBox(height: 14),
@@ -74,7 +77,7 @@ class _CameraScreenState extends State<CameraScreen> {
                         separatorBuilder: (context, index) =>
                             const SizedBox(width: 8),
                         itemBuilder: (context, index) => ChoiceChip(
-                          label: Text(brands[index]),
+                          label: Text(context.tr(brands[index])),
                           selected: _brand == brands[index],
                           onSelected: (_) =>
                               setState(() => _brand = brands[index]),
@@ -84,8 +87,9 @@ class _CameraScreenState extends State<CameraScreen> {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      'Phones from 2022 to today · guidance only, not camera controls. '
-                      'Specs are approximate; check the maker for exact figures.',
+                      context.tr(
+                        'Phones from 2022 to today · guidance only, not camera controls. Specs are approximate; check the maker for exact figures.',
+                      ),
                       style: Theme.of(context).textTheme.labelSmall
                           ?.copyWith(color: ShotbookColors.secondary),
                     ),
@@ -94,9 +98,11 @@ class _CameraScreenState extends State<CameraScreen> {
               ),
             ),
             if (devices.isEmpty)
-              const SliverFillRemaining(
+              SliverFillRemaining(
                 hasScrollBody: false,
-                child: Center(child: Text('No matching phone models.')),
+                child: Center(
+                  child: Text(context.tr('No matching phone models.')),
+                ),
               )
             else
               SliverPadding(
@@ -116,11 +122,11 @@ class _CameraScreenState extends State<CameraScreen> {
                           vertical: 8,
                         ),
                         leading: const Icon(Icons.camera_alt_outlined),
-                        title: Text(device.model),
+                        title: Text(context.tr(device.model)),
                         subtitle: Text(
                           device.year == 0
-                              ? device.brand
-                              : '${device.brand} · ${device.year}',
+                              ? context.tr(device.brand)
+                              : '${context.tr(device.brand)} · ${device.year}',
                         ),
                         trailing: const Icon(Icons.arrow_forward_ios, size: 15),
                         onTap: () => context.push('/camera/${device.id}'),
@@ -147,7 +153,9 @@ class CameraDeviceScreen extends StatelessWidget {
     if (matches.isEmpty) {
       return Scaffold(
         appBar: AppBar(),
-        body: const Center(child: Text('This device is not in the guide.')),
+        body: Center(
+          child: Text(context.tr('This device is not in the guide.')),
+        ),
       );
     }
     final device = matches.first;
@@ -158,38 +166,47 @@ class CameraDeviceScreen extends StatelessWidget {
         .take(4)
         .toList();
     return Scaffold(
-      appBar: AppBar(title: Text(device.model)),
+      appBar: AppBar(title: Text(context.tr(device.model))),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 12, 20, 36),
         children: [
           Text(
-            device.brand.toUpperCase(),
+            context.tr(device.brand).toUpperCase(),
             style: Theme.of(context).textTheme.labelLarge
                 ?.copyWith(color: ShotbookColors.secondary, letterSpacing: 1),
           ),
           const SizedBox(height: 6),
-          Text(device.model, style: Theme.of(context).textTheme.headlineMedium),
-          _CameraSection(title: 'Cameras', children: device.cameras),
+          Text(
+            context.tr(device.model),
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
           _CameraSection(
-            title: 'Shooting tips',
-            children: device.recommendations,
+            title: context.tr('Cameras'),
+            children: device.camerasFor(russian: context.isRussian),
+          ),
+          _CameraSection(
+            title: context.tr('Shooting tips'),
+            children: device.recommendationsFor(russian: context.isRussian),
           ),
           const SizedBox(height: 20),
           Text(
-            'Starting points',
+            context.tr('Starting points'),
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 8),
-          ...device.sampleSettings.entries.map(
-            (entry) => ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text(entry.key),
-              subtitle: Text(entry.value),
-            ),
-          ),
+          ...device
+              .sampleSettingsFor(russian: context.isRussian)
+              .entries
+              .map(
+                (entry) => ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(context.tr(entry.key)),
+                  subtitle: Text(entry.value),
+                ),
+              ),
           const SizedBox(height: 20),
           Text(
-            'Photo examples',
+            context.tr('Photo examples'),
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 10),

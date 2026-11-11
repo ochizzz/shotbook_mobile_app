@@ -23,6 +23,9 @@ class CameraDevice {
     required this.cameras,
     required this.recommendations,
     required this.sampleSettings,
+    this.camerasRu,
+    this.recommendationsRu,
+    this.sampleSettingsRu,
   });
 
   final String id;
@@ -34,6 +37,73 @@ class CameraDevice {
   final List<String> cameras;
   final List<String> recommendations;
   final Map<String, String> sampleSettings;
+
+  /// Russian versions; the English lists are used when these are null.
+  final List<String>? camerasRu;
+  final List<String>? recommendationsRu;
+  final Map<String, String>? sampleSettingsRu;
+
+  List<String> camerasFor({required bool russian}) =>
+      russian ? (camerasRu ?? cameras) : cameras;
+
+  List<String> recommendationsFor({required bool russian}) =>
+      russian ? (recommendationsRu ?? recommendations) : recommendations;
+
+  Map<String, String> sampleSettingsFor({required bool russian}) =>
+      russian ? (sampleSettingsRu ?? sampleSettings) : sampleSettings;
+}
+
+typedef _Tip = (String en, String ru);
+
+const _portraitRu = {
+  'the 3× camera': 'камеру 3×',
+  'the 75 mm camera': 'камеру 75 мм',
+  'the 3× camera (70 mm)': 'камеру 3× (70 мм)',
+  'the 3× camera (69 mm)': 'камеру 3× (69 мм)',
+  'the 5× camera (Pro) or the 2× crop': 'камеру 5× (Pro) или кроп 2×',
+  'the 5× camera (120 mm)': 'камеру 5× (120 мм)',
+  'the 3× camera (77 mm)': 'камеру 3× (77 мм)',
+  'the periscope camera at 75–100 mm': 'перископную камеру на 75–100 мм',
+  'the periscope camera (100 mm)': 'перископную камеру (100 мм)',
+  'the 85 mm camera': 'камеру 85 мм',
+  'the 70 mm camera': 'камеру 70 мм',
+  'the 60 mm camera': 'камеру 60 мм',
+  'the 5× camera (Pro models) or the 2× crop':
+      'камеру 5× (модели Pro) или кроп 2×',
+  'the 4× camera (100 mm)': 'камеру 4× (100 мм)',
+  'the 3× camera (73 mm)': 'камеру 3× (73 мм)',
+  'the 3× camera (65 mm)': 'камеру 3× (65 мм)',
+  'the 3.3× camera (77 mm)': 'камеру 3,3× (77 мм)',
+  'the 2× portrait camera (48 mm)': 'портретную камеру 2× (48 мм)',
+  'the 2× camera, or the 5× camera on Pixel 10':
+      'камеру 2× или камеру 5× на Pixel 10',
+  'the 2.5× camera': 'камеру 2,5×',
+  'the telephoto camera': 'телеобъектив',
+};
+
+const _cameraLineRu = {
+  'Main camera': 'Основная камера',
+  'Ultra-wide camera': 'Сверхширокая камера',
+  '3× telephoto': 'Телеобъектив 3×',
+  'Main / wide camera': 'Основная / широкая камера',
+  'Ultra-wide camera (if available)': 'Сверхширокая камера (если есть)',
+  'Telephoto camera (if available)': 'Телеобъектив (если есть)',
+};
+
+String _cameraLineToRussian(String line) {
+  final exact = _cameraLineRu[line];
+  if (exact != null) return exact;
+  return line
+      .replaceAll('Pro models:', 'Модели Pro:')
+      .replaceAll('portrait telephoto', 'портретный телеобъектив')
+      .replaceAll('telephoto', 'телеобъектив')
+      .replaceAll('ultra-wide', 'сверхширокая')
+      .replaceAll('periscope', 'перископ')
+      .replaceAll('macro', 'макро')
+      .replaceAll('main', 'основная')
+      .replaceAll('1-inch', '1 дюйм')
+      .replaceAll(' MP', ' Мп')
+      .replaceAll(' mm', ' мм');
 }
 
 CameraDevice _phone({
@@ -44,8 +114,9 @@ CameraDevice _phone({
   required CameraClass cameraClass,
   required List<String> cameras,
   String portrait = 'the telephoto camera',
-  List<String> extraTips = const [],
+  List<_Tip> extraTips = const [],
 }) {
+  final portraitRu = _portraitRu[portrait] ?? 'телеобъектив';
   final tips = switch (cameraClass) {
     CameraClass.periscope => [
       'Use $portrait for natural portrait proportions.',
@@ -90,22 +161,81 @@ CameraDevice _phone({
       'Night': 'Night mode · keep the phone steady',
     },
   };
+  final tipsRu = switch (cameraClass) {
+    CameraClass.periscope => [
+      'Для естественных пропорций в портрете используйте $portraitRu.',
+      'Максимальный зум включайте только при хорошем свете и держите телефон неподвижно.',
+      'Основную камеру 1× оставьте для съёмки при слабом свете.',
+    ],
+    CameraClass.telephoto => [
+      'Для красивых портретов используйте $portraitRu вместо широкого угла.',
+      'Основную камеру 1× оставьте для съёмки при слабом свете.',
+      'Коснитесь объекта, чтобы зафиксировать фокус, затем слегка уменьшите экспозицию.',
+    ],
+    CameraClass.dual => [
+      'Основная камера подходит для большинства кадров и лучше всех снимает при слабом свете.',
+      'Сверхширокую используйте для интерьеров и архитектуры, а людей держите подальше от краёв кадра.',
+      'Отойдите назад и кадрируйте потом вместо цифрового зума.',
+    ],
+    CameraClass.single => [
+      'Вместо зума подойдите ближе или отойдите: цифровой зум теряет детали.',
+      'Включайте портретный режим, когда объект в 1,5–2 м.',
+      'Коснитесь объекта, чтобы зафиксировать фокус, затем слегка уменьшите экспозицию.',
+    ],
+  };
+  final settingsRu = switch (cameraClass) {
+    CameraClass.periscope => {
+      'Portrait':
+          'Телеобъектив · минимальное ISO при таком свете · открытая тень',
+      'Street': '1× · выдержка 1/500 с и короче',
+      'Night': '1× · ночной режим · зафиксируйте телефон',
+    },
+    CameraClass.telephoto => {
+      'Portrait': 'Телеобъектив · мягкий свет из окна · 1/250 с',
+      'Street': '1× · выдержка 1/500 с и короче',
+      'Night': '1× · ночной режим · зафиксируйте телефон',
+    },
+    CameraClass.dual => {
+      'Portrait': 'Основная камера · портретный режим · мягкий свет',
+      'Street': '1× · выдержка 1/500 с и короче',
+      'Night': '1× · ночной режим · зафиксируйте телефон',
+    },
+    CameraClass.single => {
+      'Portrait': 'Портретный режим · мягкий свет из окна',
+      'Street': '1× · выдержка 1/250 с и короче',
+      'Night': 'Ночной режим · держите телефон неподвижно',
+    },
+  };
   return CameraDevice(
     id: id,
     brand: brand,
     model: model,
     year: year,
     cameras: cameras,
-    recommendations: [...tips, ...extraTips],
+    recommendations: [...tips, for (final tip in extraTips) tip.$1],
     sampleSettings: settings,
+    camerasRu: cameras.map(_cameraLineToRussian).toList(),
+    recommendationsRu: [...tipsRu, for (final tip in extraTips) tip.$2],
+    sampleSettingsRu: settingsRu,
   );
 }
 
-const _appleTip = 'Use Photographic Styles to keep skin tones consistent.';
-const _pixelTip = 'Keep Real Tone enabled for consistent skin tones.';
-const _samsungTip =
-    'Use Pro mode to keep white balance consistent across a set.';
-const _leicaTip = 'Leica Authentic keeps contrast and color restrained.';
+const _appleTip = (
+  'Use Photographic Styles to keep skin tones consistent.',
+  'Фотографические стили помогут сохранить единый тон кожи.',
+);
+const _pixelTip = (
+  'Keep Real Tone enabled for consistent skin tones.',
+  'Оставьте включённым Real Tone: тон кожи будет стабильным.',
+);
+const _samsungTip = (
+  'Use Pro mode to keep white balance consistent across a set.',
+  'В режиме Pro фиксируйте баланс белого, чтобы серия выглядела единой.',
+);
+const _leicaTip = (
+  'Leica Authentic keeps contrast and color restrained.',
+  'Leica Authentic сохраняет сдержанные контраст и цвет.',
+);
 
 /// Camera guide catalog: popular phones from 2022 to 2026. Models whose
 /// cameras are the same (for example Pro and Pro Max) share one entry.
@@ -354,12 +484,29 @@ final cameraDevices = <CameraDevice>[
       'Use the 3× camera for natural portrait proportions.',
       'Keep the main camera at 1× for low-light scenes.',
       'Tap the subject to lock focus before lowering exposure slightly.',
-      _samsungTip,
+      'Use Pro mode to keep white balance consistent across a set.',
     ],
     sampleSettings: {
       'Portrait': '3× · ISO 50–200 · 1/250 s',
       'Street': '1× · ISO Auto · 1/500 s',
       'Night': '1× · Night mode · brace the phone',
+    },
+    camerasRu: [
+      '200 Мп основная · 23 мм',
+      '12 Мп сверхширокая · 13 мм',
+      '10 Мп телеобъектив · 69 мм',
+      '10 Мп перископ · 230 мм',
+    ],
+    recommendationsRu: [
+      'Для естественных пропорций в портрете используйте камеру 3×.',
+      'Основную камеру 1× оставьте для съёмки при слабом свете.',
+      'Коснитесь объекта, чтобы зафиксировать фокус, затем слегка уменьшите экспозицию.',
+      'В режиме Pro фиксируйте баланс белого, чтобы серия выглядела единой.',
+    ],
+    sampleSettingsRu: {
+      'Portrait': '3× · ISO 50–200 · 1/250 с',
+      'Street': '1× · ISO авто · 1/500 с',
+      'Night': '1× · ночной режим · зафиксируйте телефон',
     },
   ),
   _phone(
@@ -539,12 +686,28 @@ final cameraDevices = <CameraDevice>[
     recommendations: [
       'Try the 75 mm camera for compressed portraits.',
       'Use Pro mode to keep white balance consistent across a set.',
-      _leicaTip,
+      'Leica Authentic keeps contrast and color restrained.',
     ],
     sampleSettings: {
       'Portrait': '75 mm · ISO 50–200 · open shade',
       'Street': '23 mm · Pro mode · 1/500 s',
       'Night': '23 mm · ISO under 800 · steady hands',
+    },
+    camerasRu: [
+      '50 Мп основная · 23 мм',
+      '50 Мп сверхширокая · 12 мм',
+      '50 Мп телеобъектив · 75 мм',
+      '50 Мп перископ · 120 мм',
+    ],
+    recommendationsRu: [
+      'Для сжатых по перспективе портретов попробуйте камеру 75 мм.',
+      'В режиме Pro фиксируйте баланс белого, чтобы серия выглядела единой.',
+      'Leica Authentic сохраняет сдержанные контраст и цвет.',
+    ],
+    sampleSettingsRu: {
+      'Portrait': '75 мм · ISO 50–200 · открытая тень',
+      'Street': '23 мм · режим Pro · 1/500 с',
+      'Night': '23 мм · ISO до 800 · устойчивые руки',
     },
   ),
   _phone(

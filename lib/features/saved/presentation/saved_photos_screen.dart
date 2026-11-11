@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../../../app/theme.dart';
+import '../../../l10n/tr.dart';
 import '../../discover/application/discover_providers.dart';
 import '../../discover/presentation/photo_grid_tile.dart';
 import '../application/saved_photo_provider.dart';
@@ -16,7 +17,7 @@ class SavedPhotosScreen extends ConsumerWidget {
     final catalogState = ref.watch(remotePhotoCatalogProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Saved')),
+      appBar: AppBar(title: Text(context.tr('Saved'))),
       body: catalogState.isLoading
           ? const Center(child: CircularProgressIndicator())
           : catalogState.hasError
@@ -39,24 +40,28 @@ class SavedPhotosScreen extends ConsumerWidget {
                     )
                     .toList();
                 if (savedPhotos.isEmpty) {
-                  return const Center(
+                  return Center(
                     child: Padding(
-                      padding: EdgeInsets.all(28),
+                      padding: const EdgeInsets.all(28),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.bookmark_border,
                             color: ShotbookColors.secondary,
                             size: 28,
                           ),
-                          SizedBox(height: 14),
-                          Text('No saved frames yet.'),
-                          SizedBox(height: 6),
+                          const SizedBox(height: 14),
+                          Text(context.tr('No saved frames yet.')),
+                          const SizedBox(height: 6),
                           Text(
-                            'Save a photo to keep it here for later.',
+                            context.tr(
+                              'Save a photo to keep it here for later.',
+                            ),
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: ShotbookColors.secondary),
+                            style: const TextStyle(
+                              color: ShotbookColors.secondary,
+                            ),
                           ),
                         ],
                       ),
@@ -107,9 +112,12 @@ class _SavedError extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('Saved photos could not be loaded.'),
+            Text(context.tr('Saved photos could not be loaded.')),
             const SizedBox(height: 12),
-            FilledButton(onPressed: onRetry, child: const Text('Try again')),
+            FilledButton(
+              onPressed: onRetry,
+              child: Text(context.tr('Try again')),
+            ),
           ],
         ),
       ),

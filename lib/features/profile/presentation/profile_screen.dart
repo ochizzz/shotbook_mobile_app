@@ -7,6 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../app/theme.dart';
+import '../../../l10n/language_picker.dart';
+import '../../../l10n/tr.dart';
 import '../../../shared/services/supabase_providers.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
 import '../../auth/application/auth_providers.dart';
@@ -29,12 +31,16 @@ class ProfileScreen extends ConsumerWidget {
     final targetId = profileId ?? user?.id;
     return Scaffold(
       appBar: AppBar(
-        title: Text(profileId == null ? 'Profile' : 'Photographer'),
+        title: Text(
+          profileId == null
+              ? context.tr('Profile')
+              : context.tr('Photographer'),
+        ),
         actions: [
           if (targetId != null && targetId == user?.id)
             IconButton(
               key: const Key('sign-out'),
-              tooltip: 'Sign out',
+              tooltip: context.tr('Sign out'),
               onPressed: () async {
                 await ref.read(authRepositoryProvider)?.signOut();
                 ref.invalidate(authStateProvider);
@@ -70,16 +76,20 @@ class _SignedOutProfile extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             supabaseReady
-                ? 'Sign in to open your profile'
-                : 'Your profile starts with an account',
+                ? context.tr('Sign in to open your profile')
+                : context.tr('Your profile starts with an account'),
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 8),
           Text(
             supabaseReady
-                ? 'See your posts, saved photos and presets in one place.'
-                : 'Add Supabase settings to enable accounts and community features.',
+                ? context.tr(
+                    'See your posts, saved photos and presets in one place.',
+                  )
+                : context.tr(
+                    'Add Supabase settings to enable accounts and community features.',
+                  ),
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium
                 ?.copyWith(color: ShotbookColors.secondary),
@@ -87,8 +97,19 @@ class _SignedOutProfile extends StatelessWidget {
           const SizedBox(height: 18),
           FilledButton(
             onPressed: () => context.push('/auth'),
-            child: const Text('Sign in or create account'),
+            child: Text(context.tr('Sign in or create account')),
           ),
+          const SizedBox(height: 24),
+          const Divider(height: 1),
+          const SizedBox(height: 8),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              context.tr('Settings'),
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+          ),
+          const LanguageSettingsTile(),
         ],
       ),
     ),
@@ -168,7 +189,7 @@ class _ProfileContent extends ConsumerWidget {
                         if (isOwn)
                           IconButton(
                             key: const Key('edit-profile'),
-                            tooltip: 'Edit profile',
+                            tooltip: context.tr('Edit profile'),
                             onPressed: () =>
                                 _showEditSheet(context, ref, profile),
                             icon: const Icon(Icons.edit_outlined),
@@ -185,22 +206,38 @@ class _ProfileContent extends ConsumerWidget {
                     const SizedBox(height: 14),
                     Row(
                       children: [
-                        _Count(label: 'Posts', count: posts.length),
+                        _Count(label: context.tr('Posts'), count: posts.length),
                         const SizedBox(width: 22),
-                        _Count(label: 'Saved', count: savedIds.length),
+                        _Count(
+                          label: context.tr('Saved'),
+                          count: savedIds.length,
+                        ),
                       ],
                     ),
+                    if (isOwn) ...[
+                      const SizedBox(height: 8),
+                      const Divider(height: 1),
+                      const SizedBox(height: 10),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          context.tr('Settings'),
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      ),
+                      const LanguageSettingsTile(),
+                    ],
                   ],
                 ),
               ),
               TabBar(
                 tabs: isOwn
-                    ? const [
-                        Tab(text: 'My Posts'),
-                        Tab(text: 'Saved'),
-                        Tab(text: 'My Presets'),
+                    ? [
+                        Tab(text: context.tr('My Posts')),
+                        Tab(text: context.tr('Saved')),
+                        Tab(text: context.tr('My Presets')),
                       ]
-                    : const [Tab(text: 'Posts')],
+                    : [Tab(text: context.tr('Posts'))],
               ),
               Expanded(
                 child: TabBarView(
@@ -213,8 +250,10 @@ class _ProfileContent extends ConsumerWidget {
                             ref.invalidate(profilePostsProvider(userId)),
                       ),
                       data: (items) => items.isEmpty
-                          ? const _EmptyTab(
-                              message: 'Your posts will appear here.',
+                          ? _EmptyTab(
+                              message: context.tr(
+                                'Your posts will appear here.',
+                              ),
                             )
                           : _ProfilePhotoGrid(
                               photos: items,
@@ -238,8 +277,10 @@ class _ProfileContent extends ConsumerWidget {
                                 ref.invalidate(remotePhotoCatalogProvider),
                           ),
                           data: (_) => saved.isEmpty
-                              ? const _EmptyTab(
-                                  message: 'Save a photo and it will be waiting here.',
+                              ? _EmptyTab(
+                                  message: context.tr(
+                                    'Save a photo and it will be waiting here.',
+                                  ),
                                 )
                               : _ProfilePhotoGrid(
                                   photos: saved,
@@ -259,9 +300,10 @@ class _ProfileContent extends ConsumerWidget {
                               ref.invalidate(profilePresetsProvider(userId)),
                         ),
                         data: (items) => items.isEmpty
-                            ? const _EmptyTab(
-                                message:
-                                    'Presets from your posts will appear here.',
+                            ? _EmptyTab(
+                                message: context.tr(
+                                  'Presets from your posts will appear here.',
+                                ),
                               )
                             : ListView.separated(
                                 padding: const EdgeInsets.fromLTRB(
@@ -286,7 +328,7 @@ class _ProfileContent extends ConsumerWidget {
                                       details.entries
                                           .map(
                                             (entry) =>
-                                                '${entry.key}: ${entry.value}',
+                                                '${context.tr(entry.key)}: ${entry.value}',
                                           )
                                           .join(' · '),
                                     ),
@@ -313,16 +355,16 @@ class _ProfileContent extends ConsumerWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Delete this post?'),
-        content: const Text('The photo will be removed from the feed.'),
+        title: Text(context.tr('Delete this post?')),
+        content: Text(context.tr('The photo will be removed from the feed.')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: Text(context.tr('Cancel')),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Delete'),
+            child: Text(context.tr('Delete')),
           ),
         ],
       ),
@@ -335,8 +377,9 @@ class _ProfileContent extends ConsumerWidget {
       ref.invalidate(remotePhotoCatalogProvider);
     } catch (error) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(error.toString())));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(context.tr(error.toString()))));
       }
     }
   }
@@ -403,7 +446,9 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet> {
     } catch (error) {
       if (mounted) {
         setState(
-          () => _error = error.toString().replaceFirst('FormatException: ', ''),
+          () => _error = context.tr(
+            error.toString().replaceFirst('FormatException: ', ''),
+          ),
         );
       }
     }
@@ -414,15 +459,18 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet> {
   Future<void> _save() async {
     if (_username.text.trim().length < 3 || _displayName.text.trim().isEmpty) {
       setState(
-        () => _error =
-            'Enter a display name and a username with at least 3 characters.',
+        () => _error = context.tr(
+          'Enter a display name and a username with at least 3 characters.',
+        ),
       );
       return;
     }
     final client = ref.read(supabaseClientProvider);
     final user = ref.read(currentUserProvider);
     if (client == null || user == null) {
-      setState(() => _error = 'Sign in again to edit your profile.');
+      setState(
+        () => _error = context.tr('Sign in again to edit your profile.'),
+      );
       return;
     }
     setState(() {
@@ -459,7 +507,9 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet> {
     } catch (error) {
       if (mounted) {
         setState(
-          () => _error = error.toString().replaceFirst('Exception: ', ''),
+          () => _error = context.tr(
+            error.toString().replaceFirst('Exception: ', ''),
+          ),
         );
       }
     } finally {
@@ -480,7 +530,10 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Edit profile', style: Theme.of(context).textTheme.titleLarge),
+          Text(
+            context.tr('Edit profile'),
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
           const SizedBox(height: 18),
           Center(
             child: InkWell(
@@ -502,18 +555,18 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet> {
           const SizedBox(height: 10),
           TextField(
             controller: _displayName,
-            decoration: const InputDecoration(labelText: 'Display name'),
+            decoration: InputDecoration(labelText: context.tr('Display name')),
           ),
           const SizedBox(height: 10),
           TextField(
             controller: _username,
-            decoration: const InputDecoration(labelText: 'Username'),
+            decoration: InputDecoration(labelText: context.tr('Username')),
           ),
           const SizedBox(height: 10),
           TextField(
             controller: _bio,
             maxLines: 3,
-            decoration: const InputDecoration(labelText: 'Bio'),
+            decoration: InputDecoration(labelText: context.tr('Bio')),
           ),
           if (_error != null) ...[
             const SizedBox(height: 10),
@@ -522,7 +575,9 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet> {
           const SizedBox(height: 18),
           FilledButton(
             onPressed: _busy ? null : _save,
-            child: Text(_busy ? 'Saving…' : 'Save changes'),
+            child: Text(
+              _busy ? context.tr('Saving…') : context.tr('Save changes'),
+            ),
           ),
         ],
       ),
@@ -573,7 +628,7 @@ class _ProfilePhotoGrid extends StatelessWidget {
                     right: 4,
                     child: IconButton.filledTonal(
                       key: Key('delete-post-${photo.id}'),
-                      tooltip: 'Delete post',
+                      tooltip: context.tr('Delete post'),
                       onPressed: () => onDelete(photo),
                       icon: const Icon(Icons.delete_outline),
                     ),
@@ -584,7 +639,7 @@ class _ProfilePhotoGrid extends StatelessWidget {
                     right: 4,
                     child: IconButton.filledTonal(
                       key: Key('unsave-profile-${photo.id}'),
-                      tooltip: 'Remove saved photo',
+                      tooltip: context.tr('Remove saved photo'),
                       onPressed: () => onDelete(photo),
                       icon: const Icon(Icons.bookmark),
                     ),
@@ -595,7 +650,7 @@ class _ProfilePhotoGrid extends StatelessWidget {
           const SizedBox(height: 7),
           Text(photo.title, maxLines: 1, overflow: TextOverflow.ellipsis),
           Text(
-            photo.category,
+            context.tr(photo.category),
             style: Theme.of(context).textTheme.bodySmall
                 ?.copyWith(color: ShotbookColors.secondary),
           ),
@@ -634,8 +689,8 @@ class _ProfileError extends StatelessWidget {
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text('Could not load this profile.'),
-        TextButton(onPressed: onRetry, child: const Text('Try again')),
+        Text(context.tr('Could not load this profile.')),
+        TextButton(onPressed: onRetry, child: Text(context.tr('Try again'))),
       ],
     ),
   );
@@ -649,7 +704,7 @@ class _InlineRetry extends StatelessWidget {
   Widget build(BuildContext context) => Center(
     child: TextButton(
       onPressed: onRetry,
-      child: const Text('Could not load. Try again.'),
+      child: Text(context.tr('Could not load. Try again.')),
     ),
   );
 }

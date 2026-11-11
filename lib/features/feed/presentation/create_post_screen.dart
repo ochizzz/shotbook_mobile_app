@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../app/theme.dart';
+import '../../../l10n/tr.dart';
 import '../../../shared/services/supabase_providers.dart';
 import '../../auth/application/auth_providers.dart';
 import '../../discover/application/discover_providers.dart';
@@ -90,12 +91,13 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
         _error = null;
       });
     } on FormatException catch (error) {
-      if (mounted) setState(() => _error = error.message);
+      if (mounted) setState(() => _error = context.tr(error.message));
     } catch (_) {
       if (mounted) {
         setState(
-          () =>
-              _error = 'Could not open that image. Please choose another file.',
+          () => _error = context.tr(
+            'Could not open that image. Please choose another file.',
+          ),
         );
       }
     }
@@ -128,14 +130,16 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
   Future<void> _publish() async {
     if (!_formKey.currentState!.validate()) return;
     if (_image == null || _imageBytes == null) {
-      setState(() => _error = 'Choose a photo before publishing.');
+      setState(() => _error = context.tr('Choose a photo before publishing.'));
       return;
     }
     final repository = ref.read(feedRepositoryProvider);
     final user = ref.read(currentUserProvider);
     if (repository == null) {
       setState(
-        () => _error = 'Publishing needs a configured Supabase project. See README for setup.',
+        () => _error = context.tr(
+          'Publishing needs a configured Supabase project. See README for setup.',
+        ),
       );
       return;
     }
@@ -174,15 +178,17 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
     final value = error.toString();
     if (value.contains('SocketException') ||
         value.contains('Failed host lookup')) {
-      return 'Could not reach Supabase. Check your connection and try again.';
+      return context.tr(
+        'Could not reach Supabase. Check your connection and try again.',
+      );
     }
-    return value.replaceFirst('Exception: ', '');
+    return context.tr(value.replaceFirst('Exception: ', ''));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('New post')),
+      appBar: AppBar(title: Text(context.tr('New post'))),
       body: SafeArea(
         child: Form(
           key: _formKey,
@@ -190,8 +196,10 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
             padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
             children: [
               if (!ref.watch(supabaseReadyProvider)) ...[
-                const _SetupNotice(
-                  message: 'Connect a Supabase project to publish posts. You can still browse the local catalog.',
+                _SetupNotice(
+                  message: context.tr(
+                    'Connect a Supabase project to publish posts. You can still browse the local catalog.',
+                  ),
                 ),
                 const SizedBox(height: 18),
               ],
@@ -200,7 +208,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
                       key: const Key('select-post-image'),
                       onPressed: _busy ? null : _pickImage,
                       icon: const Icon(Icons.add_photo_alternate_outlined),
-                      label: const Text('Choose a photo'),
+                      label: Text(context.tr('Choose a photo')),
                     )
                   : ClipRRect(
                       borderRadius: BorderRadius.circular(8),
@@ -215,16 +223,16 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: _busy ? null : _pickImage,
-                    child: const Text('Change photo'),
+                    child: Text(context.tr('Change photo')),
                   ),
                 ),
               const SizedBox(height: 18),
               TextFormField(
                 key: const Key('post-title'),
                 controller: _title,
-                decoration: const InputDecoration(labelText: 'Title'),
+                decoration: InputDecoration(labelText: context.tr('Title')),
                 validator: (value) => value == null || value.trim().isEmpty
-                    ? 'Add a title for your photo.'
+                    ? context.tr('Add a title for your photo.')
                     : null,
               ),
               const SizedBox(height: 12),
@@ -232,19 +240,21 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
                 controller: _description,
                 minLines: 2,
                 maxLines: 4,
-                decoration: const InputDecoration(
-                  labelText: 'Description (optional)',
+                decoration: InputDecoration(
+                  labelText: context.tr('Description (optional)'),
                 ),
               ),
               const SizedBox(height: 12),
               DropdownButtonFormField<String>(
                 initialValue: _category,
-                decoration: const InputDecoration(labelText: 'Category'),
+                decoration: InputDecoration(labelText: context.tr('Category')),
                 items: photoCategories
                     .where((value) => value != 'All')
                     .map(
-                      (value) =>
-                          DropdownMenuItem(value: value, child: Text(value)),
+                      (value) => DropdownMenuItem(
+                        value: value,
+                        child: Text(context.tr(value)),
+                      ),
                     )
                     .toList(),
                 onChanged: (value) =>
@@ -287,11 +297,13 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
                         dimension: 18,
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
-                    : const Text('Publish'),
+                    : Text(context.tr('Publish')),
               ),
               const SizedBox(height: 8),
               Text(
-                'Camera settings are optional. JPEG, PNG and WebP up to 10 MB.',
+                context.tr(
+                  'Camera settings are optional. JPEG, PNG and WebP up to 10 MB.',
+                ),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodySmall
                     ?.copyWith(color: ShotbookColors.secondary),
@@ -312,13 +324,16 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
     child: TextField(
       controller: controller,
       keyboardType: numeric ? TextInputType.number : TextInputType.text,
-      decoration: InputDecoration(labelText: label),
+      decoration: InputDecoration(labelText: context.tr(label)),
     ),
   );
 
   Widget _sectionTitle(BuildContext context, String title) => Padding(
     padding: const EdgeInsets.only(bottom: 6),
-    child: Text(title, style: Theme.of(context).textTheme.titleMedium),
+    child: Text(
+      context.tr(title),
+      style: Theme.of(context).textTheme.titleMedium,
+    ),
   );
 }
 

@@ -9,9 +9,15 @@ abstract final class ShotbookColors {
   static const border = Color(0xFF303030);
 }
 
+/// One serif family for the whole app: Noto Serif Display (OFL, bundled in
+/// assets/fonts). A modern, tall take on the Times New Roman tradition with
+/// full Cyrillic support.
+const shotbookFontFamily = 'NotoSerifDisplay';
+
 final shotbookDarkTheme = ThemeData(
   useMaterial3: true,
   brightness: Brightness.dark,
+  fontFamily: shotbookFontFamily,
   scaffoldBackgroundColor: ShotbookColors.background,
   colorScheme:
       ColorScheme.fromSeed(
@@ -27,17 +33,18 @@ final shotbookDarkTheme = ThemeData(
       ),
   textTheme: ThemeData.dark().textTheme
       .apply(
+        fontFamily: shotbookFontFamily,
         bodyColor: ShotbookColors.primary,
         displayColor: ShotbookColors.primary,
       )
       .copyWith(
         displaySmall: ThemeData.dark().textTheme.displaySmall?.copyWith(
-          fontFamily: 'serif',
+          fontFamily: shotbookFontFamily,
           fontWeight: FontWeight.w500,
           letterSpacing: -0.6,
         ),
         titleLarge: ThemeData.dark().textTheme.titleLarge?.copyWith(
-          fontFamily: 'serif',
+          fontFamily: shotbookFontFamily,
           fontWeight: FontWeight.w500,
         ),
       ),

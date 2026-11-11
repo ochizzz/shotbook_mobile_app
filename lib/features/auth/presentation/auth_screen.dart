@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
+import '../../../l10n/tr.dart';
 import '../../../shared/services/supabase_providers.dart';
 import '../application/auth_providers.dart';
 
@@ -40,8 +41,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     final repository = ref.read(authRepositoryProvider);
     if (repository == null) {
       setState(
-        () => _error =
-            'Sign-in is unavailable. Add Supabase settings to enable accounts.',
+        () => _error = context.tr(
+          'Sign-in is unavailable. Add Supabase settings to enable accounts.',
+        ),
       );
       return;
     }
@@ -70,14 +72,17 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
           final alreadyRegistered = response.user?.identities?.isEmpty ?? false;
           if (mounted && alreadyRegistered) {
             setState(
-              () => _error = 'This email is already registered. Sign in instead, or use "Forgot password?".',
+              () => _error = context.tr(
+                'This email is already registered. Sign in instead, or use "Forgot password?".',
+              ),
             );
           } else if (mounted && response.session != null) {
             context.pop();
           } else if (mounted) {
             setState(
-              () => _message =
-                  'Check your email to confirm your account, then sign in.',
+              () => _message = context.tr(
+                'Check your email to confirm your account, then sign in.',
+              ),
             );
           }
           break;
@@ -85,8 +90,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
           await repository.resetPassword(_email.text);
           if (mounted) {
             setState(
-              () => _message =
-                  'Password reset instructions were sent to your email.',
+              () => _message = context.tr(
+                'Password reset instructions were sent to your email.',
+              ),
             );
           }
           break;
@@ -102,13 +108,17 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     final text = error.toString();
     if (text.contains('over_email_send_rate_limit') ||
         text.contains('statusCode: 429')) {
-      return 'Too many emails requested. Wait a minute, then use the newest email.';
+      return context.tr(
+        'Too many emails requested. Wait a minute, then use the newest email.',
+      );
     }
     if (text.contains('SocketException') ||
         text.contains('Failed host lookup')) {
-      return 'Could not reach Supabase. Check your connection and project settings.';
+      return context.tr(
+        'Could not reach Supabase. Check your connection and project settings.',
+      );
     }
-    return text.replaceFirst('Exception: ', '');
+    return context.tr(text.replaceFirst('Exception: ', ''));
   }
 
   @override
@@ -136,17 +146,19 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                     const SizedBox(height: 14),
                     Text(
                       isReset
-                          ? 'Reset password'
+                          ? context.tr('Reset password')
                           : isSignUp
-                          ? 'Create your account'
-                          : 'Welcome back',
+                          ? context.tr('Create your account')
+                          : context.tr('Welcome back'),
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     const SizedBox(height: 8),
                     Text(
                       isReset
-                          ? 'We will email you a secure reset link.'
-                          : 'Save references and share what you shoot.',
+                          ? context.tr('We will email you a secure reset link.')
+                          : context.tr(
+                              'Save references and share what you shoot.',
+                            ),
                       style: Theme.of(context).textTheme.bodyMedium
                           ?.copyWith(color: ShotbookColors.secondary),
                     ),
@@ -156,12 +168,12 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                         key: const Key('auth-username'),
                         controller: _username,
                         textInputAction: TextInputAction.next,
-                        decoration: const InputDecoration(
-                          labelText: 'Username',
+                        decoration: InputDecoration(
+                          labelText: context.tr('Username'),
                         ),
                         validator: (value) =>
                             value == null || value.trim().length < 3
-                            ? 'Use at least 3 characters.'
+                            ? context.tr('Use at least 3 characters.')
                             : null,
                       ),
                       const SizedBox(height: 14),
@@ -169,8 +181,8 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                         key: const Key('auth-display-name'),
                         controller: _displayName,
                         textInputAction: TextInputAction.next,
-                        decoration: const InputDecoration(
-                          labelText: 'Display name (optional)',
+                        decoration: InputDecoration(
+                          labelText: context.tr('Display name (optional)'),
                         ),
                       ),
                       const SizedBox(height: 14),
@@ -180,10 +192,12 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                       controller: _email,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(labelText: 'Email'),
+                      decoration: InputDecoration(
+                        labelText: context.tr('Email'),
+                      ),
                       validator: (value) =>
                           value == null || !value.contains('@')
-                          ? 'Enter a valid email address.'
+                          ? context.tr('Enter a valid email address.')
                           : null,
                     ),
                     if (!isReset) ...[
@@ -194,11 +208,11 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                         obscureText: true,
                         textInputAction: TextInputAction.done,
                         onFieldSubmitted: (_) => _submit(),
-                        decoration: const InputDecoration(
-                          labelText: 'Password',
+                        decoration: InputDecoration(
+                          labelText: context.tr('Password'),
                         ),
                         validator: (value) => value == null || value.length < 6
-                            ? 'Use at least 6 characters.'
+                            ? context.tr('Use at least 6 characters.')
                             : null,
                       ),
                     ],
@@ -225,10 +239,10 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                             )
                           : Text(
                               isReset
-                                  ? 'Send reset link'
+                                  ? context.tr('Send reset link')
                                   : isSignUp
-                                  ? 'Create account'
-                                  : 'Sign in',
+                                  ? context.tr('Create account')
+                                  : context.tr('Sign in'),
                             ),
                     ),
                     if (!isReset && !isSignUp)
@@ -238,7 +252,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                           _error = null;
                           _message = null;
                         }),
-                        child: const Text('Forgot password?'),
+                        child: Text(context.tr('Forgot password?')),
                       ),
                     TextButton(
                       onPressed: _busy
@@ -254,17 +268,19 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                             }),
                       child: Text(
                         isReset
-                            ? 'Back to sign in'
+                            ? context.tr('Back to sign in')
                             : isSignUp
-                            ? 'Already have an account? Sign in'
-                            : 'Create an account',
+                            ? context.tr('Already have an account? Sign in')
+                            : context.tr('Create an account'),
                       ),
                     ),
                     if (!ref.watch(supabaseReadyProvider))
                       Padding(
                         padding: const EdgeInsets.only(top: 12),
                         child: Text(
-                          'Browsing works in demo mode. Configure Supabase to use accounts.',
+                          context.tr(
+                            'Browsing works in demo mode. Configure Supabase to use accounts.',
+                          ),
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.bodySmall
                               ?.copyWith(color: ShotbookColors.secondary),

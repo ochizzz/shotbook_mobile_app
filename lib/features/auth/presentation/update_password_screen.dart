@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../l10n/tr.dart';
 import '../../../shared/services/supabase_providers.dart';
 
 class UpdatePasswordScreen extends ConsumerStatefulWidget {
@@ -28,18 +29,19 @@ class _UpdatePasswordScreenState extends ConsumerState<UpdatePasswordScreen> {
 
   Future<void> _save() async {
     if (_password.text.length < 6) {
-      setState(() => _error = 'Use at least 6 characters.');
+      setState(() => _error = context.tr('Use at least 6 characters.'));
       return;
     }
     if (_password.text != _confirm.text) {
-      setState(() => _error = 'The passwords do not match.');
+      setState(() => _error = context.tr('The passwords do not match.'));
       return;
     }
     final client = ref.read(supabaseClientProvider);
     if (client == null) {
       setState(
-        () => _error =
-            'The recovery session is no longer available. Request a new link.',
+        () => _error = context.tr(
+          'The recovery session is no longer available. Request a new link.',
+        ),
       );
       return;
     }
@@ -50,14 +52,17 @@ class _UpdatePasswordScreenState extends ConsumerState<UpdatePasswordScreen> {
     try {
       await client.auth.updateUser(UserAttributes(password: _password.text));
       if (mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Password updated.')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.tr('Password updated.'))),
+        );
         context.go('/profile');
       }
     } catch (error) {
       if (mounted) {
         setState(
-          () => _error = error.toString().replaceFirst('Exception: ', ''),
+          () => _error = context.tr(
+            error.toString().replaceFirst('Exception: ', ''),
+          ),
         );
       }
     } finally {
@@ -67,7 +72,7 @@ class _UpdatePasswordScreenState extends ConsumerState<UpdatePasswordScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Choose a new password')),
+    appBar: AppBar(title: Text(context.tr('Choose a new password'))),
     body: Center(
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
@@ -79,14 +84,16 @@ class _UpdatePasswordScreenState extends ConsumerState<UpdatePasswordScreen> {
               TextField(
                 controller: _password,
                 obscureText: true,
-                decoration: const InputDecoration(labelText: 'New password'),
+                decoration: InputDecoration(
+                  labelText: context.tr('New password'),
+                ),
               ),
               const SizedBox(height: 14),
               TextField(
                 controller: _confirm,
                 obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Confirm password',
+                decoration: InputDecoration(
+                  labelText: context.tr('Confirm password'),
                 ),
               ),
               if (_error != null) ...[
@@ -96,7 +103,9 @@ class _UpdatePasswordScreenState extends ConsumerState<UpdatePasswordScreen> {
               const SizedBox(height: 20),
               FilledButton(
                 onPressed: _busy ? null : _save,
-                child: Text(_busy ? 'Saving…' : 'Update password'),
+                child: Text(
+                  _busy ? context.tr('Saving…') : context.tr('Update password'),
+                ),
               ),
             ],
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/theme.dart';
+import '../../../l10n/tr.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
 import '../../discover/application/discover_providers.dart';
 import '../../discover/data/seed_photo_references.dart';
@@ -21,11 +22,11 @@ class PhotoDetailScreen extends ConsumerWidget {
     }
     if (catalogState.hasError) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Photo unavailable')),
+        appBar: AppBar(title: Text(context.tr('Photo unavailable'))),
         body: Center(
           child: TextButton(
             onPressed: () => ref.invalidate(remotePhotoCatalogProvider),
-            child: const Text('Could not load this photo. Try again.'),
+            child: Text(context.tr('Could not load this photo. Try again.')),
           ),
         ),
       );
@@ -34,15 +35,15 @@ class PhotoDetailScreen extends ConsumerWidget {
     final matches = catalog.where((photo) => photo.id == photoId);
     if (matches.isEmpty) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Photo unavailable')),
+        appBar: AppBar(title: Text(context.tr('Photo unavailable'))),
         body: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('This photo is not in the catalog.'),
+              Text(context.tr('This photo is not in the catalog.')),
               TextButton(
                 onPressed: () => Navigator.of(context).maybePop(),
-                child: const Text('Go back'),
+                child: Text(context.tr('Go back')),
               ),
             ],
           ),
@@ -74,7 +75,9 @@ class PhotoDetailScreen extends ConsumerWidget {
             ),
             actions: [
               IconButton(
-                tooltip: isSaved ? 'Remove saved frame' : 'Save frame',
+                tooltip: isSaved
+                    ? context.tr('Remove saved frame')
+                    : context.tr('Save frame'),
                 onPressed: () => ref
                     .read(savedPhotoIdsProvider.notifier)
                     .toggle(photo.remoteId ?? photo.id),
@@ -90,7 +93,7 @@ class PhotoDetailScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    photo.category,
+                    context.tr(photo.category),
                     style: Theme.of(context).textTheme.labelLarge
                         ?.copyWith(color: ShotbookColors.secondary),
                   ),
@@ -119,13 +122,16 @@ class PhotoDetailScreen extends ConsumerWidget {
                   const SizedBox(height: 18),
                   if (photo.sourceType == 'curated') ...[
                     Text(
-                      'Photo credit: ${photo.credit} · ${photo.license}',
+                      context.tr('Photo credit: {credit} · {license}', {
+                        'credit': photo.credit,
+                        'license': photo.license,
+                      }),
                       style: Theme.of(context).textTheme.bodySmall
                           ?.copyWith(color: ShotbookColors.secondary),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Source: Wikimedia Commons',
+                      context.tr('Source: Wikimedia Commons'),
                       style: Theme.of(context).textTheme.bodySmall
                           ?.copyWith(color: ShotbookColors.secondary),
                     ),
@@ -139,7 +145,7 @@ class PhotoDetailScreen extends ConsumerWidget {
                     ],
                   ] else
                     Text(
-                      'Shared by a SHOTBOOK photographer',
+                      context.tr('Shared by a SHOTBOOK photographer'),
                       style: Theme.of(context).textTheme.bodySmall
                           ?.copyWith(color: ShotbookColors.secondary),
                     ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/camera/presentation/camera_screen.dart';
+import '../l10n/tr.dart';
 import '../features/auth/presentation/auth_screen.dart';
 import '../features/auth/presentation/update_password_screen.dart';
 import '../features/feed/presentation/create_post_screen.dart';
@@ -119,26 +120,26 @@ class _AppShell extends StatelessWidget {
           index,
           initialLocation: index == navigationShell.currentIndex,
         ),
-        destinations: const [
+        destinations: [
           NavigationDestination(
-            icon: Icon(Icons.grid_view_outlined),
-            selectedIcon: Icon(Icons.grid_view_rounded),
-            label: 'Discover',
+            icon: const Icon(Icons.grid_view_outlined),
+            selectedIcon: const Icon(Icons.grid_view_rounded),
+            label: context.tr('Discover'),
           ),
           NavigationDestination(
-            icon: Icon(Icons.camera_alt_outlined),
-            selectedIcon: Icon(Icons.camera_alt_rounded),
-            label: 'Camera',
+            icon: const Icon(Icons.camera_alt_outlined),
+            selectedIcon: const Icon(Icons.camera_alt_rounded),
+            label: context.tr('Camera'),
           ),
           NavigationDestination(
-            icon: Icon(Icons.view_stream_outlined),
-            selectedIcon: Icon(Icons.view_stream_rounded),
-            label: 'Feed',
+            icon: const Icon(Icons.view_stream_outlined),
+            selectedIcon: const Icon(Icons.view_stream_rounded),
+            label: context.tr('Feed'),
           ),
           NavigationDestination(
-            icon: Icon(Icons.person_outline),
-            selectedIcon: Icon(Icons.person),
-            label: 'Profile',
+            icon: const Icon(Icons.person_outline),
+            selectedIcon: const Icon(Icons.person),
+            label: context.tr('Profile'),
           ),
         ],
       ),

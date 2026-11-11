@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shotbook/app/app.dart';
+import 'package:shotbook/l10n/language_provider.dart';
 import 'package:shotbook/app/router.dart';
 
 void main() {
@@ -8,7 +9,12 @@ void main() {
     tester,
   ) async {
     final router = createAppRouter();
-    await tester.pumpWidget(ProviderScope(child: ShotbookApp(router: router)));
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [initialLanguageProvider.overrideWithValue('en')],
+        child: ShotbookApp(router: router),
+      ),
+    );
     await tester.pumpAndSettle();
 
     router.go('/login-callback?code=abc');

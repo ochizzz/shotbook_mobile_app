@@ -3,7 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 import '../features/auth/application/auth_providers.dart';
+import '../l10n/language_provider.dart';
 
 import 'router.dart';
 import 'theme.dart';
@@ -44,6 +47,15 @@ class _ShotbookAppState extends ConsumerState<ShotbookApp> {
       debugShowCheckedModeBanner: false,
       theme: shotbookDarkTheme,
       routerConfig: widget.router,
+      locale: ref.watch(localeProvider),
+      supportedLocales: [
+        for (final code in supportedLanguageCodes) Locale(code),
+      ],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
     );
   }
 }

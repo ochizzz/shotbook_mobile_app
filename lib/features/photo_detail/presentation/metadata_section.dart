@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/theme.dart';
+import '../../../l10n/tr.dart';
 
 class MetadataSection extends StatelessWidget {
   const MetadataSection({required this.title, required this.values, super.key});
@@ -18,7 +19,7 @@ class MetadataSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title,
+            context.tr(title),
             style: Theme.of(context).textTheme.titleMedium
                 ?.copyWith(color: ShotbookColors.secondary),
           ),
@@ -32,7 +33,7 @@ class MetadataSection extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      entry.key,
+                      context.tr(entry.key),
                       style: Theme.of(context).textTheme.bodyMedium
                           ?.copyWith(color: ShotbookColors.secondary),
                     ),

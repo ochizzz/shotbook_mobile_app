@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/theme.dart';
+import '../../l10n/tr.dart';
 import '../../features/discover/domain/photo_reference.dart';
 
 class PhotoReferenceImage extends StatelessWidget {
@@ -65,7 +66,7 @@ class _ImageFallback extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                photo.category,
+                context.tr(photo.category),
                 style: Theme.of(context).textTheme.labelMedium
                     ?.copyWith(color: ShotbookColors.secondary),
                 textAlign: TextAlign.center,

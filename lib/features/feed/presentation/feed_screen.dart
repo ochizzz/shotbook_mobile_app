@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
+import '../../../l10n/tr.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
 import '../../auth/application/auth_providers.dart';
 import '../../saved/application/saved_photo_provider.dart';
@@ -19,11 +20,11 @@ class FeedScreen extends ConsumerWidget {
     final repository = ref.watch(feedRepositoryProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Feed'),
+        title: Text(context.tr('Feed')),
         actions: [
           IconButton(
             key: const Key('refresh-feed'),
-            tooltip: 'Refresh feed',
+            tooltip: context.tr('Refresh feed'),
             onPressed: () => ref.invalidate(feedPostsProvider),
             icon: const Icon(Icons.refresh),
           ),
@@ -33,30 +34,34 @@ class FeedScreen extends ConsumerWidget {
         key: const Key('create-post'),
         onPressed: () => context.push('/create'),
         icon: const Icon(Icons.add),
-        label: const Text('Post'),
+        label: Text(context.tr('Post')),
       ),
       body: repository == null
-          ? const _FeedMessage(
+          ? _FeedMessage(
               icon: Icons.cloud_off_outlined,
-              title: 'Community feed is not connected',
-              message: 'Add Supabase settings to load posts and publish your own photos.',
+              title: context.tr('Community feed is not connected'),
+              message: context.tr(
+                'Add Supabase settings to load posts and publish your own photos.',
+              ),
             )
           : posts.when(
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (error, stackTrace) => _FeedMessage(
                 icon: Icons.error_outline,
-                title: 'Feed could not be loaded',
-                message: 'Check your connection, then try again.',
+                title: context.tr('Feed could not be loaded'),
+                message: context.tr('Check your connection, then try again.'),
                 action: TextButton(
                   onPressed: () => ref.invalidate(feedPostsProvider),
-                  child: const Text('Try again'),
+                  child: Text(context.tr('Try again')),
                 ),
               ),
               data: (items) => items.isEmpty
-                  ? const _FeedMessage(
+                  ? _FeedMessage(
                       icon: Icons.photo_library_outlined,
-                      title: 'No community posts yet',
-                      message: 'Be the first to share a photo and its shooting notes.',
+                      title: context.tr('No community posts yet'),
+                      message: context.tr(
+                        'Be the first to share a photo and its shooting notes.',
+                      ),
                     )
                   : RefreshIndicator(
                       onRefresh: () async {
@@ -128,7 +133,7 @@ class FeedPostCard extends ConsumerWidget {
             ),
             if (post.photo.createdAt != null)
               Text(
-                _timeAgo(post.photo.createdAt!),
+                _timeAgo(context, post.photo.createdAt!),
                 style: Theme.of(context).textTheme.bodySmall
                     ?.copyWith(color: ShotbookColors.secondary),
               ),
@@ -150,7 +155,9 @@ class FeedPostCard extends ConsumerWidget {
           children: [
             IconButton(
               key: Key('like-${post.photo.id}'),
-              tooltip: post.isLiked ? 'Unlike photo' : 'Like photo',
+              tooltip: post.isLiked
+                  ? context.tr('Unlike photo')
+                  : context.tr('Like photo'),
               onPressed: () async {
                 if (user == null) {
                   context.push('/auth');
@@ -177,7 +184,7 @@ class FeedPostCard extends ConsumerWidget {
             const Spacer(),
             IconButton(
               key: Key('save-${post.photo.id}'),
-              tooltip: 'Save photo',
+              tooltip: context.tr('Save photo'),
               onPressed: () async {
                 if (user == null) {
                   context.push('/auth');
@@ -227,18 +234,28 @@ class FeedPostCard extends ConsumerWidget {
     );
   }
 
-  static String _timeAgo(DateTime date) {
+  static String _timeAgo(BuildContext context, DateTime date) {
     final difference = DateTime.now().difference(date.toLocal());
-    if (difference.inMinutes < 1) return 'now';
-    if (difference.inHours < 1) return '${difference.inMinutes}m';
-    if (difference.inDays < 1) return '${difference.inHours}h';
-    if (difference.inDays < 7) return '${difference.inDays}d';
+    if (difference.inMinutes < 1) return context.tr('now');
+    if (difference.inHours < 1) {
+      return context.tr('{n}m', {'n': '${difference.inMinutes}'});
+    }
+    if (difference.inDays < 1) {
+      return context.tr('{n}h', {'n': '${difference.inHours}'});
+    }
+    if (difference.inDays < 7) {
+      return context.tr('{n}d', {'n': '${difference.inDays}'});
+    }
     return '${date.day}.${date.month}.${date.year}';
   }
 
   static void _showError(BuildContext context, Object error) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(error.toString().replaceFirst('Exception: ', ''))),
+      SnackBar(
+        content: Text(
+          context.tr(error.toString().replaceFirst('Exception: ', '')),
+        ),
+      ),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
+import '../../../l10n/tr.dart';
 import '../../saved/application/saved_photo_provider.dart';
 import '../application/discover_providers.dart';
 import '../data/seed_photo_references.dart';
@@ -66,7 +67,7 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                           ),
                           IconButton(
                             key: const Key('open-saved'),
-                            tooltip: 'Saved photos',
+                            tooltip: context.tr('Saved photos'),
                             onPressed: () => context.push('/saved'),
                             icon: const Icon(Icons.bookmark_border),
                           ),
@@ -74,7 +75,7 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                       ),
                       const SizedBox(height: 9),
                       Text(
-                        'Find a frame',
+                        context.tr('Find a frame'),
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
                       const SizedBox(height: 14),
@@ -86,12 +87,12 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                             .setQuery,
                         textInputAction: TextInputAction.search,
                         decoration: InputDecoration(
-                          hintText: 'Search photos or ideas',
+                          hintText: context.tr('Search photos or ideas'),
                           prefixIcon: const Icon(Icons.search),
                           suffixIcon: _searchController.text.isEmpty
                               ? null
                               : IconButton(
-                                  tooltip: 'Clear search',
+                                  tooltip: context.tr('Clear search'),
                                   onPressed: () {
                                     _searchController.clear();
                                     ref
@@ -113,7 +114,7 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                           itemBuilder: (context, index) {
                             final category = photoCategories[index];
                             return ChoiceChip(
-                              label: Text(category),
+                              label: Text(context.tr(category)),
                               selected: filters.category == category,
                               onSelected: (_) => ref
                                   .read(discoverFiltersProvider.notifier)
@@ -208,9 +209,9 @@ class _CatalogError extends StatelessWidget {
         children: [
           const Icon(Icons.cloud_off_outlined, size: 30),
           const SizedBox(height: 12),
-          const Text('Could not load the catalog.'),
+          Text(context.tr('Could not load the catalog.')),
           const SizedBox(height: 8),
-          TextButton(onPressed: onRetry, child: const Text('Try again')),
+          TextButton(onPressed: onRetry, child: Text(context.tr('Try again'))),
         ],
       ),
     ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
+import '../../../l10n/tr.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
 import '../../../features/discover/domain/photo_reference.dart';
 
@@ -45,7 +46,9 @@ class PhotoGridTile extends StatelessWidget {
                     shape: const CircleBorder(),
                     child: IconButton(
                       key: ValueKey('save-card-${photo.id}'),
-                      tooltip: isSaved ? 'Remove saved frame' : 'Save frame',
+                      tooltip: isSaved
+                          ? context.tr('Remove saved frame')
+                          : context.tr('Save frame'),
                       visualDensity: VisualDensity.compact,
                       onPressed: onSave,
                       icon: Icon(
@@ -70,7 +73,7 @@ class PhotoGridTile extends StatelessWidget {
         ),
         const SizedBox(height: 3),
         Text(
-          photo.category,
+          context.tr(photo.category),
           style: Theme.of(context).textTheme.labelSmall
               ?.copyWith(color: ShotbookColors.secondary),
         ),

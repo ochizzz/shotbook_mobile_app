@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shotbook/app/app.dart';
+import 'package:shotbook/l10n/language_provider.dart';
 
 void main() {
   testWidgets('bottom navigation opens four honest destinations', (
     tester,
   ) async {
-    await tester.pumpWidget(ProviderScope(child: ShotbookApp()));
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [initialLanguageProvider.overrideWithValue('en')],
+        child: ShotbookApp(),
+      ),
+    );
 
     expect(find.text('Discover'), findsWidgets);
 

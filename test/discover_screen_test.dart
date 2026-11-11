@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shotbook/app/app.dart';
+import 'package:shotbook/l10n/language_provider.dart';
 import 'package:shotbook/features/saved/application/saved_photo_provider.dart';
 import 'package:shotbook/features/saved/data/saved_photo_repository.dart';
 
@@ -9,7 +10,12 @@ void main() {
   testWidgets(
     'Discover filters by category and search, with a resettable empty state',
     (tester) async {
-      await tester.pumpWidget(ProviderScope(child: ShotbookApp()));
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [initialLanguageProvider.overrideWithValue('en')],
+          child: ShotbookApp(),
+        ),
+      );
 
       await tester.tap(find.text('Street').first);
       await tester.pumpAndSettle();
@@ -36,6 +42,8 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          initialLanguageProvider.overrideWithValue('en'),
+
           savedPhotoRepositoryProvider.overrideWithValue(
             SavedPhotoRepository(store: store),
           ),

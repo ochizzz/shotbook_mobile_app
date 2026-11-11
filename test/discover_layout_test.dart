@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shotbook/app/app.dart';
+import 'package:shotbook/l10n/language_provider.dart';
 import 'package:shotbook/features/discover/application/discover_providers.dart';
 import 'package:shotbook/features/discover/domain/photo_reference.dart';
 import 'package:shotbook/features/saved/application/saved_photo_provider.dart';
@@ -29,6 +30,8 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          initialLanguageProvider.overrideWithValue('en'),
+
           photoCatalogProvider.overrideWithValue([longTitlePhoto]),
           savedPhotoRepositoryProvider.overrideWithValue(
             SavedPhotoRepository(store: _MemorySavedPhotoStore()),
