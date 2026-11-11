@@ -70,8 +70,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
           final alreadyRegistered = response.user?.identities?.isEmpty ?? false;
           if (mounted && alreadyRegistered) {
             setState(
-              () => _error =
-                  'This email is already registered. Sign in instead, or use "Forgot password?".',
+              () => _error = 'This email is already registered. Sign in instead, or use "Forgot password?".',
             );
           } else if (mounted && response.session != null) {
             context.pop();
@@ -101,6 +100,10 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
 
   String _friendlyAuthError(Object error) {
     final text = error.toString();
+    if (text.contains('over_email_send_rate_limit') ||
+        text.contains('statusCode: 429')) {
+      return 'Too many emails requested. Wait a minute, then use the newest email.';
+    }
     if (text.contains('SocketException') ||
         text.contains('Failed host lookup')) {
       return 'Could not reach Supabase. Check your connection and project settings.';

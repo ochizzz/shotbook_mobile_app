@@ -103,7 +103,8 @@ CameraDevice _phone({
 
 const _appleTip = 'Use Photographic Styles to keep skin tones consistent.';
 const _pixelTip = 'Keep Real Tone enabled for consistent skin tones.';
-const _samsungTip = 'Use Pro mode to keep white balance consistent across a set.';
+const _samsungTip =
+    'Use Pro mode to keep white balance consistent across a set.';
 const _leicaTip = 'Leica Authentic keeps contrast and color restrained.';
 
 /// Camera guide catalog: popular phones from 2022 to 2026. Models whose
@@ -606,11 +607,7 @@ final cameraDevices = <CameraDevice>[
     year: 2025,
     cameraClass: CameraClass.telephoto,
     portrait: 'the 3× camera',
-    cameras: [
-      '50 MP main · 23 mm',
-      '50 MP ultra-wide',
-      '50 MP periscope · 3×',
-    ],
+    cameras: ['50 MP main · 23 mm', '50 MP ultra-wide', '50 MP periscope · 3×'],
   ),
   _phone(
     id: 'oneplus-12',

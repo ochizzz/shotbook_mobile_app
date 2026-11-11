@@ -17,6 +17,19 @@ GoRouter createAppRouter() {
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: '/discover',
+    // Links from Supabase emails (confirm, reset) open the app on
+    // com.shotbook.shotbook://login-callback. The Supabase SDK reads the link
+    // itself; the router only has to land somewhere valid. The reset flow then
+    // opens /set-password from the auth event (see ShotbookApp).
+    redirect: (context, state) {
+      final uri = state.uri;
+      if (uri.host == 'login-callback' ||
+          uri.scheme == 'com.shotbook.shotbook' ||
+          uri.path == '/login-callback') {
+        return '/discover';
+      }
+      return null;
+    },
     routes: [
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
