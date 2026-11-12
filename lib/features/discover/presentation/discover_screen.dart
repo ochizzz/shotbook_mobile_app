@@ -135,7 +135,7 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                                     ? ShotbookColors.primary
                                     : ShotbookColors.border,
                               ),
-                              shape: const StadiumBorder(),
+                              shape: shotbookShape,
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 8,
                               ),

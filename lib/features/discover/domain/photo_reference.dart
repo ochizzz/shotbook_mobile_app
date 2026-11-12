@@ -25,6 +25,7 @@ class PhotoReference {
     this.presetName,
     this.editingData = const {},
     this.imageAspectRatio = 0.82,
+    this.viewCount = 0,
   });
 
   final String id;
@@ -53,6 +54,9 @@ class PhotoReference {
   final Map<String, String> editingData;
   final double imageAspectRatio;
 
+  /// How many times the photo was opened. Shown instead of likes.
+  final int viewCount;
+
   factory PhotoReference.fromJson(Map<String, dynamic> json) {
     return PhotoReference(
       id: json['legacy_id'] as String? ?? json['id'] as String,
@@ -79,6 +83,7 @@ class PhotoReference {
       poseData: _stringMap(json['pose_data']),
       presetName: _stringMap(json['editing_data'])['Preset'],
       editingData: _stringMap(json['editing_data']),
+      viewCount: (json['views_count'] as num?)?.toInt() ?? 0,
     );
   }
 
@@ -110,6 +115,7 @@ class PhotoReference {
         'Preset': presetName!,
     },
     'created_at': createdAt?.toIso8601String(),
+    'views_count': viewCount,
   };
 
   Map<String, String> get cameraSettings => {

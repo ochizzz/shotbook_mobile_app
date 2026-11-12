@@ -225,7 +225,7 @@ class CameraDeviceScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(7),
+                          borderRadius: shotbookBorderRadius,
                           child: PhotoReferenceImage(photo: photo),
                         ),
                       ),

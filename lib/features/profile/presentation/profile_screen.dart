@@ -618,7 +618,7 @@ class _ProfilePhotoGrid extends StatelessWidget {
                 InkWell(
                   onTap: () => context.push('/photos/${photo.id}'),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(7),
+                    borderRadius: shotbookBorderRadius,
                     child: PhotoReferenceImage(photo: photo),
                   ),
                 ),

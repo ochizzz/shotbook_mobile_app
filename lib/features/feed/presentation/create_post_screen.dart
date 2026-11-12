@@ -211,7 +211,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
                       label: Text(context.tr('Choose a photo')),
                     )
                   : ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: shotbookBorderRadius,
                       child: Image.memory(
                         _imageBytes!,
                         height: 280,
@@ -347,7 +347,7 @@ class _SetupNotice extends StatelessWidget {
     padding: const EdgeInsets.all(14),
     decoration: BoxDecoration(
       color: ShotbookColors.surface,
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: shotbookBorderRadius,
     ),
     child: Text(
       message,
