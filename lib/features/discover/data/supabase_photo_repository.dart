@@ -15,6 +15,15 @@ class SupabasePhotoRepository {
     return rows.map((row) => PhotoReference.fromJson(row)).toList();
   }
 
+  /// Counts one open of the photo and returns the new total.
+  Future<int> recordView(String photoId) async {
+    final result = await _client.rpc(
+      'record_photo_view',
+      params: {'target_photo': photoId},
+    );
+    return (result as num?)?.toInt() ?? 0;
+  }
+
   Future<Set<String>> loadSavedIds(String userId) async {
     final rows = await _client
         .from('saved_photos')

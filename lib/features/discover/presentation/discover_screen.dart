@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
 import '../../../l10n/tr.dart';
-import '../../saved/application/saved_photo_provider.dart';
 import '../application/discover_providers.dart';
 import '../data/seed_photo_references.dart';
 import 'discover_empty_state.dart';
@@ -36,8 +35,6 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
   Widget build(BuildContext context) {
     final filters = ref.watch(discoverFiltersProvider);
     final photos = ref.watch(filteredPhotoReferencesProvider);
-    final savedIds =
-        ref.watch(savedPhotoIdsProvider).asData?.value ?? const <String>{};
 
     return Scaffold(
       body: SafeArea(
@@ -167,21 +164,14 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
                         sliver: SliverMasonryGrid.count(
                           crossAxisCount: 2,
-                          mainAxisSpacing: 16,
-                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 8,
+                          crossAxisSpacing: 8,
                           childCount: items.length,
                           itemBuilder: (context, index) {
                             final photo = items[index];
                             return PhotoGridTile(
                               key: ValueKey(photo.id),
                               photo: photo,
-                              isSaved:
-                                  savedIds.contains(photo.id) ||
-                                  (photo.remoteId != null &&
-                                      savedIds.contains(photo.remoteId)),
-                              onSave: () => ref
-                                  .read(savedPhotoIdsProvider.notifier)
-                                  .toggle(photo.remoteId ?? photo.id),
                             );
                           },
                         ),

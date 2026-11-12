@@ -1,21 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
 import '../../../l10n/tr.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
 import '../../discover/application/discover_providers.dart';
 import '../../discover/data/seed_photo_references.dart';
+import '../../discover/domain/photo_reference.dart';
 import '../../saved/application/saved_photo_provider.dart';
 import 'metadata_section.dart';
 
-class PhotoDetailScreen extends ConsumerWidget {
+class PhotoDetailScreen extends ConsumerStatefulWidget {
   const PhotoDetailScreen({required this.photoId, super.key});
 
   final String photoId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PhotoDetailScreen> createState() => _PhotoDetailScreenState();
+}
+
+class _PhotoDetailScreenState extends ConsumerState<PhotoDetailScreen> {
+  /// Server total after this open was counted; null until it is known.
+  int? _views;
+  bool _viewRecorded = false;
+
+  void _recordViewOnce(PhotoReference photo) {
+    if (_viewRecorded) return;
+    _viewRecorded = true;
+    final remoteId = photo.remoteId;
+    final repository = ref.read(remotePhotoRepositoryProvider);
+    if (remoteId == null || repository == null || !isUuid(remoteId)) return;
+    repository
+        .recordView(remoteId)
+        .then((total) {
+          if (mounted) setState(() => _views = total);
+        })
+        .catchError((Object _) {
+          // Counting a view is best effort; the photo still opens.
+        });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final photoId = widget.photoId;
     final catalogState = ref.watch(remotePhotoCatalogProvider);
     if (catalogState.isLoading) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
@@ -52,6 +80,8 @@ class PhotoDetailScreen extends ConsumerWidget {
     }
 
     final photo = matches.first;
+    WidgetsBinding.instance.addPostFrameCallback((_) => _recordViewOnce(photo));
+    final views = _views ?? photo.viewCount;
     final savedState = ref.watch(savedPhotoIdsProvider);
     final savedIds = savedState.asData?.value ?? const <String>{};
     final isSaved =
@@ -93,7 +123,8 @@ class PhotoDetailScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    context.tr(photo.category),
+                    '${context.tr(photo.category)} · ${context.tr('Views: {n}', {'n': '$views'})}',
+                    key: const Key('photo-views'),
                     style: Theme.of(context).textTheme.labelLarge
                         ?.copyWith(color: ShotbookColors.secondary),
                   ),
@@ -109,6 +140,13 @@ class PhotoDetailScreen extends ConsumerWidget {
                       color: ShotbookColors.secondary,
                       height: 1.5,
                     ),
+                  ),
+                  const SizedBox(height: 18),
+                  OutlinedButton.icon(
+                    key: const Key('repeat-shot'),
+                    onPressed: () => context.push('/photos/${photo.id}/repeat'),
+                    icon: const Icon(Icons.filter_center_focus),
+                    label: Text(context.tr('Repeat this shot')),
                   ),
                   MetadataSection(title: 'Pose', values: photo.poseData),
                   MetadataSection(

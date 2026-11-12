@@ -75,18 +75,14 @@ class SavedPhotosScreen extends ConsumerWidget {
                       padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
                       sliver: SliverMasonryGrid.count(
                         crossAxisCount: 2,
-                        mainAxisSpacing: 16,
-                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 8,
+                        crossAxisSpacing: 8,
                         childCount: savedPhotos.length,
                         itemBuilder: (context, index) {
                           final photo = savedPhotos[index];
                           return PhotoGridTile(
                             key: ValueKey(photo.id),
                             photo: photo,
-                            isSaved: true,
-                            onSave: () => ref
-                                .read(savedPhotoIdsProvider.notifier)
-                                .toggle(photo.remoteId ?? photo.id),
                           );
                         },
                       ),

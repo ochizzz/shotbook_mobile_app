@@ -20,7 +20,6 @@ class FeedRepository {
     if (rows.isEmpty) return const [];
 
     final photos = rows.map((row) => PhotoReference.fromJson(row)).toList();
-    final photoIds = photos.map((photo) => photo.id).toList();
     final authorIds = photos
         .map((photo) => photo.authorId)
         .whereType<String>()
@@ -35,51 +34,16 @@ class FeedRepository {
     final profileById = {
       for (final profile in profiles) profile['id'] as String: profile,
     };
-    final likes = await _client
-        .from('likes')
-        .select('photo_id, user_id')
-        .inFilter('photo_id', photoIds);
-    final likesByPhoto = <String, List<dynamic>>{};
-    for (final like in likes) {
-      (likesByPhoto[like['photo_id'] as String] ??= []).add(like);
-    }
 
     return photos.map((photo) {
       final profile = profileById[photo.authorId];
-      final photoLikes = likesByPhoto[photo.id] ?? const [];
       return FeedPost(
         photo: photo,
         authorName: profile?['display_name'] as String? ?? 'SHOTBOOK member',
         username: profile?['username'] as String? ?? 'member',
         avatarUrl: profile?['avatar_url'] as String?,
-        likeCount: photoLikes.length,
-        isLiked:
-            viewerId != null &&
-            photoLikes.any((like) => like['user_id'] == viewerId),
       );
     }).toList();
-  }
-
-  Future<void> setLiked({
-    required String userId,
-    required String photoId,
-    required bool liked,
-  }) async {
-    if (liked) {
-      await _client
-          .from('likes')
-          .delete()
-          .eq('user_id', userId)
-          .eq('photo_id', photoId);
-    } else {
-      await _client
-          .from('likes')
-          .upsert(
-            {'user_id': userId, 'photo_id': photoId},
-            onConflict: 'user_id,photo_id',
-            ignoreDuplicates: true,
-          );
-    }
   }
 
   Future<PhotoReference> createPost({

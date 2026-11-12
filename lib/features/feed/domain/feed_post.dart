@@ -5,8 +5,6 @@ class FeedPost {
     required this.photo,
     required this.authorName,
     required this.username,
-    required this.likeCount,
-    required this.isLiked,
     this.avatarUrl,
   });
 
@@ -14,6 +12,7 @@ class FeedPost {
   final String authorName;
   final String username;
   final String? avatarUrl;
-  final int likeCount;
-  final bool isLiked;
+
+  /// Popularity is shown as views, not likes.
+  int get viewCount => photo.viewCount;
 }

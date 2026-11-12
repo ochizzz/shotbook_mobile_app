@@ -43,6 +43,10 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(seconds: 1));
 
+    // Cards are clean photo blocks; the title is only in the long-press menu.
+    expect(find.byKey(const ValueKey('photo-long-title')), findsOneWidget);
+    await tester.longPress(find.byKey(const ValueKey('photo-long-title')));
+    await tester.pumpAndSettle();
     expect(
       find.text(
         'A very long photographic reference title that must stay within its card',

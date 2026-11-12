@@ -19,8 +19,11 @@ void main() {
 
       await tester.tap(find.text('Street').first);
       await tester.pumpAndSettle();
-      expect(find.text('A pause in Braga'), findsOneWidget);
-      expect(find.text('Studio light study'), findsNothing);
+      expect(find.byKey(const ValueKey('photo-street-braga')), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('photo-portrait-studio-light')),
+        findsNothing,
+      );
 
       await tester.enterText(
         find.byKey(const Key('discover-search-field')),
@@ -31,7 +34,10 @@ void main() {
 
       await tester.tap(find.text('Clear filters'));
       await tester.pumpAndSettle();
-      expect(find.text('Studio light study'), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('photo-portrait-studio-light')),
+        findsOneWidget,
+      );
     },
   );
 
@@ -53,13 +59,23 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byKey(const Key('save-card-portrait-studio-light')));
+    const tile = ValueKey('photo-portrait-studio-light');
+
+    // Cards carry no buttons: saving lives in the long-press menu.
+    await tester.longPress(find.byKey(tile));
+    await tester.pumpAndSettle();
+    expect(find.text('Studio light study'), findsOneWidget);
+    expect(find.text('Repeat this shot'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('sheet-save')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('open-saved')));
     await tester.pumpAndSettle();
-    expect(find.text('Studio light study'), findsOneWidget);
+    expect(find.byKey(tile), findsOneWidget);
 
-    await tester.tap(find.byKey(const Key('save-card-portrait-studio-light')));
+    await tester.longPress(find.byKey(tile));
+    await tester.pumpAndSettle();
+    expect(find.text('Remove saved frame'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('sheet-save')));
     await tester.pumpAndSettle();
     expect(find.text('No saved frames yet.'), findsOneWidget);
   });

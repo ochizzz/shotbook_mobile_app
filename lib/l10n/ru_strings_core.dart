@@ -87,4 +87,23 @@ const Map<String, String> ruStringsCore = {
   'Photo examples': 'Примеры фото',
   'Other': 'Другое',
   'Other smartphone': 'Другой смартфон',
+
+  // Long-press menu, views, repeat shot
+  'Views: {n}': 'Просмотры: {n}',
+  'Open': 'Открыть',
+  'Repeat this shot': 'Повторить кадр',
+  'Camera with this photo as a see-through guide':
+      'Камера с этим фото как полупрозрачным эталоном',
+  'Author profile': 'Профиль автора',
+  'Close': 'Закрыть',
+  'Hide guide': 'Скрыть эталон',
+  'Show guide': 'Показать эталон',
+  'Guide opacity': 'Прозрачность эталона',
+  'Switch camera': 'Сменить камеру',
+  'Saved to your gallery.': 'Сохранено в галерею.',
+  'The photo could not be saved.': 'Не удалось сохранить фото.',
+  'No camera was found on this device.': 'На устройстве не найдена камера.',
+  'Allow camera access in your phone settings to repeat a shot.':
+      'Разрешите доступ к камере в настройках телефона, чтобы повторить кадр.',
+  'The camera could not be started.': 'Не удалось запустить камеру.',
 };

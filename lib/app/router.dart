@@ -10,6 +10,7 @@ import '../features/feed/presentation/feed_screen.dart';
 import '../features/discover/presentation/discover_screen.dart';
 import '../features/photo_detail/presentation/photo_detail_screen.dart';
 import '../features/profile/presentation/profile_screen.dart';
+import '../features/repeat_shot/presentation/repeat_shot_screen.dart';
 import '../features/saved/presentation/saved_photos_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -100,6 +101,13 @@ GoRouter createAppRouter() {
         path: '/photos/:photoId',
         builder: (context, state) =>
             PhotoDetailScreen(photoId: state.pathParameters['photoId']!),
+        routes: [
+          GoRoute(
+            path: 'repeat',
+            builder: (context, state) =>
+                RepeatShotScreen(photoId: state.pathParameters['photoId']!),
+          ),
+        ],
       ),
     ],
   );

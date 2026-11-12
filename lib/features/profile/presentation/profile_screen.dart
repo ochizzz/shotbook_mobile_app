@@ -10,6 +10,7 @@ import '../../../app/theme.dart';
 import '../../../l10n/language_picker.dart';
 import '../../../l10n/tr.dart';
 import '../../../shared/services/supabase_providers.dart';
+import '../../../shared/widgets/photo_actions_sheet.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
 import '../../auth/application/auth_providers.dart';
 import '../../discover/application/discover_providers.dart';
@@ -257,9 +258,9 @@ class _ProfileContent extends ConsumerWidget {
                             )
                           : _ProfilePhotoGrid(
                               photos: items,
-                              canDelete: isOwn,
-                              onDelete: (photo) =>
-                                  _deletePost(context, ref, photo),
+                              onDelete: isOwn
+                                  ? (photo) => _deletePost(context, ref, photo)
+                                  : null,
                             ),
                     ),
                     if (isOwn)
@@ -282,13 +283,7 @@ class _ProfileContent extends ConsumerWidget {
                                     'Save a photo and it will be waiting here.',
                                   ),
                                 )
-                              : _ProfilePhotoGrid(
-                                  photos: saved,
-                                  canDelete: false,
-                                  onDelete: (photo) => ref
-                                      .read(savedPhotoIdsProvider.notifier)
-                                      .toggle(photo.remoteId ?? photo.id),
-                                ),
+                              : _ProfilePhotoGrid(photos: saved),
                         ),
                       ),
                     if (isOwn)
@@ -586,75 +581,48 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet> {
 }
 
 class _ProfilePhotoGrid extends StatelessWidget {
-  const _ProfilePhotoGrid({
-    required this.photos,
-    required this.canDelete,
-    required this.onDelete,
-  });
+  const _ProfilePhotoGrid({required this.photos, this.onDelete});
 
   final List<PhotoReference> photos;
-  final bool canDelete;
-  final ValueChanged<PhotoReference> onDelete;
+
+  /// Set for the owner's own posts; adds "Delete post" to the long-press menu.
+  final ValueChanged<PhotoReference>? onDelete;
 
   @override
   Widget build(BuildContext context) => GridView.builder(
     padding: const EdgeInsets.all(16),
     itemCount: photos.length,
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: 2,
-      mainAxisSpacing: 14,
-      crossAxisSpacing: 12,
-      childAspectRatio: 0.72,
+      crossAxisCount: 3,
+      mainAxisSpacing: 4,
+      crossAxisSpacing: 4,
+      childAspectRatio: 0.8,
     ),
     itemBuilder: (context, index) {
       final photo = photos[index];
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                InkWell(
-                  onTap: () => context.push('/photos/${photo.id}'),
-                  child: ClipRRect(
-                    borderRadius: shotbookBorderRadius,
-                    child: PhotoReferenceImage(photo: photo),
-                  ),
-                ),
-                if (canDelete)
-                  Positioned(
-                    top: 4,
-                    right: 4,
-                    child: IconButton.filledTonal(
-                      key: Key('delete-post-${photo.id}'),
-                      tooltip: context.tr('Delete post'),
-                      onPressed: () => onDelete(photo),
-                      icon: const Icon(Icons.delete_outline),
-                    ),
-                  ),
-                if (!canDelete)
-                  Positioned(
-                    top: 4,
-                    right: 4,
-                    child: IconButton.filledTonal(
-                      key: Key('unsave-profile-${photo.id}'),
-                      tooltip: context.tr('Remove saved photo'),
-                      onPressed: () => onDelete(photo),
-                      icon: const Icon(Icons.bookmark),
-                    ),
+      return ClipRRect(
+        borderRadius: shotbookBorderRadius,
+        child: Material(
+          color: ShotbookColors.card,
+          child: InkWell(
+            key: Key('profile-photo-${photo.id}'),
+            onTap: () => context.push('/photos/${photo.id}'),
+            onLongPress: () => showPhotoActions(
+              context,
+              photo: photo,
+              extraActions: [
+                if (onDelete != null)
+                  PhotoSheetAction(
+                    key: Key('delete-post-${photo.id}'),
+                    icon: Icons.delete_outline,
+                    label: context.tr('Delete post'),
+                    onSelected: () => onDelete!(photo),
                   ),
               ],
             ),
+            child: PhotoReferenceImage(photo: photo),
           ),
-          const SizedBox(height: 7),
-          Text(photo.title, maxLines: 1, overflow: TextOverflow.ellipsis),
-          Text(
-            context.tr(photo.category),
-            style: Theme.of(context).textTheme.bodySmall
-                ?.copyWith(color: ShotbookColors.secondary),
-          ),
-        ],
+        ),
       );
     },
   );
