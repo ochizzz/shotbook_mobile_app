@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../features/auth/application/auth_providers.dart';
+import '../features/onboarding/onboarding.dart';
 import '../l10n/language_provider.dart';
 
 import 'router.dart';
@@ -47,6 +48,15 @@ class _ShotbookAppState extends ConsumerState<ShotbookApp> {
       debugShowCheckedModeBanner: false,
       theme: shotbookDarkTheme,
       routerConfig: widget.router,
+      // First launch shows the welcome screens over the app until finished.
+      builder: (context, child) => ref.watch(onboardingDoneProvider)
+          ? child ?? const SizedBox.shrink()
+          // Own navigator so its language sheet can open.
+          : Navigator(
+              onGenerateRoute: (_) => MaterialPageRoute<void>(
+                builder: (_) => const OnboardingScreen(),
+              ),
+            ),
       locale: ref.watch(localeProvider),
       supportedLocales: [
         for (final code in supportedLanguageCodes) Locale(code),

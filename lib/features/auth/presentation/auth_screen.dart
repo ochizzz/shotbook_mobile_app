@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
 import '../../../l10n/tr.dart';
+import '../../../shared/services/legal_links.dart';
 import '../../../shared/services/supabase_providers.dart';
 import '../application/auth_providers.dart';
 
@@ -24,6 +25,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   final _displayName = TextEditingController();
   _AuthMode _mode = _AuthMode.signIn;
   bool _busy = false;
+  bool _acceptedTerms = false;
   String? _message;
   String? _error;
 
@@ -38,6 +40,14 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
 
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
+    if (_mode == _AuthMode.signUp && !_acceptedTerms) {
+      setState(
+        () => _error = context.tr(
+          'Accept the terms and community rules to create an account.',
+        ),
+      );
+      return;
+    }
     final repository = ref.read(authRepositoryProvider);
     if (repository == null) {
       setState(
@@ -216,6 +226,44 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                             : null,
                       ),
                     ],
+                    if (isSignUp) ...[
+                      const SizedBox(height: 10),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Checkbox(
+                            key: const Key('auth-accept-terms'),
+                            value: _acceptedTerms,
+                            onChanged: (value) =>
+                                setState(() => _acceptedTerms = value ?? false),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 4),
+                              child: Wrap(
+                                children: [
+                                  Text(context.tr('I accept the ')),
+                                  _InlineLink(
+                                    text: context.tr(
+                                      'terms and community rules',
+                                    ),
+                                    onTap: () =>
+                                        openLegalPage(context, 'terms.html'),
+                                  ),
+                                  Text(context.tr(' and the ')),
+                                  _InlineLink(
+                                    text: context.tr('privacy policy'),
+                                    onTap: () =>
+                                        openLegalPage(context, 'privacy.html'),
+                                  ),
+                                  Text(context.tr('. I am 13 or older.')),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                     if (_error != null) ...[
                       const SizedBox(height: 16),
                       Text(
@@ -295,4 +343,20 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       ),
     );
   }
+}
+
+class _InlineLink extends StatelessWidget {
+  const _InlineLink({required this.text, required this.onTap});
+
+  final String text;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => GestureDetector(
+    onTap: onTap,
+    child: Text(
+      text,
+      style: const TextStyle(decoration: TextDecoration.underline),
+    ),
+  );
 }

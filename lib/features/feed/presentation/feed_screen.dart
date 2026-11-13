@@ -71,13 +71,22 @@ class FeedScreen extends ConsumerWidget {
                           // The provider exposes the load error and retry action.
                         }
                       },
-                      child: ListView.separated(
-                        padding: const EdgeInsets.fromLTRB(16, 10, 16, 100),
-                        itemCount: items.length,
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 8),
-                        itemBuilder: (context, index) =>
-                            FeedPostCard(post: items[index]),
+                      child: NotificationListener<ScrollNotification>(
+                        onNotification: (notification) {
+                          // Fetch the next page well before the end.
+                          if (notification.metrics.extentAfter < 1200) {
+                            ref.read(feedPostsProvider.notifier).loadMore();
+                          }
+                          return false;
+                        },
+                        child: ListView.separated(
+                          padding: const EdgeInsets.fromLTRB(16, 10, 16, 100),
+                          itemCount: items.length,
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 8),
+                          itemBuilder: (context, index) =>
+                              FeedPostCard(post: items[index]),
+                        ),
                       ),
                     ),
             ),

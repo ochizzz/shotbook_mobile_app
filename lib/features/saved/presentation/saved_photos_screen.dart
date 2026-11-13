@@ -22,7 +22,7 @@ class SavedPhotosScreen extends ConsumerWidget {
           ? const Center(child: CircularProgressIndicator())
           : catalogState.hasError
           ? _SavedError(
-              onRetry: () => ref.invalidate(remotePhotoCatalogProvider),
+              onRetry: () => ref.invalidate(photoCatalogSourceProvider),
             )
           : savedState.when(
               loading: () => const Center(child: CircularProgressIndicator()),

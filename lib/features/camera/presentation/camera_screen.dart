@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
 import '../../../l10n/tr.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
+import '../../discover/application/discover_providers.dart';
 import '../../discover/data/seed_photo_references.dart';
 import '../domain/camera_device.dart';
 
@@ -142,13 +144,13 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 }
 
-class CameraDeviceScreen extends StatelessWidget {
+class CameraDeviceScreen extends ConsumerWidget {
   const CameraDeviceScreen({required this.deviceId, super.key});
 
   final String deviceId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final matches = cameraDevices.where((device) => device.id == deviceId);
     if (matches.isEmpty) {
       return Scaffold(
@@ -159,12 +161,20 @@ class CameraDeviceScreen extends StatelessWidget {
       );
     }
     final device = matches.first;
-    final examples = seedPhotoReferences
-        .where(
-          (photo) => photo.category == 'Portrait' || photo.category == 'Street',
-        )
-        .take(4)
+    final catalog =
+        ref.watch(remotePhotoCatalogProvider).asData?.value ??
+        seedPhotoReferences;
+    // Recipes written for this phone first, then a few general examples.
+    final forDevice = catalog
+        .where((photo) => photo.deviceId == device.id)
         .toList();
+    final examples = [
+      ...forDevice,
+      ...catalog
+          .where((photo) => photo.deviceId != device.id)
+          .where((photo) => photo.sourceType == 'curated')
+          .take(forDevice.isEmpty ? 6 : 3),
+    ];
     return Scaffold(
       appBar: AppBar(title: Text(context.tr(device.model))),
       body: ListView(
@@ -206,7 +216,9 @@ class CameraDeviceScreen extends StatelessWidget {
               ),
           const SizedBox(height: 20),
           Text(
-            context.tr('Photo examples'),
+            forDevice.isEmpty
+                ? context.tr('Photo examples')
+                : context.tr('Shot recipes for this phone'),
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 10),
@@ -220,23 +232,30 @@ class CameraDeviceScreen extends StatelessWidget {
                 final photo = examples[index];
                 return SizedBox(
                   width: 124,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: ClipRRect(
-                          borderRadius: shotbookBorderRadius,
-                          child: PhotoReferenceImage(photo: photo),
+                  child: GestureDetector(
+                    key: Key('device-example-${photo.id}'),
+                    onTap: () => context.push('/photos/${photo.id}'),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: ClipRRect(
+                            borderRadius: shotbookBorderRadius,
+                            child: PhotoReferenceImage(
+                              photo: photo,
+                              thumbnail: true,
+                            ),
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        photo.title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ],
+                        const SizedBox(height: 6),
+                        Text(
+                          photo.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },

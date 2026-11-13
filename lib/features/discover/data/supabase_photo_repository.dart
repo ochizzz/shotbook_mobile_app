@@ -11,6 +11,7 @@ class SupabasePhotoRepository {
     final rows = await _client
         .from('photos')
         .select()
+        .order('sort_order', ascending: true, nullsFirst: false)
         .order('created_at', ascending: false);
     return rows.map((row) => PhotoReference.fromJson(row)).toList();
   }

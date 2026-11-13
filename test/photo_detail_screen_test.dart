@@ -16,19 +16,19 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byKey(const ValueKey('photo-portrait-studio-light')));
+    await tester.tap(find.byKey(const ValueKey('photo-portrait-01')));
     await tester.pumpAndSettle();
 
     expect(find.text('Pose'), findsOneWidget);
     expect(find.text('Camera settings'), findsOneWidget);
     expect(find.text('Color / editing'), findsOneWidget);
-    expect(find.text('Body position'), findsOneWidget);
+    expect(find.text('Freckled close-up'), findsOneWidget);
+    expect(find.text('Light'), findsOneWidget);
     expect(find.text('Focal length'), findsOneWidget);
     expect(find.text('Preset'), findsOneWidget);
+    expect(find.text('Camera guide: Xiaomi 15'), findsOneWidget);
     expect(
-      find.textContaining(
-        'commons.wikimedia.org/wiki/File:Photographer-studio-1893.jpg',
-      ),
+      find.textContaining('flickr.com/photos/52365139@N05/19617814358'),
       findsOneWidget,
     );
   });

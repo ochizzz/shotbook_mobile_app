@@ -12,6 +12,7 @@ import '../features/photo_detail/presentation/photo_detail_screen.dart';
 import '../features/profile/presentation/profile_screen.dart';
 import '../features/repeat_shot/presentation/repeat_shot_screen.dart';
 import '../features/saved/presentation/saved_photos_screen.dart';
+import '../features/settings/presentation/settings_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -80,6 +81,16 @@ GoRouter createAppRouter() {
         ],
       ),
       GoRoute(path: '/auth', builder: (context, state) => const AuthScreen()),
+      GoRoute(
+        path: '/settings',
+        builder: (context, state) => const SettingsScreen(),
+        routes: [
+          GoRoute(
+            path: 'blocked',
+            builder: (context, state) => const BlockedUsersScreen(),
+          ),
+        ],
+      ),
       GoRoute(
         path: '/set-password',
         builder: (context, state) => const UpdatePasswordScreen(),

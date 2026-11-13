@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/theme.dart';
+import '../../features/auth/application/auth_providers.dart';
 import '../../features/discover/domain/photo_reference.dart';
+import '../../features/safety/presentation/safety_actions.dart';
 import '../../features/saved/application/saved_photo_provider.dart';
 import '../../l10n/tr.dart';
 
@@ -58,6 +60,43 @@ class _PhotoActionsSheet extends ConsumerWidget {
   final String? author;
   final List<PhotoSheetAction> extraActions;
   final BuildContext hostContext;
+
+  /// Report and block, for photos that exist on the server and are not
+  /// the viewer's own. The sheet stays open under the dialogs so [ref]
+  /// stays valid, and closes once the action is done.
+  List<Widget> _safetyTiles(BuildContext context, WidgetRef ref) {
+    final viewerId = ref.watch(currentUserProvider)?.id;
+    final authorId = photo.authorId;
+    final isOwn = viewerId != null && authorId == viewerId;
+    if (photo.remoteId == null || isOwn) return const [];
+    return [
+      const Divider(height: 1),
+      ListTile(
+        key: const Key('sheet-report'),
+        leading: const Icon(Icons.flag_outlined),
+        title: Text(context.tr('Report photo')),
+        onTap: () async {
+          await showReportSheet(context, ref, photoId: photo.remoteId);
+          if (context.mounted) Navigator.of(context).pop();
+        },
+      ),
+      if (photo.sourceType == 'community' && authorId != null)
+        ListTile(
+          key: const Key('sheet-block'),
+          leading: const Icon(Icons.block),
+          title: Text(context.tr('Block author')),
+          onTap: () async {
+            await confirmAndBlock(
+              context,
+              ref,
+              userId: authorId,
+              name: author ?? context.tr('this author'),
+            );
+            if (context.mounted) Navigator.of(context).pop();
+          },
+        ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -130,6 +169,7 @@ class _PhotoActionsSheet extends ConsumerWidget {
               ),
               onTap: () => go('/photos/${photo.id}/repeat'),
             ),
+            ..._safetyTiles(context, ref),
             for (final action in extraActions)
               ListTile(
                 key: action.key,

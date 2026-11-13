@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'app/app.dart';
+import 'features/onboarding/onboarding.dart';
 import 'l10n/language_provider.dart';
 import 'shared/services/supabase_config.dart';
 import 'shared/services/supabase_providers.dart';
@@ -24,12 +25,14 @@ Future<void> main() async {
   }
 
   final language = await loadSavedLanguage();
+  final onboarded = await loadOnboardingDone();
 
   runApp(
     ProviderScope(
       overrides: [
         supabaseReadyProvider.overrideWithValue(supabaseReady),
         initialLanguageProvider.overrideWithValue(language),
+        initialOnboardingDoneProvider.overrideWithValue(onboarded),
       ],
       child: const _ShotbookRoot(),
     ),

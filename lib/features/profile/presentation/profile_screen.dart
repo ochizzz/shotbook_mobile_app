@@ -9,8 +9,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../app/theme.dart';
 import '../../../l10n/language_picker.dart';
 import '../../../l10n/tr.dart';
+import '../../../shared/services/image_prep.dart';
 import '../../../shared/services/supabase_providers.dart';
 import '../../../shared/widgets/photo_actions_sheet.dart';
+import '../../safety/presentation/safety_actions.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
 import '../../auth/application/auth_providers.dart';
 import '../../discover/application/discover_providers.dart';
@@ -47,6 +49,47 @@ class ProfileScreen extends ConsumerWidget {
                 ref.invalidate(authStateProvider);
               },
               icon: const Icon(Icons.logout),
+            ),
+          if (targetId != null && targetId == user?.id)
+            IconButton(
+              key: const Key('open-settings'),
+              tooltip: context.tr('Settings'),
+              onPressed: () => context.push('/settings'),
+              icon: const Icon(Icons.settings_outlined),
+            ),
+          if (targetId != null && targetId != user?.id)
+            PopupMenuButton<String>(
+              key: const Key('profile-menu'),
+              onSelected: (value) async {
+                final name =
+                    ref
+                        .read(profileProvider(targetId))
+                        .asData
+                        ?.value
+                        ?.displayName ??
+                    context.tr('this author');
+                if (value == 'report') {
+                  await showReportSheet(context, ref, userId: targetId);
+                } else if (value == 'block') {
+                  final blocked = await confirmAndBlock(
+                    context,
+                    ref,
+                    userId: targetId,
+                    name: name,
+                  );
+                  if (blocked && context.mounted) context.pop();
+                }
+              },
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  value: 'report',
+                  child: Text(context.tr('Report user')),
+                ),
+                PopupMenuItem(
+                  value: 'block',
+                  child: Text(context.tr('Block user')),
+                ),
+              ],
             ),
         ],
       ),
@@ -111,9 +154,24 @@ class _SignedOutProfile extends StatelessWidget {
             ),
           ),
           const LanguageSettingsTile(),
+          const _MoreSettingsTile(),
         ],
       ),
     ),
+  );
+}
+
+class _MoreSettingsTile extends StatelessWidget {
+  const _MoreSettingsTile();
+
+  @override
+  Widget build(BuildContext context) => ListTile(
+    key: const Key('more-settings'),
+    contentPadding: EdgeInsets.zero,
+    leading: const Icon(Icons.settings_outlined),
+    title: Text(context.tr('Privacy, rules and account')),
+    trailing: const Icon(Icons.arrow_forward_ios, size: 15),
+    onTap: () => context.push('/settings'),
   );
 }
 
@@ -227,6 +285,7 @@ class _ProfileContent extends ConsumerWidget {
                         ),
                       ),
                       const LanguageSettingsTile(),
+                      const _MoreSettingsTile(),
                     ],
                   ],
                 ),
@@ -275,7 +334,7 @@ class _ProfileContent extends ConsumerWidget {
                               const Center(child: CircularProgressIndicator()),
                           error: (error, stackTrace) => _InlineRetry(
                             onRetry: () =>
-                                ref.invalidate(remotePhotoCatalogProvider),
+                                ref.invalidate(photoCatalogSourceProvider),
                           ),
                           data: (_) => saved.isEmpty
                               ? _EmptyTab(
@@ -369,7 +428,7 @@ class _ProfileContent extends ConsumerWidget {
       await ref.read(feedRepositoryProvider)!.deletePost(photo);
       ref.invalidate(profilePostsProvider(userId));
       ref.invalidate(feedPostsProvider);
-      ref.invalidate(remotePhotoCatalogProvider);
+      ref.invalidate(photoCatalogSourceProvider);
     } catch (error) {
       if (context.mounted) {
         ScaffoldMessenger.of(
@@ -426,8 +485,10 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet> {
     try {
       final file = await _picker.pickImage(source: ImageSource.gallery);
       if (file == null) return;
-      final bytes = await file.readAsBytes();
-      final mime = ImageUploadValidation.validate(file.name, bytes);
+      final original = await file.readAsBytes();
+      ImageUploadValidation.validate(file.name, original);
+      final bytes = await prepareImageForUpload(original, maxSide: 512);
+      const mime = 'image/jpeg';
       if (bytes.length > 5 * 1024 * 1024) {
         throw const FormatException('Avatar images must be 5 MB or smaller.');
       }
@@ -620,7 +681,26 @@ class _ProfilePhotoGrid extends StatelessWidget {
                   ),
               ],
             ),
-            child: PhotoReferenceImage(photo: photo),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                PhotoReferenceImage(photo: photo, thumbnail: true),
+                if (photo.isHidden)
+                  Positioned(
+                    top: 6,
+                    right: 6,
+                    child: Tooltip(
+                      message: context.tr('Hidden after reports, under review'),
+                      child: const Icon(
+                        Icons.visibility_off_outlined,
+                        size: 18,
+                        color: ShotbookColors.primary,
+                        shadows: [Shadow(blurRadius: 6)],
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       );

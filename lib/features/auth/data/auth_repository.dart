@@ -31,7 +31,12 @@ class AuthRepository {
       email: email.trim(),
       password: password,
       emailRedirectTo: authRedirectTo,
-      data: {'username': username.trim(), 'display_name': displayName.trim()},
+      data: {
+        'username': username.trim(),
+        'display_name': displayName.trim(),
+        // Sign-up requires accepting the terms and community rules.
+        'terms_accepted_at': DateTime.now().toUtc().toIso8601String(),
+      },
     );
   }
 

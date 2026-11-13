@@ -53,7 +53,7 @@ class _PhotoDetailScreenState extends ConsumerState<PhotoDetailScreen> {
         appBar: AppBar(title: Text(context.tr('Photo unavailable'))),
         body: Center(
           child: TextButton(
-            onPressed: () => ref.invalidate(remotePhotoCatalogProvider),
+            onPressed: () => ref.invalidate(photoCatalogSourceProvider),
             child: Text(context.tr('Could not load this photo. Try again.')),
           ),
         ),
@@ -153,6 +153,31 @@ class _PhotoDetailScreenState extends ConsumerState<PhotoDetailScreen> {
                     title: 'Camera settings',
                     values: photo.cameraSettings,
                   ),
+                  if (photo.sourceType == 'curated') ...[
+                    Text(
+                      context.tr(
+                        'Suggested settings to repeat the shot on this phone, not the original camera data.',
+                      ),
+                      style: Theme.of(context).textTheme.bodySmall
+                          ?.copyWith(color: ShotbookColors.secondary),
+                    ),
+                    if (photo.deviceId != null)
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: TextButton.icon(
+                          key: const Key('open-device-guide'),
+                          style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                          onPressed: () =>
+                              context.push('/camera/${photo.deviceId}'),
+                          icon: const Icon(Icons.camera_alt_outlined, size: 18),
+                          label: Text(
+                            context.tr('Camera guide: {device}', {
+                              'device': photo.device ?? '',
+                            }),
+                          ),
+                        ),
+                      ),
+                  ],
                   MetadataSection(
                     title: 'Color / editing',
                     values: photo.editingSettings,
@@ -169,7 +194,7 @@ class _PhotoDetailScreenState extends ConsumerState<PhotoDetailScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      context.tr('Source: Wikimedia Commons'),
+                      context.tr('Source: Flickr via Openverse'),
                       style: Theme.of(context).textTheme.bodySmall
                           ?.copyWith(color: ShotbookColors.secondary),
                     ),

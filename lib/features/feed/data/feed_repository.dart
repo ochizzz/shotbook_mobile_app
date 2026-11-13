@@ -11,12 +11,14 @@ class FeedRepository {
 
   final SupabaseClient _client;
 
-  Future<List<FeedPost>> loadNewest({String? viewerId}) async {
+  /// One page of the newest community posts.
+  Future<List<FeedPost>> loadNewest({int offset = 0, int limit = 12}) async {
     final rows = await _client
         .from('photos')
         .select()
         .eq('source_type', 'community')
-        .order('created_at', ascending: false);
+        .order('created_at', ascending: false)
+        .range(offset, offset + limit - 1);
     if (rows.isEmpty) return const [];
 
     final photos = rows.map((row) => PhotoReference.fromJson(row)).toList();

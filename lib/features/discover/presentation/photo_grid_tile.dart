@@ -36,7 +36,7 @@ class PhotoGridTile extends StatelessWidget {
             ),
             child: Semantics(
               label: photo.title,
-              child: PhotoReferenceImage(photo: photo),
+              child: PhotoReferenceImage(photo: photo, thumbnail: true),
             ),
           ),
         ),

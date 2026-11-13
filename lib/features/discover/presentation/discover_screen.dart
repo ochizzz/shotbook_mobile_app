@@ -41,7 +41,7 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
         bottom: false,
         child: RefreshIndicator(
           onRefresh: () async {
-            ref.invalidate(remotePhotoCatalogProvider);
+            ref.invalidate(photoCatalogSourceProvider);
             await ref.read(remotePhotoCatalogProvider.future);
           },
           child: CustomScrollView(
@@ -152,7 +152,7 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                 error: (error, stackTrace) => SliverFillRemaining(
                   hasScrollBody: false,
                   child: _CatalogError(
-                    onRetry: () => ref.invalidate(remotePhotoCatalogProvider),
+                    onRetry: () => ref.invalidate(photoCatalogSourceProvider),
                   ),
                 ),
                 data: (items) => items.isEmpty

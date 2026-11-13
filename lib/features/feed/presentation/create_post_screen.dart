@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../app/theme.dart';
 import '../../../l10n/tr.dart';
+import '../../../shared/services/image_prep.dart';
 import '../../../shared/services/supabase_providers.dart';
 import '../../auth/application/auth_providers.dart';
 import '../../discover/application/discover_providers.dart';
@@ -82,8 +83,10 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
     try {
       final image = await _picker.pickImage(source: ImageSource.gallery);
       if (image == null) return;
-      final bytes = await image.readAsBytes();
-      ImageUploadValidation.validate(image.name, bytes);
+      final original = await image.readAsBytes();
+      ImageUploadValidation.validate(image.name, original);
+      // Smaller file, upright, and no location or device data.
+      final bytes = await prepareImageForUpload(original);
       if (!mounted) return;
       setState(() {
         _image = image;
@@ -154,7 +157,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
     try {
       await repository.createPost(
         userId: user.id,
-        fileName: _image!.name,
+        fileName: 'photo.jpg',
         bytes: _imageBytes!,
         title: _title.text,
         description: _description.text,
@@ -164,7 +167,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
         editingSettings: _editingSettings,
       );
       ref.invalidate(feedPostsProvider);
-      ref.invalidate(remotePhotoCatalogProvider);
+      ref.invalidate(photoCatalogSourceProvider);
       ref.invalidate(profilePostsProvider);
       if (mounted) context.pop();
     } catch (error) {

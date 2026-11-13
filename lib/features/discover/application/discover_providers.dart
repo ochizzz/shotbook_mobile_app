@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/language_provider.dart';
 import '../../../shared/services/supabase_providers.dart';
 import '../data/photo_catalog_repository.dart';
 import '../data/seed_photo_references.dart';
@@ -10,17 +11,28 @@ final photoCatalogProvider = Provider<List<PhotoReference>>(
   (ref) => seedPhotoReferences,
 );
 
-final remotePhotoCatalogProvider = FutureProvider<List<PhotoReference>>((
+/// The catalog as loaded: curated photos first (in their set order), then
+/// community posts. Falls back to the bundled catalog when offline or when
+/// the backend has no curated rows yet.
+final photoCatalogSourceProvider = FutureProvider<List<PhotoReference>>((
   ref,
 ) async {
   final client = ref.watch(supabaseClientProvider);
   if (client == null) return ref.watch(photoCatalogProvider);
   final photos = await SupabasePhotoRepository(client).loadPublicPhotos();
-  if (photos.isEmpty ||
-      photos.every((photo) => photo.sourceType != 'curated')) {
+  if (photos.every((photo) => photo.sourceType != 'curated')) {
     return [...ref.watch(photoCatalogProvider), ...photos];
   }
   return photos;
+});
+
+/// The catalog in the interface language.
+final remotePhotoCatalogProvider = FutureProvider<List<PhotoReference>>((
+  ref,
+) async {
+  final language = ref.watch(languageProvider);
+  final photos = await ref.watch(photoCatalogSourceProvider.future);
+  return photos.map((photo) => photo.localized(language)).toList();
 });
 
 final discoverFiltersProvider =

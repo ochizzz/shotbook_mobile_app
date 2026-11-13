@@ -9,19 +9,40 @@ class PhotoReferenceImage extends StatelessWidget {
   const PhotoReferenceImage({
     required this.photo,
     this.fit = BoxFit.cover,
+    this.thumbnail = false,
     super.key,
   });
 
   final PhotoReference photo;
   final BoxFit fit;
 
+  /// Grids load the small version of the photo.
+  final bool thumbnail;
+
   @override
   Widget build(BuildContext context) {
-    return CachedNetworkImage(
-      imageUrl: photo.imageUrl,
-      fit: fit,
-      placeholder: (context, url) => const _ImagePlaceholder(),
-      errorWidget: (context, url, error) => _ImageFallback(photo: photo),
+    final url = thumbnail ? photo.gridImageUrl : photo.imageUrl;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Decode at the size it is shown, not the full file size: keeps
+        // memory low and scrolling smooth on long grids.
+        final dpr = MediaQuery.devicePixelRatioOf(context);
+        final width = constraints.maxWidth.isFinite
+            ? (constraints.maxWidth * dpr).round()
+            : null;
+        return CachedNetworkImage(
+          imageUrl: url,
+          fit: fit,
+          memCacheWidth: width,
+          fadeInDuration: const Duration(milliseconds: 180),
+          placeholder: (context, url) => const _ImagePlaceholder(),
+          errorWidget: (context, url, error) =>
+              thumbnail && url != photo.imageUrl
+              // A missing thumbnail falls back to the full image.
+              ? PhotoReferenceImage(photo: photo, fit: fit)
+              : _ImageFallback(photo: photo),
+        );
+      },
     );
   }
 }
