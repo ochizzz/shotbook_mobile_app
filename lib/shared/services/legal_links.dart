@@ -7,7 +7,7 @@ import '../../l10n/tr.dart';
 /// Override at build time with --dart-define=LEGAL_SITE_URL=https://…
 const legalSiteUrl = String.fromEnvironment(
   'LEGAL_SITE_URL',
-  defaultValue: 'https://shotbook-legal.vercel.app',
+  defaultValue: 'https://ochizzz.github.io/shotbook_mobile_app',
 );
 
 String legalPageUrl(String page) => '$legalSiteUrl/$page';
