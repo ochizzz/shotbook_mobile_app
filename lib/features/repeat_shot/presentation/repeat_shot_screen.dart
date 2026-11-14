@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,6 +13,7 @@ import '../../../shared/widgets/photo_reference_image.dart';
 import '../../discover/application/discover_providers.dart';
 import '../../discover/data/seed_photo_references.dart';
 import '../../discover/domain/photo_reference.dart';
+import '../../pro_camera/pro_camera_view.dart';
 
 /// "Repeat this shot": the live camera with the reference photo laid over it
 /// as a see-through guide, so the angle and framing can be matched.
@@ -34,10 +36,16 @@ class RepeatShotScreen extends ConsumerWidget {
         ),
       );
     }
-    return _RepeatShotView(
-      photo: photo,
-      onOpened: () => trackUnsplashUse(ref.read(supabaseClientProvider), photo),
-    );
+    void onOpened() =>
+        trackUnsplashUse(ref.read(supabaseClientProvider), photo);
+    Widget basic(BuildContext context) =>
+        _RepeatShotView(photo: photo, onOpened: onOpened);
+    // Android gets SHOTBOOK's own manual camera; other platforms, and phones
+    // without Camera2 support, use the basic camera.
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+      return ProCameraView(photo: photo, onOpened: onOpened, fallback: basic);
+    }
+    return basic(context);
   }
 }
 

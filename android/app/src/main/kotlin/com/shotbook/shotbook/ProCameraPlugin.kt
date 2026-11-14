@@ -1,0 +1,493 @@
+package com.shotbook.shotbook
+
+import android.annotation.SuppressLint
+import android.content.ContentValues
+import android.content.Context
+import android.graphics.ImageFormat
+import android.graphics.SurfaceTexture
+import android.hardware.camera2.CameraAccessException
+import android.hardware.camera2.CameraCaptureSession
+import android.hardware.camera2.CameraCharacteristics
+import android.hardware.camera2.CameraDevice
+import android.hardware.camera2.CameraManager
+import android.hardware.camera2.CameraMetadata
+import android.hardware.camera2.CaptureRequest
+import android.hardware.camera2.CaptureResult
+import android.hardware.camera2.DngCreator
+import android.hardware.camera2.TotalCaptureResult
+import android.media.ExifInterface
+import android.media.Image
+import android.media.ImageReader
+import android.os.Build
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.Looper
+import android.provider.MediaStore
+import android.util.Range
+import android.util.Size
+import android.view.Surface
+import io.flutter.embedding.engine.plugins.FlutterPlugin
+import io.flutter.plugin.common.MethodCall
+import io.flutter.plugin.common.MethodChannel
+import io.flutter.view.TextureRegistry
+import java.io.OutputStream
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import kotlin.math.abs
+import kotlin.math.max
+
+/**
+ * SHOTBOOK's own photo camera on Camera2: manual ISO, shutter, exposure
+ * compensation, white balance presets, manual focus, zoom across the
+ * phone's lenses, and JPEG + optional RAW (DNG) capture to the gallery.
+ *
+ * Channel "shotbook/pro_camera". Every control the device does not support
+ * is reported as unavailable in `capabilities`, so the UI can disable it.
+ */
+class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
+    private lateinit var channel: MethodChannel
+    private lateinit var context: Context
+    private lateinit var textures: TextureRegistry
+    private val main = Handler(Looper.getMainLooper())
+
+    private var thread: HandlerThread? = null
+    private var handler: Handler? = null
+
+    private var cameraId: String? = null
+    private var characteristics: CameraCharacteristics? = null
+    private var device: CameraDevice? = null
+    private var session: CameraCaptureSession? = null
+    private var textureEntry: TextureRegistry.SurfaceTextureEntry? = null
+    private var previewSurface: Surface? = null
+    private var jpegReader: ImageReader? = null
+    private var rawReader: ImageReader? = null
+    private var rawInSession = false
+
+    // Current controls. Applied to the preview and to every capture.
+    private var autoExposure = true
+    private var iso = 100
+    private var exposureNs = 8_000_000L
+    private var evSteps = 0
+    private var awb = "auto"
+    private var autoFocus = true
+    private var focusDiopters = 0f
+    private var zoom = 1f
+
+    override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+        context = binding.applicationContext
+        textures = binding.textureRegistry
+        channel = MethodChannel(binding.binaryMessenger, "shotbook/pro_camera")
+        channel.setMethodCallHandler(this)
+    }
+
+    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+        channel.setMethodCallHandler(null)
+        closeCamera()
+    }
+
+    override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
+        try {
+            when (call.method) {
+                "capabilities" -> result.success(capabilities())
+                "open" -> openCamera(result)
+                "setControls" -> {
+                    readControls(call)
+                    applyRepeating()
+                    result.success(null)
+                }
+                "capture" -> capture(call.argument<Boolean>("raw") == true, result)
+                "close" -> {
+                    closeCamera()
+                    result.success(null)
+                }
+                else -> result.notImplemented()
+            }
+        } catch (e: CameraAccessException) {
+            result.error("camera_access", e.message, null)
+        } catch (e: SecurityException) {
+            result.error("permission", e.message, null)
+        } catch (e: Exception) {
+            result.error("camera_error", e.message, null)
+        }
+    }
+
+    // ---- Capabilities -------------------------------------------------
+
+    private val manager: CameraManager
+        get() = context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
+
+    /** The main back camera. On multi-camera phones this is the logical
+     *  camera that switches lenses with the zoom ratio. */
+    private fun pickBackCamera(): String? {
+        val ids = manager.cameraIdList
+        return ids.firstOrNull {
+            manager.getCameraCharacteristics(it)
+                .get(CameraCharacteristics.LENS_FACING) == CameraMetadata.LENS_FACING_BACK
+        } ?: ids.firstOrNull()
+    }
+
+    private fun capabilities(): Map<String, Any?> {
+        val id = pickBackCamera() ?: return mapOf("available" to false)
+        val c = manager.getCameraCharacteristics(id)
+        val caps = c.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES)?.toSet() ?: emptySet()
+        val manualSensor = caps.contains(CameraMetadata.REQUEST_AVAILABLE_CAPABILITIES_MANUAL_SENSOR)
+        val raw = caps.contains(CameraMetadata.REQUEST_AVAILABLE_CAPABILITIES_RAW) &&
+            (c.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
+                ?.getOutputSizes(ImageFormat.RAW_SENSOR)?.isNotEmpty() == true)
+        val isoRange = c.get(CameraCharacteristics.SENSOR_INFO_SENSITIVITY_RANGE)
+        val expRange = c.get(CameraCharacteristics.SENSOR_INFO_EXPOSURE_TIME_RANGE)
+        val evRange = c.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE)
+        val evStep = c.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_STEP)
+        val minFocus = c.get(CameraCharacteristics.LENS_INFO_MINIMUM_FOCUS_DISTANCE) ?: 0f
+        val awbModes = c.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)?.toList() ?: emptyList()
+        val zoomRange: Range<Float>? = if (Build.VERSION.SDK_INT >= 30) {
+            c.get(CameraCharacteristics.CONTROL_ZOOM_RATIO_RANGE)
+        } else null
+        val maxDigital = c.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM) ?: 1f
+        val focal = c.get(CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS)?.firstOrNull()
+        val sensor = c.get(CameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE)
+        // 35 mm equivalent of the main lens, from the sensor diagonal.
+        val equivalent = if (focal != null && sensor != null) {
+            val diag = Math.hypot(sensor.width.toDouble(), sensor.height.toDouble())
+            focal * 43.27 / diag
+        } else null
+        return mapOf(
+            "available" to true,
+            "cameraId" to id,
+            "hardwareLevel" to c.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL),
+            "manualSensor" to manualSensor,
+            "raw" to raw,
+            "isoMin" to isoRange?.lower,
+            "isoMax" to isoRange?.upper,
+            "exposureMinNs" to expRange?.lower,
+            // Very long exposures freeze the preview; cap the dial at 1 s.
+            "exposureMaxNs" to expRange?.upper?.coerceAtMost(1_000_000_000L),
+            "evMin" to evRange?.lower,
+            "evMax" to evRange?.upper,
+            "evStep" to evStep?.toDouble(),
+            "manualFocus" to (minFocus > 0f),
+            "minFocusDiopters" to minFocus.toDouble(),
+            "awbModes" to awbModes.mapNotNull { awbName(it) },
+            "zoomMin" to (zoomRange?.lower ?: 1f).toDouble(),
+            "zoomMax" to (zoomRange?.upper ?: maxDigital).toDouble(),
+            "mainEquivalentMm" to equivalent,
+        )
+    }
+
+    private fun awbName(mode: Int) = when (mode) {
+        CameraMetadata.CONTROL_AWB_MODE_AUTO -> "auto"
+        CameraMetadata.CONTROL_AWB_MODE_INCANDESCENT -> "incandescent"
+        CameraMetadata.CONTROL_AWB_MODE_FLUORESCENT -> "fluorescent"
+        CameraMetadata.CONTROL_AWB_MODE_DAYLIGHT -> "daylight"
+        CameraMetadata.CONTROL_AWB_MODE_CLOUDY_DAYLIGHT -> "cloudy"
+        CameraMetadata.CONTROL_AWB_MODE_SHADE -> "shade"
+        else -> null
+    }
+
+    private fun awbMode(name: String) = when (name) {
+        "incandescent" -> CameraMetadata.CONTROL_AWB_MODE_INCANDESCENT
+        "fluorescent" -> CameraMetadata.CONTROL_AWB_MODE_FLUORESCENT
+        "daylight" -> CameraMetadata.CONTROL_AWB_MODE_DAYLIGHT
+        "cloudy" -> CameraMetadata.CONTROL_AWB_MODE_CLOUDY_DAYLIGHT
+        "shade" -> CameraMetadata.CONTROL_AWB_MODE_SHADE
+        else -> CameraMetadata.CONTROL_AWB_MODE_AUTO
+    }
+
+    // ---- Open / close -------------------------------------------------
+
+    @SuppressLint("MissingPermission") // The Dart side asks for CAMERA first.
+    private fun openCamera(result: MethodChannel.Result) {
+        closeCamera()
+        val id = pickBackCamera() ?: return result.error("no_camera", "No camera", null)
+        val c = manager.getCameraCharacteristics(id)
+        cameraId = id
+        characteristics = c
+        val map = c.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
+            ?: return result.error("no_camera", "No stream configuration", null)
+
+        val t = HandlerThread("ShotbookProCamera").also { it.start() }
+        thread = t
+        handler = Handler(t.looper)
+
+        // 4:3 is the native shape of phone sensors.
+        val preview = choose(map.getOutputSizes(SurfaceTexture::class.java), 1920)
+        val jpegSize = choose(map.getOutputSizes(ImageFormat.JPEG), 4032)
+        val entry = textures.createSurfaceTexture()
+        textureEntry = entry
+        entry.surfaceTexture().setDefaultBufferSize(preview.width, preview.height)
+        previewSurface = Surface(entry.surfaceTexture())
+        jpegReader = ImageReader.newInstance(jpegSize.width, jpegSize.height, ImageFormat.JPEG, 2)
+        val rawSizes = map.getOutputSizes(ImageFormat.RAW_SENSOR)
+        rawReader = if (rawSizes != null && rawSizes.isNotEmpty()) {
+            val largest = rawSizes.maxByOrNull { it.width.toLong() * it.height }!!
+            ImageReader.newInstance(largest.width, largest.height, ImageFormat.RAW_SENSOR, 2)
+        } else null
+
+        var replied = false
+        fun reply(block: () -> Unit) = main.post {
+            if (!replied) {
+                replied = true
+                block()
+            }
+        }
+
+        manager.openCamera(id, object : CameraDevice.StateCallback() {
+            override fun onOpened(camera: CameraDevice) {
+                device = camera
+                createSession(withRaw = rawReader != null) { ok, raw ->
+                    if (ok) {
+                        reply {
+                            result.success(
+                                mapOf(
+                                    "textureId" to entry.id(),
+                                    "previewWidth" to preview.width,
+                                    "previewHeight" to preview.height,
+                                    "sensorOrientation" to (c.get(CameraCharacteristics.SENSOR_ORIENTATION) ?: 90),
+                                    "raw" to raw,
+                                )
+                            )
+                        }
+                    } else {
+                        reply { result.error("session", "Could not start the camera", null) }
+                    }
+                }
+            }
+
+            override fun onDisconnected(camera: CameraDevice) {
+                camera.close()
+                device = null
+            }
+
+            override fun onError(camera: CameraDevice, error: Int) {
+                camera.close()
+                device = null
+                reply { result.error("camera_error", "Camera error $error", null) }
+            }
+        }, handler)
+    }
+
+    /** Largest 4:3 size not wider than [maxWidth]; any size as a fallback. */
+    private fun choose(sizes: Array<Size>?, maxWidth: Int): Size {
+        val all = sizes?.toList() ?: listOf(Size(1440, 1080))
+        val fourThree = all.filter { abs(it.width * 3 - it.height * 4) < 8 && it.width <= maxWidth }
+        return (fourThree.ifEmpty { all.filter { it.width <= maxWidth }.ifEmpty { all } })
+            .maxByOrNull { it.width.toLong() * it.height }!!
+    }
+
+    @Suppress("DEPRECATION")
+    private fun createSession(withRaw: Boolean, done: (Boolean, Boolean) -> Unit) {
+        val camera = device ?: return done(false, false)
+        val outputs = mutableListOf(previewSurface!!, jpegReader!!.surface)
+        if (withRaw) outputs.add(rawReader!!.surface)
+        try {
+            camera.createCaptureSession(outputs, object : CameraCaptureSession.StateCallback() {
+                override fun onConfigured(s: CameraCaptureSession) {
+                    session = s
+                    rawInSession = withRaw
+                    applyRepeating()
+                    done(true, withRaw)
+                }
+
+                override fun onConfigureFailed(s: CameraCaptureSession) {
+                    // Some phones cannot stream RAW together with preview and
+                    // JPEG on the multi-lens camera: retry without RAW.
+                    if (withRaw) createSession(false, done) else done(false, false)
+                }
+            }, handler)
+        } catch (e: Exception) {
+            if (withRaw) createSession(false, done) else done(false, false)
+        }
+    }
+
+    private fun closeCamera() {
+        try { session?.close() } catch (_: Exception) {}
+        try { device?.close() } catch (_: Exception) {}
+        session = null
+        device = null
+        jpegReader?.close(); jpegReader = null
+        rawReader?.close(); rawReader = null
+        previewSurface?.release(); previewSurface = null
+        textureEntry?.release(); textureEntry = null
+        thread?.quitSafely(); thread = null; handler = null
+    }
+
+    // ---- Controls -----------------------------------------------------
+
+    private fun readControls(call: MethodCall) {
+        call.argument<Boolean>("autoExposure")?.let { autoExposure = it }
+        call.argument<Int>("iso")?.let { iso = it }
+        call.argument<Number>("exposureNs")?.let { exposureNs = it.toLong() }
+        call.argument<Int>("ev")?.let { evSteps = it }
+        call.argument<String>("awb")?.let { awb = it }
+        call.argument<Boolean>("autoFocus")?.let { autoFocus = it }
+        call.argument<Number>("focusDiopters")?.let { focusDiopters = it.toFloat() }
+        call.argument<Number>("zoom")?.let { zoom = it.toFloat() }
+    }
+
+    private fun fill(builder: CaptureRequest.Builder) {
+        val c = characteristics ?: return
+        builder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO)
+        if (autoExposure) {
+            builder.set(CaptureRequest.CONTROL_AE_MODE, CameraMetadata.CONTROL_AE_MODE_ON)
+            builder.set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION, evSteps)
+        } else {
+            builder.set(CaptureRequest.CONTROL_AE_MODE, CameraMetadata.CONTROL_AE_MODE_OFF)
+            builder.set(CaptureRequest.SENSOR_SENSITIVITY, iso)
+            builder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, exposureNs)
+            // Frame duration must be at least the exposure time.
+            builder.set(CaptureRequest.SENSOR_FRAME_DURATION, max(exposureNs, 33_333_333L))
+        }
+        builder.set(CaptureRequest.CONTROL_AWB_MODE, awbMode(awb))
+        if (autoFocus) {
+            builder.set(CaptureRequest.CONTROL_AF_MODE, CameraMetadata.CONTROL_AF_MODE_CONTINUOUS_PICTURE)
+        } else {
+            builder.set(CaptureRequest.CONTROL_AF_MODE, CameraMetadata.CONTROL_AF_MODE_OFF)
+            builder.set(CaptureRequest.LENS_FOCUS_DISTANCE, focusDiopters)
+        }
+        if (Build.VERSION.SDK_INT >= 30) {
+            val range = c.get(CameraCharacteristics.CONTROL_ZOOM_RATIO_RANGE)
+            val ratio = if (range != null) zoom.coerceIn(range.lower, range.upper) else 1f
+            builder.set(CaptureRequest.CONTROL_ZOOM_RATIO, ratio)
+        } else {
+            val active = c.get(CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE)
+            if (active != null && zoom > 1f) {
+                val w = (active.width() / zoom).toInt()
+                val h = (active.height() / zoom).toInt()
+                val x = (active.width() - w) / 2
+                val y = (active.height() - h) / 2
+                builder.set(CaptureRequest.SCALER_CROP_REGION, android.graphics.Rect(x, y, x + w, y + h))
+            }
+        }
+    }
+
+    private fun applyRepeating() {
+        val s = session ?: return
+        val camera = device ?: return
+        try {
+            val b = camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)
+            b.addTarget(previewSurface!!)
+            fill(b)
+            s.setRepeatingRequest(b.build(), null, handler)
+        } catch (_: Exception) {
+            // The session may be closing; the next open applies the controls.
+        }
+    }
+
+    // ---- Capture ------------------------------------------------------
+
+    private fun capture(wantRaw: Boolean, result: MethodChannel.Result) {
+        val s = session ?: return result.error("not_open", "Camera is not open", null)
+        val camera = device ?: return result.error("not_open", "Camera is not open", null)
+        val c = characteristics!!
+        val raw = wantRaw && rawInSession && rawReader != null
+        val orientation = c.get(CameraCharacteristics.SENSOR_ORIENTATION) ?: 90
+
+        var jpegImage: Image? = null
+        var rawImage: Image? = null
+        var captureResult: TotalCaptureResult? = null
+        var finished = false
+
+        fun finishIfReady() {
+            if (finished) return
+            if (jpegImage == null || (raw && (rawImage == null || captureResult == null))) return
+            finished = true
+            val saved = mutableMapOf<String, Any?>()
+            try {
+                saved["jpeg"] = saveJpeg(jpegImage!!)
+                if (raw) saved["dng"] = saveDng(rawImage!!, captureResult!!, c, orientation)
+                main.post { result.success(saved) }
+            } catch (e: Exception) {
+                main.post { result.error("save_failed", e.message, null) }
+            } finally {
+                jpegImage?.close()
+                rawImage?.close()
+                jpegReader?.setOnImageAvailableListener(null, null)
+                rawReader?.setOnImageAvailableListener(null, null)
+            }
+        }
+
+        jpegReader!!.setOnImageAvailableListener({ r ->
+            jpegImage = r.acquireNextImage(); finishIfReady()
+        }, handler)
+        if (raw) {
+            rawReader!!.setOnImageAvailableListener({ r ->
+                rawImage = r.acquireNextImage(); finishIfReady()
+            }, handler)
+        }
+
+        val b = camera.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE)
+        b.addTarget(jpegReader!!.surface)
+        if (raw) b.addTarget(rawReader!!.surface)
+        fill(b)
+        b.set(CaptureRequest.JPEG_ORIENTATION, orientation)
+        b.set(CaptureRequest.JPEG_QUALITY, 95.toByte())
+        s.capture(b.build(), object : CameraCaptureSession.CaptureCallback() {
+            override fun onCaptureCompleted(
+                session: CameraCaptureSession,
+                request: CaptureRequest,
+                total: TotalCaptureResult,
+            ) {
+                captureResult = total
+                finishIfReady()
+            }
+
+            override fun onCaptureFailed(
+                session: CameraCaptureSession,
+                request: CaptureRequest,
+                failure: android.hardware.camera2.CaptureFailure,
+            ) {
+                if (!finished) {
+                    finished = true
+                    main.post { result.error("capture_failed", "Capture failed", null) }
+                }
+            }
+        }, handler)
+    }
+
+    private fun stamp() = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+
+    private fun insert(name: String, mime: String): Pair<android.net.Uri, OutputStream> {
+        val values = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, name)
+            put(MediaStore.Images.Media.MIME_TYPE, mime)
+            if (Build.VERSION.SDK_INT >= 29) {
+                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/SHOTBOOK")
+            }
+        }
+        val resolver = context.contentResolver
+        val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+            ?: throw IllegalStateException("Gallery unavailable")
+        val stream = resolver.openOutputStream(uri) ?: throw IllegalStateException("Gallery unavailable")
+        return uri to stream
+    }
+
+    private fun saveJpeg(image: Image): String {
+        val buffer = image.planes[0].buffer
+        val bytes = ByteArray(buffer.remaining()).also { buffer.get(it) }
+        val (uri, stream) = insert("SHOTBOOK_${stamp()}.jpg", "image/jpeg")
+        stream.use { it.write(bytes) }
+        return uri.toString()
+    }
+
+    private fun saveDng(
+        image: Image,
+        total: CaptureResult,
+        c: CameraCharacteristics,
+        sensorOrientation: Int,
+    ): String {
+        val (uri, stream) = insert("SHOTBOOK_${stamp()}.dng", "image/x-adobe-dng")
+        DngCreator(c, total).use { dng ->
+            dng.setOrientation(
+                when (sensorOrientation) {
+                    90 -> ExifInterface.ORIENTATION_ROTATE_90
+                    180 -> ExifInterface.ORIENTATION_ROTATE_180
+                    270 -> ExifInterface.ORIENTATION_ROTATE_270
+                    else -> ExifInterface.ORIENTATION_NORMAL
+                }
+            )
+            stream.use { dng.writeImage(it, image) }
+        }
+        return uri.toString()
+    }
+}
