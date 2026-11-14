@@ -69,10 +69,23 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     private var iso = 100
     private var exposureNs = 8_000_000L
     private var evSteps = 0
-    private var awb = "auto"
+    private var awbAuto = true
+    private var kelvin = 5500
     private var autoFocus = true
     private var focusDiopters = 0f
     private var zoom = 1f
+    private var flash = "off" // off | auto | on
+    @Volatile private var lastAeState: Int? = null
+
+    // One preview request reused for every change, so the camera's
+    // autofocus and exposure loops are not restarted on each dial move.
+    private var previewBuilder: CaptureRequest.Builder? = null
+    private var applyScheduled = false
+    private var lastApplyAt = 0L
+
+    // Colour transform and gains the camera chose in auto white balance;
+    // manual Kelvin keeps the transform and replaces only the gains.
+    private var lastTransform: android.hardware.camera2.params.ColorSpaceTransform? = null
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         context = binding.applicationContext
@@ -92,11 +105,14 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 "capabilities" -> result.success(capabilities())
                 "open" -> openCamera(result)
                 "setControls" -> {
+                    // Values are read now; the request is applied on the
+                    // camera thread, at most ~30 times a second.
                     readControls(call)
-                    applyRepeating()
+                    scheduleApply()
                     result.success(null)
                 }
                 "capture" -> capture(call.argument<Boolean>("raw") == true, result)
+
                 "close" -> {
                     closeCamera()
                     result.success(null)
@@ -145,6 +161,7 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
             c.get(CameraCharacteristics.CONTROL_ZOOM_RATIO_RANGE)
         } else null
         val maxDigital = c.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM) ?: 1f
+        val wbMode = whiteBalanceMode(c)
         val focal = c.get(CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS)?.firstOrNull()
         val sensor = c.get(CameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE)
         // 35 mm equivalent of the main lens, from the sensor diagonal.
@@ -169,10 +186,61 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
             "manualFocus" to (minFocus > 0f),
             "minFocusDiopters" to minFocus.toDouble(),
             "awbModes" to awbModes.mapNotNull { awbName(it) },
+            // "cct" (Android 15 colour temperature), "gains" (manual
+            // post-processing) or "presets" (nearest preset only).
+            "wbMode" to wbMode,
+            "kelvinMin" to 2000,
+            "kelvinMax" to 10000,
             "zoomMin" to (zoomRange?.lower ?: 1f).toDouble(),
             "zoomMax" to (zoomRange?.upper ?: maxDigital).toDouble(),
             "mainEquivalentMm" to equivalent,
+            "flash" to (c.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true),
         )
+    }
+
+    private fun whiteBalanceMode(c: CameraCharacteristics): String {
+        if (Build.VERSION.SDK_INT >= 35) {
+            val modes = c.get(CameraCharacteristics.COLOR_CORRECTION_AVAILABLE_MODES)
+            if (modes != null && modes.contains(CameraMetadata.COLOR_CORRECTION_MODE_CCT)) {
+                return "cct"
+            }
+        }
+        val caps = c.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES)?.toSet() ?: emptySet()
+        return if (caps.contains(CameraMetadata.REQUEST_AVAILABLE_CAPABILITIES_MANUAL_POST_PROCESSING)) {
+            "gains"
+        } else "presets"
+    }
+
+    /** Light colour of a black body at [k] Kelvin (Tanner Helland), 0…1. */
+    private fun kelvinToRgb(k: Int): FloatArray {
+        val t = k / 100.0
+        val r = if (t <= 66) 255.0 else 329.698727446 * Math.pow(t - 60, -0.1332047592)
+        val g = if (t <= 66) 99.4708025861 * Math.log(t) - 161.1195681661
+        else 288.1221695283 * Math.pow(t - 60, -0.0755148492)
+        val b = when {
+            t >= 66 -> 255.0
+            t <= 19 -> 0.0
+            else -> 138.5177312231 * Math.log(t - 10) - 305.0447927307
+        }
+        fun c(v: Double) = (v.coerceIn(1.0, 255.0) / 255.0).toFloat()
+        return floatArrayOf(c(r), c(g), c(b))
+    }
+
+    /** Gains that neutralise light of [k] Kelvin, green normalised to 1. */
+    private fun kelvinGains(k: Int): android.hardware.camera2.params.RggbChannelVector {
+        val (r, g, b) = kelvinToRgb(k).let { Triple(it[0], it[1], it[2]) }
+        val red = (g / r).coerceIn(0.25f, 8f)
+        val blue = (g / b).coerceIn(0.25f, 8f)
+        return android.hardware.camera2.params.RggbChannelVector(red, 1f, 1f, blue)
+    }
+
+    /** Nearest preset for phones without manual white balance. */
+    private fun kelvinPreset(k: Int) = when {
+        k < 3400 -> CameraMetadata.CONTROL_AWB_MODE_INCANDESCENT
+        k < 4600 -> CameraMetadata.CONTROL_AWB_MODE_FLUORESCENT
+        k < 6000 -> CameraMetadata.CONTROL_AWB_MODE_DAYLIGHT
+        k < 7000 -> CameraMetadata.CONTROL_AWB_MODE_CLOUDY_DAYLIGHT
+        else -> CameraMetadata.CONTROL_AWB_MODE_SHADE
     }
 
     private fun awbName(mode: Int) = when (mode) {
@@ -284,6 +352,7 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
             camera.createCaptureSession(outputs, object : CameraCaptureSession.StateCallback() {
                 override fun onConfigured(s: CameraCaptureSession) {
                     session = s
+                    previewBuilder = null
                     rawInSession = withRaw
                     applyRepeating()
                     done(true, withRaw)
@@ -305,6 +374,8 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
         try { device?.close() } catch (_: Exception) {}
         session = null
         device = null
+        previewBuilder = null
+        lastTransform = null
         jpegReader?.close(); jpegReader = null
         rawReader?.close(); rawReader = null
         previewSurface?.release(); previewSurface = null
@@ -319,17 +390,27 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
         call.argument<Int>("iso")?.let { iso = it }
         call.argument<Number>("exposureNs")?.let { exposureNs = it.toLong() }
         call.argument<Int>("ev")?.let { evSteps = it }
-        call.argument<String>("awb")?.let { awb = it }
+        call.argument<Boolean>("awbAuto")?.let { awbAuto = it }
+        call.argument<Int>("kelvin")?.let { kelvin = it.coerceIn(2000, 10000) }
         call.argument<Boolean>("autoFocus")?.let { autoFocus = it }
         call.argument<Number>("focusDiopters")?.let { focusDiopters = it.toFloat() }
         call.argument<Number>("zoom")?.let { zoom = it.toFloat() }
+        call.argument<String>("flash")?.let { flash = it }
     }
 
     private fun fill(builder: CaptureRequest.Builder) {
         val c = characteristics ?: return
         builder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO)
+        val hasFlash = c.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
         if (autoExposure) {
-            builder.set(CaptureRequest.CONTROL_AE_MODE, CameraMetadata.CONTROL_AE_MODE_ON)
+            builder.set(
+                CaptureRequest.CONTROL_AE_MODE,
+                when {
+                    !hasFlash || flash == "off" -> CameraMetadata.CONTROL_AE_MODE_ON
+                    flash == "on" -> CameraMetadata.CONTROL_AE_MODE_ON_ALWAYS_FLASH
+                    else -> CameraMetadata.CONTROL_AE_MODE_ON_AUTO_FLASH
+                },
+            )
             builder.set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION, evSteps)
         } else {
             builder.set(CaptureRequest.CONTROL_AE_MODE, CameraMetadata.CONTROL_AE_MODE_OFF)
@@ -338,7 +419,30 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
             // Frame duration must be at least the exposure time.
             builder.set(CaptureRequest.SENSOR_FRAME_DURATION, max(exposureNs, 33_333_333L))
         }
-        builder.set(CaptureRequest.CONTROL_AWB_MODE, awbMode(awb))
+        if (awbAuto) {
+            builder.set(CaptureRequest.CONTROL_AWB_MODE, CameraMetadata.CONTROL_AWB_MODE_AUTO)
+            builder.set(CaptureRequest.COLOR_CORRECTION_MODE, CameraMetadata.COLOR_CORRECTION_MODE_FAST)
+        } else {
+            when (whiteBalanceMode(c)) {
+                "cct" -> if (Build.VERSION.SDK_INT >= 35) {
+                    builder.set(CaptureRequest.CONTROL_AWB_MODE, CameraMetadata.CONTROL_AWB_MODE_OFF)
+                    builder.set(CaptureRequest.COLOR_CORRECTION_MODE, CameraMetadata.COLOR_CORRECTION_MODE_CCT)
+                    builder.set(CaptureRequest.COLOR_CORRECTION_COLOR_TEMPERATURE, kelvin)
+                }
+                "gains" -> {
+                    builder.set(CaptureRequest.CONTROL_AWB_MODE, CameraMetadata.CONTROL_AWB_MODE_OFF)
+                    builder.set(
+                        CaptureRequest.COLOR_CORRECTION_MODE,
+                        CameraMetadata.COLOR_CORRECTION_MODE_TRANSFORM_MATRIX,
+                    )
+                    builder.set(CaptureRequest.COLOR_CORRECTION_GAINS, kelvinGains(kelvin))
+                    lastTransform?.let {
+                        builder.set(CaptureRequest.COLOR_CORRECTION_TRANSFORM, it)
+                    }
+                }
+                else -> builder.set(CaptureRequest.CONTROL_AWB_MODE, kelvinPreset(kelvin))
+            }
+        }
         if (autoFocus) {
             builder.set(CaptureRequest.CONTROL_AF_MODE, CameraMetadata.CONTROL_AF_MODE_CONTINUOUS_PICTURE)
         } else {
@@ -361,14 +465,44 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
         }
     }
 
+    /** Coalesces control changes: at most one request per ~33 ms. */
+    private fun scheduleApply() {
+        val h = handler ?: return
+        h.post {
+            if (applyScheduled) return@post
+            applyScheduled = true
+            val wait = (33 - (System.currentTimeMillis() - lastApplyAt)).coerceAtLeast(0)
+            h.postDelayed({
+                applyScheduled = false
+                applyRepeating()
+            }, wait)
+        }
+    }
+
+    private val previewCallback = object : CameraCaptureSession.CaptureCallback() {
+        override fun onCaptureCompleted(
+            session: CameraCaptureSession,
+            request: CaptureRequest,
+            result: TotalCaptureResult,
+        ) {
+            if (awbAuto) {
+                result.get(CaptureResult.COLOR_CORRECTION_TRANSFORM)?.let { lastTransform = it }
+            }
+            lastAeState = result.get(CaptureResult.CONTROL_AE_STATE)
+        }
+    }
+
     private fun applyRepeating() {
         val s = session ?: return
         val camera = device ?: return
         try {
-            val b = camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)
-            b.addTarget(previewSurface!!)
+            val b = previewBuilder ?: camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW).also {
+                it.addTarget(previewSurface!!)
+                previewBuilder = it
+            }
             fill(b)
-            s.setRepeatingRequest(b.build(), null, handler)
+            s.setRepeatingRequest(b.build(), previewCallback, handler)
+            lastApplyAt = System.currentTimeMillis()
         } catch (_: Exception) {
             // The session may be closing; the next open applies the controls.
         }
@@ -377,9 +511,63 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     // ---- Capture ------------------------------------------------------
 
     private fun capture(wantRaw: Boolean, result: MethodChannel.Result) {
-        val s = session ?: return result.error("not_open", "Camera is not open", null)
-        val camera = device ?: return result.error("not_open", "Camera is not open", null)
-        val c = characteristics!!
+        val hasFlash = characteristics?.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
+        val h = handler ?: return result.error("not_open", "Camera is not open", null)
+        if (!(hasFlash && flash != "off" && autoExposure)) {
+            h.post { captureStill(wantRaw, result) }
+            return
+        }
+        // Flash in auto exposure: run the pre-flash metering sequence first,
+        // then take the picture once exposure has settled (max 1.5 s).
+        h.post {
+            try {
+                val builder = previewBuilder
+                val s = session
+                if (builder == null || s == null) {
+                    captureStill(wantRaw, result); return@post
+                }
+                builder.set(
+                    CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER,
+                    CameraMetadata.CONTROL_AE_PRECAPTURE_TRIGGER_START,
+                )
+                s.capture(builder.build(), null, h)
+                builder.set(
+                    CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER,
+                    CameraMetadata.CONTROL_AE_PRECAPTURE_TRIGGER_IDLE,
+                )
+                val started = System.currentTimeMillis()
+                var sawPrecapture = false
+                val poll = object : Runnable {
+                    override fun run() {
+                        val state = lastAeState
+                        if (state == CameraMetadata.CONTROL_AE_STATE_PRECAPTURE) sawPrecapture = true
+                        val settled = state == CameraMetadata.CONTROL_AE_STATE_CONVERGED ||
+                            state == CameraMetadata.CONTROL_AE_STATE_FLASH_REQUIRED ||
+                            state == CameraMetadata.CONTROL_AE_STATE_LOCKED
+                        val elapsed = System.currentTimeMillis() - started
+                        if ((sawPrecapture && settled) || (elapsed > 400 && settled) || elapsed > 1500) {
+                            captureStill(wantRaw, result)
+                        } else {
+                            h.postDelayed(this, 40)
+                        }
+                    }
+                }
+                h.postDelayed(poll, 60)
+            } catch (e: Exception) {
+                captureStill(wantRaw, result)
+            }
+        }
+    }
+
+    private fun captureStill(wantRaw: Boolean, result: MethodChannel.Result) {
+        // Runs on the camera thread: replies go back through the main thread.
+        val s = session
+        val camera = device
+        val c = characteristics
+        if (s == null || camera == null || c == null) {
+            main.post { result.error("not_open", "Camera is not open", null) }
+            return
+        }
         val raw = wantRaw && rawInSession && rawReader != null
         val orientation = c.get(CameraCharacteristics.SENSOR_ORIENTATION) ?: 90
 
@@ -420,6 +608,12 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
         b.addTarget(jpegReader!!.surface)
         if (raw) b.addTarget(rawReader!!.surface)
         fill(b)
+        if (!autoExposure && flash != "off" &&
+            c.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
+        ) {
+            // Manual exposure cannot meter a pre-flash: fire it at full power.
+            b.set(CaptureRequest.FLASH_MODE, CameraMetadata.FLASH_MODE_SINGLE)
+        }
         b.set(CaptureRequest.JPEG_ORIENTATION, orientation)
         b.set(CaptureRequest.JPEG_QUALITY, 95.toByte())
         s.capture(b.build(), object : CameraCaptureSession.CaptureCallback() {

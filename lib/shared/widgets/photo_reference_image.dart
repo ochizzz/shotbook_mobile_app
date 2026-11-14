@@ -74,26 +74,44 @@ class _ImageFallback extends StatelessWidget {
   Widget build(BuildContext context) {
     return ColoredBox(
       color: ShotbookColors.card,
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          // Small spots (thumbnails, buttons) get the icon only.
+          if (constraints.maxWidth < 90 || constraints.maxHeight < 90) {
+            return const Center(
+              child: Icon(
                 Icons.photo_outlined,
                 color: ShotbookColors.secondary,
-                size: 26,
+                size: 18,
               ),
-              const SizedBox(height: 8),
-              Text(
-                context.tr(photo.category),
-                style: Theme.of(context).textTheme.labelMedium
-                    ?.copyWith(color: ShotbookColors.secondary),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
+            );
+          }
+          return _labelled(context);
+        },
+      ),
+    );
+  }
+
+  Widget _labelled(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.photo_outlined,
+              color: ShotbookColors.secondary,
+              size: 26,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              context.tr(photo.category),
+              style: Theme.of(context).textTheme.labelMedium
+                  ?.copyWith(color: ShotbookColors.secondary),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
     );

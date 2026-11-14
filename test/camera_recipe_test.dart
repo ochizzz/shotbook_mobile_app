@@ -17,10 +17,10 @@ void main() {
     expect(parseEv('−0,3 EV'), closeTo(-0.3, 1e-9));
     expect(parseEv('+0.7 EV'), closeTo(0.7, 1e-9));
     expect(parseEv('0 EV'), 0);
-    expect(parseWhiteBalance('5000 K'), 'daylight');
-    expect(parseWhiteBalance('3200K'), 'incandescent');
-    expect(parseWhiteBalance('Авто, теплее на +3'), isNull);
-    expect(parseWhiteBalance('Облачно'), 'cloudy');
+    expect(parseKelvin('5000 K'), 5000);
+    expect(parseKelvin('3300K'), 3300);
+    expect(parseKelvin('Авто, теплее на +3'), isNull);
+    expect(parseKelvin('Облачно'), 6500);
   });
 
   test('zoom from lens notes', () {

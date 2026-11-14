@@ -21,10 +21,13 @@ class ProCameraCapabilities {
     this.evStep = 1,
     this.manualFocus = false,
     this.minFocusDiopters = 0,
-    this.awbModes = const ['auto'],
+    this.wbMode = 'presets',
+    this.kelvinMin = 2000,
+    this.kelvinMax = 10000,
     this.zoomMin = 1,
     this.zoomMax = 1,
     this.mainEquivalentMm = 24,
+    this.flash = false,
   });
 
   factory ProCameraCapabilities.fromMap(Map<Object?, Object?> map) {
@@ -44,13 +47,13 @@ class ProCameraCapabilities {
       evStep: d('evStep', 1),
       manualFocus: map['manualFocus'] == true,
       minFocusDiopters: d('minFocusDiopters', 0),
-      awbModes: [
-        for (final mode in (map['awbModes'] as List?) ?? const ['auto'])
-          '$mode',
-      ],
+      wbMode: map['wbMode'] as String? ?? 'presets',
+      kelvinMin: i('kelvinMin', 2000),
+      kelvinMax: i('kelvinMax', 10000),
       zoomMin: d('zoomMin', 1),
       zoomMax: d('zoomMax', 1),
       mainEquivalentMm: d('mainEquivalentMm', 24),
+      flash: map['flash'] == true,
     );
   }
 
@@ -66,13 +69,19 @@ class ProCameraCapabilities {
   final double evStep;
   final bool manualFocus;
   final double minFocusDiopters;
-  final List<String> awbModes;
+
+  /// "cct" or "gains": any Kelvin value; "presets": nearest preset only.
+  final String wbMode;
+  final int kelvinMin;
+  final int kelvinMax;
   final double zoomMin;
   final double zoomMax;
   final double mainEquivalentMm;
+  final bool flash;
 
   bool get exposureCompensation => evMax > evMin;
   bool get zoomable => zoomMax > zoomMin;
+  bool get preciseKelvin => wbMode == 'cct' || wbMode == 'gains';
 }
 
 /// The controls the user set. Auto flags win over the manual values.
@@ -83,11 +92,13 @@ class ProCameraSettings {
     this.iso = 100,
     this.exposureNs = 8000000,
     this.ev = 0,
-    this.whiteBalance = 'auto',
+    this.autoWhiteBalance = true,
+    this.kelvin = 5500,
     this.autoFocus = true,
     this.focusDiopters = 0,
     this.zoom = 1,
     this.raw = false,
+    this.flash = 'off',
   });
 
   final bool autoExposure;
@@ -96,33 +107,47 @@ class ProCameraSettings {
 
   /// Exposure compensation in stops (used in automatic exposure).
   final double ev;
-  final String whiteBalance;
+  final bool autoWhiteBalance;
+  final int kelvin;
   final bool autoFocus;
   final double focusDiopters;
   final double zoom;
   final bool raw;
+
+  /// "off", "auto" or "on".
+  final String flash;
 
   ProCameraSettings copyWith({
     bool? autoExposure,
     int? iso,
     int? exposureNs,
     double? ev,
-    String? whiteBalance,
+    bool? autoWhiteBalance,
+    int? kelvin,
     bool? autoFocus,
     double? focusDiopters,
     double? zoom,
     bool? raw,
+    String? flash,
   }) => ProCameraSettings(
     autoExposure: autoExposure ?? this.autoExposure,
     iso: iso ?? this.iso,
     exposureNs: exposureNs ?? this.exposureNs,
     ev: ev ?? this.ev,
-    whiteBalance: whiteBalance ?? this.whiteBalance,
+    autoWhiteBalance: autoWhiteBalance ?? this.autoWhiteBalance,
+    kelvin: kelvin ?? this.kelvin,
     autoFocus: autoFocus ?? this.autoFocus,
     focusDiopters: focusDiopters ?? this.focusDiopters,
     zoom: zoom ?? this.zoom,
     raw: raw ?? this.raw,
+    flash: flash ?? this.flash,
   );
+
+  /// Everything back to automatic at 1×; keeps the RAW choice.
+  ProCameraSettings reset() => ProCameraSettings(raw: raw, flash: flash);
+
+  bool get isDefault =>
+      autoExposure && ev == 0 && autoWhiteBalance && autoFocus && zoom == 1;
 
   /// Applies a photo's recipe within what the phone allows. Manual ISO and
   /// shutter are only used together, and only on phones with manual sensor
@@ -144,9 +169,11 @@ class ProCameraSettings {
       final steps = (recipe.ev! / c.evStep).round().clamp(c.evMin, c.evMax);
       next = next.copyWith(ev: steps * c.evStep);
     }
-    if (recipe.whiteBalance != null &&
-        c.awbModes.contains(recipe.whiteBalance)) {
-      next = next.copyWith(whiteBalance: recipe.whiteBalance);
+    if (recipe.kelvin != null) {
+      next = next.copyWith(
+        autoWhiteBalance: false,
+        kelvin: recipe.kelvin!.clamp(c.kelvinMin, c.kelvinMax),
+      );
     }
     if (recipe.zoom != null && c.zoomable) {
       next = next.copyWith(zoom: recipe.zoom!.clamp(c.zoomMin, c.zoomMax));
@@ -163,6 +190,10 @@ class ProCameraPhotoResult {
 }
 
 /// Talks to the native camera (Android, ProCameraPlugin.kt).
+///
+/// [values] holds the live settings: widgets listen to it directly, so a
+/// moving dial does not rebuild the preview. Changes reach the camera at
+/// most every 33 ms, always ending with the latest value.
 class ProCameraController extends ChangeNotifier {
   ProCameraController({MethodChannel? channel})
     : _channel = channel ?? const MethodChannel('shotbook/pro_camera');
@@ -172,12 +203,19 @@ class ProCameraController extends ChangeNotifier {
   ProCameraCapabilities capabilities = const ProCameraCapabilities(
     available: false,
   );
-  ProCameraSettings settings = const ProCameraSettings();
+  final values = ValueNotifier(const ProCameraSettings());
   int? textureId;
   int previewWidth = 4;
   int previewHeight = 3;
   bool rawAvailable = false;
   bool busy = false;
+
+  Timer? _sendTimer;
+  bool _sending = false;
+  bool _dirty = false;
+  DateTime _lastSent = DateTime.fromMillisecondsSinceEpoch(0);
+
+  ProCameraSettings get settings => values.value;
 
   /// Preview aspect ratio in portrait (width / height).
   double get portraitAspectRatio =>
@@ -208,30 +246,53 @@ class ProCameraController extends ChangeNotifier {
     previewWidth = (map?['previewWidth'] as num?)?.toInt() ?? 4;
     previewHeight = (map?['previewHeight'] as num?)?.toInt() ?? 3;
     rawAvailable = map?['raw'] == true && capabilities.raw;
-    if (!rawAvailable && settings.raw) settings = settings.copyWith(raw: false);
-    await _push();
+    if (!rawAvailable && settings.raw) {
+      values.value = settings.copyWith(raw: false);
+    }
+    _dirty = true;
+    await _flush();
     notifyListeners();
   }
 
-  Future<void> update(ProCameraSettings next) async {
-    settings = next;
-    notifyListeners();
-    await _push();
-  }
-
-  Future<void> _push() async {
-    if (textureId == null) return;
-    final c = capabilities;
-    await _channel.invokeMethod<void>('setControls', {
-      'autoExposure': settings.autoExposure || !c.manualSensor,
-      'iso': settings.iso,
-      'exposureNs': settings.exposureNs,
-      'ev': c.exposureCompensation ? (settings.ev / c.evStep).round() : 0,
-      'awb': settings.whiteBalance,
-      'autoFocus': settings.autoFocus || !c.manualFocus,
-      'focusDiopters': settings.focusDiopters,
-      'zoom': settings.zoom,
+  /// Shows [next] at once and sends it to the camera soon.
+  void update(ProCameraSettings next) {
+    values.value = next;
+    _dirty = true;
+    if (_sending || _sendTimer != null) return;
+    final wait = 33 - DateTime.now().difference(_lastSent).inMilliseconds;
+    _sendTimer = Timer(Duration(milliseconds: wait.clamp(0, 33)), () {
+      _sendTimer = null;
+      _flush();
     });
+  }
+
+  Future<void> _flush() async {
+    if (textureId == null || !_dirty) return;
+    _dirty = false;
+    _sending = true;
+    final s = settings;
+    final c = capabilities;
+    try {
+      await _channel.invokeMethod<void>('setControls', {
+        'autoExposure': s.autoExposure || !c.manualSensor,
+        'iso': s.iso,
+        'exposureNs': s.exposureNs,
+        'ev': c.exposureCompensation ? (s.ev / c.evStep).round() : 0,
+        'awbAuto': s.autoWhiteBalance,
+        'kelvin': s.kelvin,
+        'autoFocus': s.autoFocus || !c.manualFocus,
+        'focusDiopters': s.focusDiopters,
+        'zoom': s.zoom,
+        'flash': c.flash ? s.flash : 'off',
+      });
+    } on PlatformException {
+      // The preview keeps the last settings the camera accepted.
+    } finally {
+      _sending = false;
+      _lastSent = DateTime.now();
+    }
+    // Something changed while sending: send the latest once more.
+    if (_dirty) update(settings);
   }
 
   Future<ProCameraPhotoResult> capture() async {
@@ -252,12 +313,21 @@ class ProCameraController extends ChangeNotifier {
   }
 
   Future<void> close() async {
+    _sendTimer?.cancel();
+    _sendTimer = null;
     textureId = null;
     try {
       await _channel.invokeMethod<void>('close');
     } on MissingPluginException {
       // Nothing to close on platforms without the native camera.
     }
+  }
+
+  @override
+  void dispose() {
+    _sendTimer?.cancel();
+    values.dispose();
+    super.dispose();
   }
 }
 
@@ -273,38 +343,47 @@ String formatShutter(int ns) {
   return '1/${(1 / seconds).round()}';
 }
 
-/// Standard shutter stops between [minNs] and [maxNs], for the dial.
-List<int> shutterStops(int minNs, int maxNs) {
-  const denominators = [
-    8000, 4000, 2000, 1000, 500, 250, 125, 60, 30, 15, 8, 4, 2, //
-  ];
-  final stops = <int>[
-    for (final d in denominators) (1e9 / d).round(),
-    500000000,
-    1000000000,
-  ];
-  return [
-    for (final ns in stops)
-      if (ns >= minNs && ns <= maxNs) ns,
-  ];
+T _nearestLog<T extends num>(List<T> stops, num value) {
+  var best = stops.first;
+  for (final s in stops) {
+    if ((math.log(s) - math.log(value)).abs() <
+        (math.log(best) - math.log(value)).abs()) {
+      best = s;
+    }
+  }
+  return best;
 }
 
-/// Standard ISO stops between [min] and [max], for the dial.
-List<int> isoStops(int min, int max) => [
-  for (final iso in const [
-    50,
-    64,
-    100,
-    125,
-    200,
-    250,
-    400,
-    640,
-    800,
-    1600,
-    3200,
-    6400,
+/// Standard 1/3-stop shutter speeds between [minNs] and [maxNs].
+List<int> shutterStops(int minNs, int maxNs) {
+  const denominators = [
+    8000, 6400, 5000, 4000, 3200, 2500, 2000, 1600, 1250, 1000, 800, 640, //
+    500, 400, 320, 250, 200, 160, 125, 100, 80, 60, 50, 40, 30, 25, 20, 15,
+    13, 10, 8, 6, 5, 4, 3,
+  ];
+  final all = [
+    for (final d in denominators) (1e9 / d).round(),
+    for (final s in const [0.4, 0.5, 0.6, 0.8, 1.0]) (s * 1e9).round(),
+  ];
+  final inRange = [
+    for (final ns in all)
+      if (ns >= minNs && ns <= maxNs) ns,
+  ];
+  return inRange.isEmpty ? [minNs, maxNs] : inRange;
+}
+
+/// Standard 1/3-stop ISO values between [min] and [max].
+List<int> isoStops(int min, int max) {
+  const all = [
+    25, 32, 40, 50, 64, 80, 100, 125, 160, 200, 250, 320, 400, 500, 640, //
+    800, 1000, 1250, 1600, 2000, 2500, 3200, 4000, 5000, 6400, 8000, 10000,
     12800,
-  ])
-    if (iso >= min && iso <= max) iso,
-];
+  ];
+  final inRange = [
+    for (final iso in all)
+      if (iso >= min && iso <= max) iso,
+  ];
+  return inRange.isEmpty ? [min, max] : inRange;
+}
+
+int nearestStop(List<int> stops, num value) => _nearestLog(stops, value);

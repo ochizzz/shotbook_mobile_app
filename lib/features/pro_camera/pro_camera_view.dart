@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../app/theme.dart';
 import '../../l10n/tr.dart';
 import '../../shared/widgets/photo_reference_image.dart';
 import '../discover/domain/photo_reference.dart';
@@ -16,30 +16,15 @@ import 'widgets/zoom_control.dart';
 enum _Dial { iso, shutter, ev, wb, focus }
 
 const _accent = Color(0xFFFFD25A);
+const _timers = [0, 3, 10];
+const _flashModes = ['off', 'auto', 'on'];
 
-const _wbOrder = [
-  'auto',
-  'incandescent',
-  'fluorescent',
-  'daylight',
-  'cloudy',
-  'shade',
-];
-const _wbKelvin = {
-  'incandescent': '3200K',
-  'fluorescent': '4000K',
-  'daylight': '5500K',
-  'cloudy': '6500K',
-  'shade': '7500K',
-};
-
-/// Whole stops between two values, for 1/3-stop snapping on the dials.
-double _stops(num min, num max) =>
-    max > min ? math.log(max / min) / math.ln2 : 0;
-
-/// SHOTBOOK's manual photo camera. With a [photo] it shows the reference as
-/// a see-through guide and can apply the photo's settings; without one it
-/// is a plain pro camera (the Camera tab).
+/// SHOTBOOK's manual photo camera, laid out like the iPhone and Pixel
+/// cameras: flash and timer top left, options top right, zoom over the
+/// preview, settings row with spinning dials, exit bottom left.
+///
+/// With a [photo] it shows the reference as a see-through guide and can
+/// apply the photo's settings; without one it is the plain Camera tab.
 class ProCameraView extends StatefulWidget {
   const ProCameraView({
     required this.fallback,
@@ -61,18 +46,20 @@ class ProCameraView extends StatefulWidget {
 class _ProCameraViewState extends State<ProCameraView>
     with WidgetsBindingObserver {
   final _camera = ProCameraController();
+  final _dial = ValueNotifier<_Dial?>(null);
   bool _ready = false;
   bool _unsupported = false;
   String? _error;
-  _Dial? _dial;
   double _opacity = 0.4;
   bool _showGuide = true;
   bool _grid = true;
-  bool _flash = false;
-  Timer? _pushTimer;
-  ProCameraSettings? _pending;
+  bool _flashBlink = false;
+  int _timer = 0;
+  int? _countdown;
+  Timer? _countdownTimer;
 
   PhotoReference? get _photo => widget.photo;
+  ProCameraCapabilities get _caps => _camera.capabilities;
 
   @override
   void initState() {
@@ -85,10 +72,11 @@ class _ProCameraViewState extends State<ProCameraView>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _pushTimer?.cancel();
+    _countdownTimer?.cancel();
     _camera.removeListener(_onCamera);
     _camera.close();
     _camera.dispose();
+    _dial.dispose();
     super.dispose();
   }
 
@@ -101,6 +89,7 @@ class _ProCameraViewState extends State<ProCameraView>
     if (!_ready) return;
     if (state == AppLifecycleState.inactive ||
         state == AppLifecycleState.paused) {
+      _cancelCountdown();
       _camera.close();
     } else if (state == AppLifecycleState.resumed) {
       _open();
@@ -136,63 +125,90 @@ class _ProCameraViewState extends State<ProCameraView>
     }
   }
 
-  /// Dials fire many changes per second: show each at once, send them to
-  /// the camera at most every 40 ms.
-  void _set(ProCameraSettings next) {
-    _camera.settings = next;
-    setState(() {});
-    _pending = next;
-    _pushTimer ??= Timer(const Duration(milliseconds: 40), () async {
-      _pushTimer = null;
-      final value = _pending;
-      _pending = null;
-      if (value == null) return;
-      try {
-        await _camera.update(value);
-      } on PlatformException {
-        // The preview keeps the last settings the camera accepted.
-      }
-    });
+  void _set(ProCameraSettings next) => _camera.update(next);
+
+  void _snack(String text) {
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          duration: const Duration(seconds: 2),
+          behavior: SnackBarBehavior.floating,
+          // Above the shutter row, never over the controls.
+          margin: const EdgeInsets.fromLTRB(16, 0, 16, 110),
+          content: Text(text),
+        ),
+      );
+  }
+
+  void _reset() {
+    HapticFeedback.mediumImpact();
+    _set(_camera.settings.reset());
+    _dial.value = null;
   }
 
   void _applyRecipe() {
     final photo = _photo;
-    if (photo == null) return;
-    final caps = _camera.capabilities;
+    if (photo == null || !_ready) return;
     final recipe = CameraRecipe.fromPhoto(
       photo,
-      mainEquivalentMm: caps.mainEquivalentMm,
+      mainEquivalentMm: _caps.mainEquivalentMm,
     );
     HapticFeedback.mediumImpact();
-    _set(_camera.settings.withRecipe(recipe, caps));
+    _set(_camera.settings.withRecipe(recipe, _caps));
     final manual =
-        caps.manualSensor && recipe.iso != null && recipe.exposureNs != null;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        duration: const Duration(seconds: 2),
-        content: Text(
-          recipe.isEmpty
-              ? context.tr(
-                  'This photo has no fixed settings: the camera stays on auto.',
-                )
-              : manual
-              ? context.tr('Settings from the photo applied.')
-              : context.tr(
-                  'Settings applied. ISO and shutter stay automatic on this phone or recipe.',
-                ),
-        ),
-      ),
+        _caps.manualSensor && recipe.iso != null && recipe.exposureNs != null;
+    _snack(
+      recipe.isEmpty
+          ? context.tr(
+              'This photo has no fixed settings: the camera stays on auto.',
+            )
+          : manual
+          ? context.tr('Settings from the photo applied.')
+          : context.tr(
+              'Settings applied. ISO and shutter stay automatic on this phone or recipe.',
+            ),
     );
   }
 
-  Future<void> _shoot() async {
+  void _cancelCountdown() {
+    _countdownTimer?.cancel();
+    _countdownTimer = null;
+    if (_countdown != null && mounted) setState(() => _countdown = null);
+  }
+
+  void _onShutter() {
     if (_camera.busy || !_ready) return;
-    HapticFeedback.lightImpact();
-    setState(() => _flash = true);
-    Future.delayed(const Duration(milliseconds: 120), () {
-      if (mounted) setState(() => _flash = false);
+    if (_countdown != null) {
+      _cancelCountdown();
+      return;
+    }
+    if (_timer == 0) {
+      _shoot();
+      return;
+    }
+    HapticFeedback.selectionClick();
+    setState(() => _countdown = _timer);
+    _countdownTimer = Timer.periodic(const Duration(seconds: 1), (t) {
+      final next = (_countdown ?? 1) - 1;
+      if (next <= 0) {
+        t.cancel();
+        _countdownTimer = null;
+        setState(() => _countdown = null);
+        _shoot();
+      } else {
+        HapticFeedback.selectionClick();
+        setState(() => _countdown = next);
+      }
     });
-    final messenger = ScaffoldMessenger.of(context);
+  }
+
+  Future<void> _shoot() async {
+    HapticFeedback.lightImpact();
+    setState(() => _flashBlink = true);
+    Future.delayed(const Duration(milliseconds: 110), () {
+      if (mounted) setState(() => _flashBlink = false);
+    });
     final rawText = context.tr(
       'Saved to SHOTBOOK in your gallery: JPEG + RAW.',
     );
@@ -200,22 +216,15 @@ class _ProCameraViewState extends State<ProCameraView>
     final failText = context.tr('The photo could not be saved.');
     try {
       final result = await _camera.capture();
-      messenger.showSnackBar(
-        SnackBar(
-          duration: const Duration(seconds: 2),
-          content: Text(result.dng != null ? rawText : jpegText),
-        ),
-      );
+      if (mounted) _snack(result.dng != null ? rawText : jpegText);
     } on PlatformException {
-      messenger.showSnackBar(SnackBar(content: Text(failText)));
+      if (mounted) _snack(failText);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     if (_unsupported) return widget.fallback(context);
-    final caps = _camera.capabilities;
-    final s = _camera.settings;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
@@ -224,26 +233,46 @@ class _ProCameraViewState extends State<ProCameraView>
         body: SafeArea(
           child: Column(
             children: [
-              _topBar(context, s),
-              Expanded(child: Center(child: _preview(context))),
-              const SizedBox(height: 6),
-              _readouts(context, caps, s),
-              AnimatedSize(
-                duration: const Duration(milliseconds: 220),
-                curve: Curves.easeOutCubic,
-                child: _dial == null
-                    ? const SizedBox(width: double.infinity)
-                    : _dialPanel(context, caps, s),
+              _topBar(context),
+              // Full-width preview right under the top bar (as on the
+              // iPhone), settings directly below it, shutter row at the
+              // bottom. The preview shrinks only on short screens.
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, box) {
+                    final ratio = _ready ? _camera.portraitAspectRatio : 3 / 4;
+                    final maxH = box.maxHeight - 44 - 44;
+                    final h = (box.maxWidth / ratio).clamp(0.0, maxH);
+                    return Column(
+                      children: [
+                        SizedBox(
+                          width: h * ratio,
+                          height: h,
+                          child: Center(child: _preview(context)),
+                        ),
+                        _ValueBuilder(
+                          camera: _camera,
+                          dial: _dial,
+                          builder: (context, s, dial) =>
+                              _readouts(context, s, dial),
+                        ),
+                        _ValueBuilder(
+                          camera: _camera,
+                          dial: _dial,
+                          builder: (context, s, dial) => AnimatedSize(
+                            duration: const Duration(milliseconds: 200),
+                            curve: Curves.easeOutCubic,
+                            alignment: Alignment.topCenter,
+                            child: dial == null
+                                ? const SizedBox(width: double.infinity)
+                                : _dialPanel(context, s, dial),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
-              if (caps.zoomable)
-                ZoomControl(
-                  zoom: s.zoom,
-                  min: caps.zoomMin,
-                  max: caps.zoomMax,
-                  onChanged: (z) => _set(s.copyWith(zoom: z)),
-                )
-              else
-                const SizedBox(height: 24),
               _bottomBar(context),
             ],
           ),
@@ -252,113 +281,183 @@ class _ProCameraViewState extends State<ProCameraView>
     );
   }
 
-  Widget _round(
+  // ---- Top bar --------------------------------------------------------
+
+  Widget _icon(
     IconData icon,
     VoidCallback? onTap, {
     required String tooltip,
     Key? key,
     bool active = false,
+    String? badge,
   }) {
+    final color = onTap == null
+        ? Colors.white24
+        : active
+        ? _accent
+        : Colors.white;
     return Tooltip(
       message: tooltip,
       child: InkResponse(
         key: key,
         onTap: onTap,
-        radius: 24,
-        child: Container(
-          width: 38,
-          height: 38,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.white.withValues(alpha: active ? 0.2 : 0.08),
+        radius: 22,
+        child: SizedBox(
+          width: 36,
+          height: 36,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Icon(icon, size: 21, color: color),
+              if (badge != null)
+                Positioned(
+                  right: 2,
+                  bottom: 4,
+                  child: Text(
+                    badge,
+                    style: TextStyle(
+                      fontSize: 9,
+                      fontWeight: FontWeight.w700,
+                      color: color,
+                    ),
+                  ),
+                ),
+            ],
           ),
-          child: Icon(icon, size: 19, color: active ? _accent : Colors.white),
         ),
       ),
     );
   }
 
-  Widget _topBar(BuildContext context, ProCameraSettings s) {
-    final rawEnabled = _camera.rawAvailable;
-    final rawOn = s.raw && rawEnabled;
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
-      child: Row(
-        children: [
-          _round(
-            Icons.close,
-            () => Navigator.of(context).maybePop(),
-            tooltip: context.tr('Close'),
-            key: const Key('pro-close'),
-          ),
-          const Spacer(),
-          Tooltip(
-            message: rawEnabled
-                ? context.tr('Also save RAW (DNG)')
-                : context.tr('This phone does not give RAW to other apps'),
-            child: GestureDetector(
-              key: const Key('pro-raw'),
-              onTap: rawEnabled
-                  ? () {
-                      HapticFeedback.selectionClick();
-                      _set(s.copyWith(raw: !s.raw));
-                    }
-                  : null,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 180),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
+  Widget _topBar(BuildContext context) {
+    return SizedBox(
+      height: 44,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: ValueListenableBuilder<ProCameraSettings>(
+          valueListenable: _camera.values,
+          builder: (context, s, _) {
+            final rawEnabled = _camera.rawAvailable;
+            final rawOn = s.raw && rawEnabled;
+            final flashIcon = switch (s.flash) {
+              'auto' => Icons.flash_auto,
+              'on' => Icons.flash_on,
+              _ => Icons.flash_off,
+            };
+            return Row(
+              children: [
+                _icon(
+                  flashIcon,
+                  _caps.flash
+                      ? () {
+                          HapticFeedback.selectionClick();
+                          final i = _flashModes.indexOf(s.flash);
+                          _set(
+                            s.copyWith(
+                              flash: _flashModes[(i + 1) % _flashModes.length],
+                            ),
+                          );
+                        }
+                      : null,
+                  tooltip: context.tr('Flash'),
+                  key: const Key('pro-flash'),
+                  active: s.flash != 'off',
                 ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: rawOn ? _accent : Colors.transparent,
-                  border: Border.all(
-                    color: rawEnabled
-                        ? (rawOn ? _accent : Colors.white70)
-                        : Colors.white24,
+                _icon(
+                  _timer == 0 ? Icons.timer_off_outlined : Icons.timer_outlined,
+                  () {
+                    HapticFeedback.selectionClick();
+                    setState(
+                      () => _timer =
+                          _timers[(_timers.indexOf(_timer) + 1) %
+                              _timers.length],
+                    );
+                  },
+                  tooltip: context.tr('Timer'),
+                  key: const Key('pro-timer'),
+                  active: _timer > 0,
+                  badge: _timer == 0 ? null : '$_timer',
+                ),
+                const Spacer(),
+                Tooltip(
+                  message: rawEnabled
+                      ? context.tr('Also save RAW (DNG)')
+                      : context.tr(
+                          'This phone does not give RAW to other apps',
+                        ),
+                  child: GestureDetector(
+                    key: const Key('pro-raw'),
+                    onTap: rawEnabled
+                        ? () {
+                            HapticFeedback.selectionClick();
+                            _set(s.copyWith(raw: !s.raw));
+                          }
+                        : null,
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 160),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: rawOn ? _accent : Colors.transparent,
+                        border: Border.all(
+                          width: 1.2,
+                          color: rawEnabled
+                              ? (rawOn ? _accent : Colors.white)
+                              : Colors.white24,
+                        ),
+                      ),
+                      child: Text(
+                        'RAW',
+                        style: TextStyle(
+                          fontSize: 10.5,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.8,
+                          color: rawOn
+                              ? Colors.black
+                              : rawEnabled
+                              ? Colors.white
+                              : Colors.white24,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-                child: Text(
-                  'RAW',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 1,
-                    color: rawOn
-                        ? Colors.black
-                        : rawEnabled
-                        ? Colors.white
-                        : Colors.white24,
-                  ),
+                const SizedBox(width: 4),
+                _icon(
+                  Icons.grid_3x3,
+                  () => setState(() => _grid = !_grid),
+                  tooltip: context.tr('Grid'),
+                  key: const Key('pro-grid'),
+                  active: _grid,
                 ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 10),
-          _round(
-            _grid ? Icons.grid_on : Icons.grid_off,
-            () => setState(() => _grid = !_grid),
-            tooltip: context.tr('Grid'),
-            key: const Key('pro-grid'),
-            active: _grid,
-          ),
-          if (_photo != null) ...[
-            const SizedBox(width: 10),
-            _round(
-              _showGuide ? Icons.layers : Icons.layers_clear_outlined,
-              () => setState(() => _showGuide = !_showGuide),
-              tooltip: _showGuide
-                  ? context.tr('Hide guide')
-                  : context.tr('Show guide'),
-              key: const Key('pro-guide'),
-              active: _showGuide,
-            ),
-          ],
-        ],
+                if (_photo != null)
+                  _icon(
+                    _showGuide ? Icons.layers : Icons.layers_clear_outlined,
+                    () => setState(() => _showGuide = !_showGuide),
+                    tooltip: _showGuide
+                        ? context.tr('Hide guide')
+                        : context.tr('Show guide'),
+                    key: const Key('pro-guide'),
+                    active: _showGuide,
+                  ),
+                _icon(
+                  Icons.restart_alt,
+                  s.isDefault ? null : _reset,
+                  tooltip: context.tr('Reset to auto'),
+                  key: const Key('pro-reset'),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
+
+  // ---- Preview --------------------------------------------------------
 
   Widget _preview(BuildContext context) {
     if (_error != null) {
@@ -373,77 +472,114 @@ class _ProCameraViewState extends State<ProCameraView>
     }
     final id = _camera.textureId;
     if (!_ready || id == null) {
-      return const CircularProgressIndicator(color: Colors.white54);
+      return const CircularProgressIndicator(
+        strokeWidth: 2,
+        color: Colors.white38,
+      );
     }
     final photo = _photo;
     return AspectRatio(
       aspectRatio: _camera.portraitAspectRatio,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(2),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            Texture(textureId: id),
-            if (photo != null && _showGuide)
-              IgnorePointer(
-                child: Opacity(
-                  opacity: _opacity,
-                  child: PhotoReferenceImage(photo: photo),
-                ),
-              ),
-            if (_grid)
-              const IgnorePointer(child: CustomPaint(painter: _Grid())),
-            if (photo != null && _showGuide)
-              Positioned(
-                right: 4,
-                top: 48,
-                bottom: 48,
-                child: _OpacitySlider(
-                  value: _opacity,
-                  onChanged: (v) => setState(() => _opacity = v),
-                ),
-              ),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          RepaintBoundary(child: Texture(textureId: id)),
+          if (photo != null && _showGuide)
             IgnorePointer(
-              child: AnimatedOpacity(
-                opacity: _flash ? 0.6 : 0,
-                duration: const Duration(milliseconds: 90),
-                child: const ColoredBox(color: Colors.black),
+              child: Opacity(
+                opacity: _opacity,
+                child: PhotoReferenceImage(photo: photo),
               ),
             ),
-          ],
-        ),
+          if (_grid) const IgnorePointer(child: CustomPaint(painter: _Grid())),
+          if (photo != null && _showGuide)
+            Positioned(
+              right: 2,
+              top: 56,
+              bottom: 96,
+              child: _OpacitySlider(
+                value: _opacity,
+                onChanged: (v) => setState(() => _opacity = v),
+              ),
+            ),
+          if (_caps.zoomable)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: ValueListenableBuilder<ProCameraSettings>(
+                valueListenable: _camera.values,
+                builder: (context, s, _) => ZoomControl(
+                  zoom: s.zoom,
+                  min: _caps.zoomMin,
+                  max: _caps.zoomMax,
+                  onChanged: (z) => _set(_camera.settings.copyWith(zoom: z)),
+                ),
+              ),
+            ),
+          if (_countdown != null)
+            IgnorePointer(
+              child: Center(
+                child: Text(
+                  '$_countdown',
+                  key: const Key('pro-countdown'),
+                  style: const TextStyle(
+                    fontSize: 96,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.white,
+                    shadows: [Shadow(blurRadius: 12)],
+                  ),
+                ),
+              ),
+            ),
+          IgnorePointer(
+            child: AnimatedOpacity(
+              opacity: _flashBlink ? 0.65 : 0,
+              duration: const Duration(milliseconds: 80),
+              child: const ColoredBox(color: Colors.black),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  String _readout(_Dial dial, ProCameraCapabilities caps, ProCameraSettings s) {
-    final manual = caps.manualSensor && !s.autoExposure;
-    switch (dial) {
-      case _Dial.iso:
-        return manual ? '${s.iso}' : 'AUTO';
-      case _Dial.shutter:
-        return manual ? formatShutter(s.exposureNs) : 'AUTO';
-      case _Dial.ev:
-        return manual ? '—' : _signed(s.ev);
-      case _Dial.wb:
-        return _wbKelvin[s.whiteBalance] ?? 'AWB';
-      case _Dial.focus:
-        return s.autoFocus || !caps.manualFocus ? 'AF' : 'MF';
-    }
-  }
+  // ---- Settings row and dials ----------------------------------------
 
-  bool _enabled(_Dial dial, ProCameraCapabilities caps) => switch (dial) {
-    _Dial.iso || _Dial.shutter => caps.manualSensor,
-    _Dial.ev => caps.exposureCompensation,
-    _Dial.wb => caps.awbModes.length > 1,
-    _Dial.focus => caps.manualFocus,
+  bool _enabled(_Dial dial) => switch (dial) {
+    _Dial.iso || _Dial.shutter => _caps.manualSensor,
+    _Dial.ev => _caps.exposureCompensation,
+    _Dial.wb => true,
+    _Dial.focus => _caps.manualFocus,
   };
 
-  Widget _readouts(
-    BuildContext context,
-    ProCameraCapabilities caps,
-    ProCameraSettings s,
-  ) {
+  bool _isAuto(_Dial dial, ProCameraSettings s) => switch (dial) {
+    _Dial.iso || _Dial.shutter => s.autoExposure || !_caps.manualSensor,
+    _Dial.ev => s.ev == 0,
+    _Dial.wb => s.autoWhiteBalance,
+    _Dial.focus => s.autoFocus || !_caps.manualFocus,
+  };
+
+  String _readout(_Dial dial, ProCameraSettings s) {
+    final manual = _caps.manualSensor && !s.autoExposure;
+    return switch (dial) {
+      _Dial.iso => manual ? '${s.iso}' : 'AUTO',
+      _Dial.shutter => manual ? formatShutter(s.exposureNs) : 'AUTO',
+      _Dial.ev => manual ? '—' : _signed(s.ev),
+      _Dial.wb => s.autoWhiteBalance ? 'AWB' : '${s.kelvin}K',
+      _Dial.focus => s.autoFocus || !_caps.manualFocus ? 'AF' : 'MF',
+    };
+  }
+
+  /// Back to automatic for one setting (double tap on its readout).
+  ProCameraSettings _autoFor(_Dial dial, ProCameraSettings s) => switch (dial) {
+    _Dial.iso || _Dial.shutter => s.copyWith(autoExposure: true),
+    _Dial.ev => s.copyWith(ev: 0),
+    _Dial.wb => s.copyWith(autoWhiteBalance: true),
+    _Dial.focus => s.copyWith(autoFocus: true),
+  };
+
+  Widget _readouts(BuildContext context, ProCameraSettings s, _Dial? open) {
     final labels = {
       _Dial.iso: 'ISO',
       _Dial.shutter: context.tr('SHUTTER'),
@@ -451,8 +587,8 @@ class _ProCameraViewState extends State<ProCameraView>
       _Dial.wb: context.tr('WB'),
       _Dial.focus: context.tr('FOCUS'),
     };
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+    return SizedBox(
+      height: 44,
       child: Row(
         children: [
           for (final dial in _Dial.values)
@@ -460,40 +596,24 @@ class _ProCameraViewState extends State<ProCameraView>
               child: GestureDetector(
                 key: Key('pro-cell-${dial.name}'),
                 behavior: HitTestBehavior.opaque,
-                onTap: _enabled(dial, caps)
+                onTap: _enabled(dial)
                     ? () {
                         HapticFeedback.selectionClick();
-                        setState(() => _dial = _dial == dial ? null : dial);
+                        _dial.value = open == dial ? null : dial;
                       }
                     : null,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 6),
-                  child: Column(
-                    children: [
-                      Text(
-                        labels[dial]!,
-                        style: TextStyle(
-                          fontSize: 9.5,
-                          letterSpacing: 1,
-                          color: _enabled(dial, caps)
-                              ? (_dial == dial ? _accent : Colors.white54)
-                              : Colors.white24,
-                        ),
-                      ),
-                      const SizedBox(height: 3),
-                      Text(
-                        _readout(dial, caps, s),
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          fontFeatures: const [FontFeature.tabularFigures()],
-                          color: _enabled(dial, caps)
-                              ? (_dial == dial ? _accent : Colors.white)
-                              : Colors.white24,
-                        ),
-                      ),
-                    ],
-                  ),
+                onDoubleTap: _enabled(dial)
+                    ? () {
+                        HapticFeedback.mediumImpact();
+                        _set(_autoFor(dial, _camera.settings));
+                      }
+                    : null,
+                child: _Readout(
+                  label: labels[dial]!,
+                  value: _readout(dial, s),
+                  selected: open == dial,
+                  manual: !_isAuto(dial, s),
+                  enabled: _enabled(dial),
                 ),
               ),
             ),
@@ -502,75 +622,71 @@ class _ProCameraViewState extends State<ProCameraView>
     );
   }
 
-  Widget _dialPanel(
-    BuildContext context,
-    ProCameraCapabilities caps,
-    ProCameraSettings s,
-  ) {
+  Widget _dialPanel(BuildContext context, ProCameraSettings s, _Dial dial) {
     Widget? lead;
     late Widget ruler;
-    switch (_dial!) {
+    switch (dial) {
       case _Dial.iso:
+        final stops = isoStops(_caps.isoMin, _caps.isoMax);
+        final index = stops.indexOf(nearestStop(stops, s.iso));
         lead = _autoPill(
           s.autoExposure,
-          () => _set(s.copyWith(autoExposure: true)),
+          () => _set(_camera.settings.copyWith(autoExposure: true)),
         );
         ruler = RulerDial(
           key: const Key('pro-dial-iso'),
-          position: logPosition(s.iso, caps.isoMin, caps.isoMax),
-          steps: (3 * _stops(caps.isoMin, caps.isoMax)).round(),
-          startLabel: '${caps.isoMin}',
-          endLabel: '${caps.isoMax}',
+          value: stops.length > 1 ? index / (stops.length - 1) : 0,
+          divisions: stops.length - 1,
+          startLabel: '${stops.first}',
+          endLabel: '${stops.last}',
           onChanged: (t) => _set(
-            s.copyWith(
+            _camera.settings.copyWith(
               autoExposure: false,
-              iso: logValue(t, caps.isoMin, caps.isoMax).round(),
+              iso: stops[(t * (stops.length - 1)).round()],
             ),
           ),
         );
       case _Dial.shutter:
+        final stops = shutterStops(_caps.exposureMinNs, _caps.exposureMaxNs);
+        final index = stops.indexOf(nearestStop(stops, s.exposureNs));
         lead = _autoPill(
           s.autoExposure,
-          () => _set(s.copyWith(autoExposure: true)),
+          () => _set(_camera.settings.copyWith(autoExposure: true)),
         );
         // Left = fast, right = slow, as on a shutter dial.
         ruler = RulerDial(
           key: const Key('pro-dial-shutter'),
-          position: logPosition(
-            s.exposureNs,
-            caps.exposureMinNs,
-            caps.exposureMaxNs,
-          ),
-          steps: (3 * _stops(caps.exposureMinNs, caps.exposureMaxNs)).round(),
-          startLabel: formatShutter(caps.exposureMinNs),
-          endLabel: formatShutter(caps.exposureMaxNs),
+          value: stops.length > 1 ? index / (stops.length - 1) : 0,
+          divisions: stops.length - 1,
+          startLabel: formatShutter(stops.first),
+          endLabel: formatShutter(stops.last),
           onChanged: (t) => _set(
-            s.copyWith(
+            _camera.settings.copyWith(
               autoExposure: false,
-              exposureNs: logValue(
-                t,
-                caps.exposureMinNs,
-                caps.exposureMaxNs,
-              ).round(),
+              exposureNs: stops[(t * (stops.length - 1)).round()],
             ),
           ),
         );
       case _Dial.ev:
-        final enabled = !(caps.manualSensor && !s.autoExposure);
-        final min = caps.evMin * caps.evStep;
-        final max = caps.evMax * caps.evStep;
+        final enabled = !(_caps.manualSensor && !s.autoExposure);
+        final span = _caps.evMax - _caps.evMin;
+        final step = ((s.ev / _caps.evStep).round() - _caps.evMin).clamp(
+          0,
+          span,
+        );
         ruler = RulerDial(
           key: const Key('pro-dial-ev'),
           enabled: enabled,
-          position: max > min ? (s.ev - min) / (max - min) : 0.5,
-          steps: caps.evMax - caps.evMin,
-          majorEvery: (1 / caps.evStep).round().clamp(1, 12),
-          startLabel: _signed(min),
-          endLabel: _signed(max),
-          onChanged: (t) {
-            final step = (t * (caps.evMax - caps.evMin)).round() + caps.evMin;
-            _set(s.copyWith(ev: step * caps.evStep));
-          },
+          value: span > 0 ? step / span : 0.5,
+          divisions: span,
+          majorEvery: (1 / _caps.evStep).round().clamp(1, 12),
+          startLabel: _signed(_caps.evMin * _caps.evStep),
+          endLabel: _signed(_caps.evMax * _caps.evStep),
+          onChanged: (t) => _set(
+            _camera.settings.copyWith(
+              ev: ((t * span).round() + _caps.evMin) * _caps.evStep,
+            ),
+          ),
         );
         if (!enabled) {
           lead = _hint(
@@ -580,50 +696,56 @@ class _ProCameraViewState extends State<ProCameraView>
           );
         }
       case _Dial.wb:
-        final modes = [
-          for (final m in _wbOrder)
-            if (caps.awbModes.contains(m)) m,
-        ];
-        final index = modes.indexOf(s.whiteBalance).clamp(0, modes.length - 1);
+        // 2000–10000 K in 100 K steps.
+        final min = _caps.kelvinMin;
+        final steps = (_caps.kelvinMax - min) ~/ 100;
+        lead = _autoPill(
+          s.autoWhiteBalance,
+          () => _set(_camera.settings.copyWith(autoWhiteBalance: true)),
+          label: 'AWB',
+        );
         ruler = RulerDial(
           key: const Key('pro-dial-wb'),
-          position: modes.length > 1 ? index / (modes.length - 1) : 0,
-          steps: modes.length - 1,
-          majorEvery: 1,
-          startLabel: 'AWB',
-          endLabel: _wbKelvin[modes.last],
+          value: steps > 0 ? (s.kelvin - min) / 100 / steps : 0,
+          divisions: steps,
+          majorEvery: 10,
+          startLabel: '${min}K',
+          endLabel: '${_caps.kelvinMax}K',
           onChanged: (t) => _set(
-            s.copyWith(whiteBalance: modes[(t * (modes.length - 1)).round()]),
+            _camera.settings.copyWith(
+              autoWhiteBalance: false,
+              kelvin: min + (t * steps).round() * 100,
+            ),
           ),
         );
       case _Dial.focus:
         lead = _autoPill(
           s.autoFocus,
-          () => _set(s.copyWith(autoFocus: true)),
+          () => _set(_camera.settings.copyWith(autoFocus: true)),
           label: 'AF',
         );
         ruler = RulerDial(
           key: const Key('pro-dial-focus'),
-          position: caps.minFocusDiopters > 0
-              ? s.focusDiopters / caps.minFocusDiopters
+          value: _caps.minFocusDiopters > 0
+              ? (s.focusDiopters / _caps.minFocusDiopters).clamp(0.0, 1.0)
               : 0,
           startLabel: '∞',
           endLabel: context.tr('near'),
           onChanged: (t) => _set(
-            s.copyWith(
+            _camera.settings.copyWith(
               autoFocus: false,
-              focusDiopters: t * caps.minFocusDiopters,
+              focusDiopters: t * _caps.minFocusDiopters,
             ),
           ),
         );
     }
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 2, 12, 2),
+      padding: const EdgeInsets.fromLTRB(12, 0, 12, 4),
       child: Row(
         children: [
           ?lead,
-          if (lead != null) const SizedBox(width: 8),
-          Expanded(child: SizedBox(height: 46, child: ruler)),
+          if (lead != null) const SizedBox(width: 6),
+          Expanded(child: SizedBox(height: 40, child: ruler)),
         ],
       ),
     );
@@ -631,24 +753,25 @@ class _ProCameraViewState extends State<ProCameraView>
 
   Widget _autoPill(bool active, VoidCallback onTap, {String label = 'AUTO'}) {
     return GestureDetector(
-      key: Key('pro-auto-${_dial?.name}'),
+      key: Key('pro-auto-${_dial.value?.name}'),
       onTap: () {
         HapticFeedback.selectionClick();
         onTap();
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 160),
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: active ? _accent : Colors.white.withValues(alpha: 0.08),
+          borderRadius: BorderRadius.circular(4),
+          color: active ? _accent : Colors.transparent,
+          border: Border.all(color: active ? _accent : Colors.white38),
         ),
         child: Text(
           label,
           style: TextStyle(
-            fontSize: 11,
+            fontSize: 10,
             fontWeight: FontWeight.w700,
-            letterSpacing: 0.8,
+            letterSpacing: 0.6,
             color: active ? Colors.black : Colors.white,
           ),
         ),
@@ -657,109 +780,109 @@ class _ProCameraViewState extends State<ProCameraView>
   }
 
   Widget _hint(String text) => SizedBox(
-    width: 120,
+    width: 110,
     child: Text(
       text,
-      style: const TextStyle(fontSize: 10, color: Colors.white54),
+      style: const TextStyle(fontSize: 9.5, color: Colors.white54),
     ),
   );
 
+  // ---- Bottom bar -----------------------------------------------------
+
   Widget _bottomBar(BuildContext context) {
     final photo = _photo;
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(28, 2, 28, 18),
-      child: Row(
-        children: [
-          Expanded(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: photo == null
-                  ? const SizedBox.shrink()
-                  : _labelledRound(
-                      icon: Icons.auto_fix_high,
-                      label: context.tr('Apply photo settings'),
-                      onTap: _ready ? _applyRecipe : null,
-                      key: const Key('pro-apply-recipe'),
-                    ),
-            ),
-          ),
-          GestureDetector(
-            key: const Key('pro-shutter'),
-            onTap: _shoot,
-            child: AnimatedScale(
-              scale: _camera.busy ? 0.92 : 1,
-              duration: const Duration(milliseconds: 120),
-              child: Container(
-                width: 76,
-                height: 76,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3.5),
+    return SizedBox(
+      height: 96,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 28),
+        child: Row(
+          children: [
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: _roundButton(
+                  key: const Key('pro-close'),
+                  tooltip: context.tr('Close'),
+                  onTap: () => Navigator.of(context).maybePop(),
+                  child: const Icon(Icons.close, color: Colors.white, size: 22),
                 ),
-                padding: const EdgeInsets.all(5),
-                child: const DecoratedBox(
+              ),
+            ),
+            GestureDetector(
+              key: const Key('pro-shutter'),
+              onTap: _onShutter,
+              child: AnimatedScale(
+                scale: _camera.busy ? 0.9 : 1,
+                duration: const Duration(milliseconds: 120),
+                curve: Curves.easeOut,
+                child: Container(
+                  width: 70,
+                  height: 70,
+                  padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.white,
+                    border: Border.all(color: Colors.white, width: 3),
+                  ),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 160),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _countdown != null ? _accent : Colors.white,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: photo == null
-                  ? const SizedBox.shrink()
-                  : ClipRRect(
-                      borderRadius: BorderRadius.circular(6),
-                      child: SizedBox(
-                        width: 46,
-                        height: 46,
-                        child: PhotoReferenceImage(
-                          photo: photo,
-                          thumbnail: true,
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: photo == null
+                    ? const SizedBox(width: 44)
+                    : _roundButton(
+                        key: const Key('pro-apply-recipe'),
+                        tooltip: context.tr('Apply photo settings'),
+                        onTap: _ready ? _applyRecipe : null,
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            PhotoReferenceImage(photo: photo, thumbnail: true),
+                            Container(color: Colors.black38),
+                            const Icon(
+                              Icons.auto_fix_high,
+                              color: _accent,
+                              size: 20,
+                            ),
+                          ],
                         ),
                       ),
-                    ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  Widget _labelledRound({
-    required IconData icon,
-    required String label,
+  Widget _roundButton({
+    required Widget child,
+    required String tooltip,
     required VoidCallback? onTap,
     Key? key,
   }) {
-    return GestureDetector(
-      key: key,
-      onTap: onTap,
-      child: SizedBox(
-        width: 86,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 46,
-              height: 46,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white.withValues(alpha: 0.1),
-              ),
-              child: Icon(icon, color: _accent, size: 21),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 9.5, color: Colors.white70),
-            ),
-          ],
+    return Tooltip(
+      message: tooltip,
+      child: GestureDetector(
+        key: key,
+        onTap: onTap,
+        child: Container(
+          width: 46,
+          height: 46,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white.withValues(alpha: 0.12),
+          ),
+          child: child,
         ),
       ),
     );
@@ -768,6 +891,85 @@ class _ProCameraViewState extends State<ProCameraView>
   static String _signed(double v) => v.abs() < 0.05
       ? '±0'
       : '${v > 0 ? '+' : '−'}${v.abs().toStringAsFixed(1)}';
+}
+
+/// Rebuilds only its child when the settings or the open dial change.
+class _ValueBuilder extends StatelessWidget {
+  const _ValueBuilder({
+    required this.camera,
+    required this.dial,
+    required this.builder,
+  });
+
+  final ProCameraController camera;
+  final ValueNotifier<_Dial?> dial;
+  final Widget Function(BuildContext, ProCameraSettings, _Dial?) builder;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<_Dial?>(
+      valueListenable: dial,
+      builder: (context, open, _) => ValueListenableBuilder<ProCameraSettings>(
+        valueListenable: camera.values,
+        builder: (context, s, _) => builder(context, s, open),
+      ),
+    );
+  }
+}
+
+class _Readout extends StatelessWidget {
+  const _Readout({
+    required this.label,
+    required this.value,
+    required this.selected,
+    required this.manual,
+    required this.enabled,
+  });
+
+  final String label;
+  final String value;
+  final bool selected;
+  final bool manual;
+  final bool enabled;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = !enabled
+        ? Colors.white24
+        : selected
+        ? _accent
+        : manual
+        ? Colors.white
+        : Colors.white70;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontFamily: shotbookBodyFont,
+            fontSize: 9,
+            letterSpacing: 0.9,
+            color: enabled
+                ? (selected ? _accent : Colors.white38)
+                : Colors.white24,
+          ),
+        ),
+        const SizedBox(height: 2),
+        AnimatedDefaultTextStyle(
+          duration: const Duration(milliseconds: 150),
+          style: TextStyle(
+            fontFamily: shotbookBodyFont,
+            fontSize: 13.5,
+            fontWeight: manual ? FontWeight.w700 : FontWeight.w500,
+            fontFeatures: const [FontFeature.tabularFigures()],
+            color: color,
+          ),
+          child: Text(value),
+        ),
+      ],
+    );
+  }
 }
 
 /// Vertical see-through-guide slider on the preview's edge.
@@ -780,17 +982,17 @@ class _OpacitySlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 28,
+      width: 26,
       child: RotatedBox(
         quarterTurns: 3,
         child: SliderTheme(
           data: SliderTheme.of(context).copyWith(
             trackHeight: 2,
             activeTrackColor: Colors.white,
-            inactiveTrackColor: Colors.white30,
+            inactiveTrackColor: Colors.white24,
             thumbColor: Colors.white,
             overlayShape: SliderComponentShape.noOverlay,
-            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 7),
+            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
           ),
           child: Slider(
             key: const Key('pro-guide-opacity'),
@@ -811,8 +1013,8 @@ class _Grid extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.28)
-      ..strokeWidth = 0.6;
+      ..color = Colors.white.withValues(alpha: 0.25)
+      ..strokeWidth = 0.5;
     for (var i = 1; i < 3; i++) {
       final x = size.width * i / 3;
       final y = size.height * i / 3;

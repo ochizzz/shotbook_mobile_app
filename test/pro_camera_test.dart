@@ -19,14 +19,8 @@ const _s23Ultra = ProCameraCapabilities(
   evStep: 1 / 6,
   manualFocus: true,
   minFocusDiopters: 10,
-  awbModes: [
-    'auto',
-    'incandescent',
-    'fluorescent',
-    'daylight',
-    'cloudy',
-    'shade',
-  ],
+  wbMode: 'cct',
+  flash: true,
   zoomMin: 0.6,
   zoomMax: 10,
   mainEquivalentMm: 23,
@@ -38,7 +32,7 @@ void main() {
       iso: 100,
       exposureNs: 4000000,
       ev: -0.3,
-      whiteBalance: 'daylight',
+      kelvin: 5300,
       zoom: 3,
     );
     final s = const ProCameraSettings().withRecipe(recipe, _s23Ultra);
@@ -46,21 +40,45 @@ void main() {
     expect(s.iso, 100);
     expect(s.exposureNs, 4000000);
     expect(s.ev, closeTo(-2 / 6, 1e-9));
-    expect(s.whiteBalance, 'daylight');
+    expect(s.autoWhiteBalance, isFalse);
+    expect(s.kelvin, 5300);
     expect(s.zoom, 3);
   });
 
   test('without manual sensor control exposure stays automatic', () {
-    const basic = ProCameraCapabilities(
-      available: true,
-      evMin: -2,
-      evMax: 2,
-      awbModes: ['auto'],
-    );
+    const basic = ProCameraCapabilities(available: true, evMin: -2, evMax: 2);
     const recipe = CameraRecipe(iso: 100, exposureNs: 4000000, zoom: 3);
     final s = const ProCameraSettings().withRecipe(recipe, basic);
     expect(s.autoExposure, isTrue);
     expect(s.zoom, 1, reason: 'no zoom range reported');
+  });
+
+  test('reset returns every setting to automatic and 1x', () {
+    final manual = const ProCameraSettings().copyWith(
+      autoExposure: false,
+      iso: 800,
+      autoWhiteBalance: false,
+      kelvin: 3300,
+      autoFocus: false,
+      zoom: 3,
+      raw: true,
+    );
+    expect(manual.isDefault, isFalse);
+    final reset = manual.reset();
+    expect(reset.isDefault, isTrue);
+    expect(reset.raw, isTrue, reason: 'the RAW choice is kept');
+  });
+
+  test('ISO and shutter dials offer every 1/3 stop', () {
+    final iso = isoStops(50, 3200);
+    expect(iso, containsAllInOrder([50, 64, 80, 100, 125, 160, 200]));
+    expect(iso.last, 3200);
+    final shutter = shutterStops(125000, 1000000000);
+    expect(
+      shutter.map(formatShutter),
+      containsAllInOrder(['1/8000', '1/6400', '1/5000']),
+    );
+    expect(formatShutter(shutter.last), '1″');
   });
 
   test('shutter labels read like a camera', () {
@@ -68,6 +86,7 @@ void main() {
     expect(formatShutter(500000000), '0.5″');
     expect(formatShutter(1000000000), '1″');
     expect(shutterStops(100000, 1000000000).first, 125000);
+    expect(nearestStop(isoStops(50, 3200), 110), 100);
   });
 
   testWidgets('camera screen shows controls and disables RAW when absent', (
@@ -89,7 +108,7 @@ void main() {
               'evMin': -12,
               'evMax': 12,
               'evStep': 1 / 6,
-              'awbModes': ['auto', 'daylight'],
+              'wbMode': 'gains',
               'zoomMin': 0.6,
               'zoomMax': 10.0,
             };

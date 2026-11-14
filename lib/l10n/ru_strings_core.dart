@@ -245,4 +245,9 @@ const Map<String, String> ruStringsCore = {
   'All phones': 'Все телефоны',
   'The number is how many recipes are written for that phone.':
       'Число — сколько рецептов написано для этого телефона.',
+
+  // Camera top bar
+  'Flash': 'Вспышка',
+  'Timer': 'Таймер',
+  'Reset to auto': 'Сбросить в авто',
 };

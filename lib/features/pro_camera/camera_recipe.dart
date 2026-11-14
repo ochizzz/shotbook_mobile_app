@@ -8,7 +8,7 @@ class CameraRecipe {
     this.iso,
     this.exposureNs,
     this.ev,
-    this.whiteBalance,
+    this.kelvin,
     this.zoom,
   });
 
@@ -16,8 +16,8 @@ class CameraRecipe {
   final int? exposureNs;
   final double? ev;
 
-  /// One of the camera's white balance presets.
-  final String? whiteBalance;
+  /// White balance in Kelvin.
+  final int? kelvin;
 
   /// Zoom ratio relative to the main (1×) lens.
   final double? zoom;
@@ -26,7 +26,7 @@ class CameraRecipe {
       iso == null &&
       exposureNs == null &&
       ev == null &&
-      whiteBalance == null &&
+      kelvin == null &&
       zoom == null;
 
   /// [mainEquivalentMm] is the phone's 1× lens in 35 mm terms (~23–26 mm).
@@ -38,7 +38,7 @@ class CameraRecipe {
       iso: parseIso(photo.iso),
       exposureNs: parseShutterNs(photo.shutterSpeed),
       ev: parseEv(photo.exposureCompensation),
-      whiteBalance: parseWhiteBalance(photo.whiteBalance),
+      kelvin: parseKelvin(photo.whiteBalance),
       zoom:
           parseZoom(photo.focalLength, mainEquivalentMm) ??
           parseZoom(photo.camera, mainEquivalentMm),
@@ -90,32 +90,28 @@ double? parseEv(String? text) {
   return m.group(1)!.isNotEmpty && m.group(1) != '+' ? -value : value;
 }
 
-/// Kelvin values and words map to the nearest camera preset.
-String? parseWhiteBalance(String? text) {
+/// "5000 K", "3200K" or words like daylight/облачно → Kelvin.
+int? parseKelvin(String? text) {
   if (_isAuto(text)) return null;
   final lower = text!.toLowerCase();
   final kelvin = RegExp(r'(\d{4,5})\s*[kк]').firstMatch(lower);
   if (kelvin != null) {
     final k = int.parse(kelvin.group(1)!);
-    if (k < 3400) return 'incandescent';
-    if (k < 4600) return 'fluorescent';
-    if (k < 6000) return 'daylight';
-    if (k < 7000) return 'cloudy';
-    return 'shade';
+    return k >= 2000 && k <= 10000 ? k : null;
   }
   if (lower.contains('ламп') ||
       lower.contains('tungsten') ||
       lower.contains('incandescent')) {
-    return 'incandescent';
+    return 3200;
   }
-  if (lower.contains('флуор') || lower.contains('fluor')) return 'fluorescent';
-  if (lower.contains('тень') || lower.contains('shade')) return 'shade';
-  if (lower.contains('облач') || lower.contains('cloud')) return 'cloudy';
+  if (lower.contains('флуор') || lower.contains('fluor')) return 4000;
+  if (lower.contains('тень') || lower.contains('shade')) return 7500;
+  if (lower.contains('облач') || lower.contains('cloud')) return 6500;
   if (lower.contains('днев') ||
       lower.contains('солн') ||
       lower.contains('daylight') ||
       lower.contains('sun')) {
-    return 'daylight';
+    return 5500;
   }
   return null;
 }
