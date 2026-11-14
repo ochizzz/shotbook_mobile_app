@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 
 import '../../../app/theme.dart';
 
-const _accent = Color(0xFFFFD25A);
+const _accent = ShotbookColors.accent;
 
 /// iPhone-style zoom: lens buttons in a small capsule; tapping one glides
 /// to it, dragging across (or holding) opens a shallow wheel for smooth
@@ -177,7 +177,7 @@ class _ZoomControlState extends State<ZoomControl>
                                     ? '${_label(widget.zoom)}×'
                                     : _label(lens),
                                 style: TextStyle(
-                                  fontFamily: shotbookBodyFont,
+                                  fontFamily: shotbookMonoFont,
                                   fontSize: lens == active ? 12 : 11,
                                   fontWeight: FontWeight.w600,
                                   color: lens == active
@@ -295,7 +295,7 @@ class _WheelPainter extends CustomPainter {
       text: TextSpan(
         text: text,
         style: TextStyle(
-          fontFamily: shotbookBodyFont,
+          fontFamily: shotbookMonoFont,
           fontSize: size,
           fontWeight: FontWeight.w600,
           color: color,

@@ -158,13 +158,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 children: [
                   Row(
                     children: [
-                      Text(
-                        'SHOTBOOK',
-                        style: textTheme.labelLarge?.copyWith(
-                          letterSpacing: 3,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                      const Text('SHOTBOOK', style: ShotbookText.wordmark),
                       const Spacer(),
                       IconButton(
                         key: const Key('onboarding-language'),
@@ -218,7 +212,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           width: i == _index ? 26 : 10,
                           height: 3,
                           color: i == _index
-                              ? ShotbookColors.primary
+                              ? ShotbookColors.accent
                               : ShotbookColors.border,
                         ),
                       const Spacer(),

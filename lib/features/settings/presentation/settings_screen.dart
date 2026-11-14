@@ -6,6 +6,7 @@ import '../../../app/theme.dart';
 import '../../../l10n/language_picker.dart';
 import '../../../l10n/tr.dart';
 import '../../../shared/services/legal_links.dart';
+import '../../../shared/widgets/graphite/graphite.dart';
 import '../../auth/application/auth_providers.dart';
 import '../../safety/application/safety_providers.dart';
 import '../../safety/presentation/safety_actions.dart';
@@ -220,12 +221,8 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(top: 22, bottom: 4),
-    child: Text(
-      text,
-      style: Theme.of(context).textTheme.titleSmall
-          ?.copyWith(color: ShotbookColors.secondary),
-    ),
+    padding: const EdgeInsets.only(top: 28, bottom: 6),
+    child: SectionLabel(text),
   );
 }
 

@@ -89,7 +89,7 @@ const Map<String, String> ruStringsScreens = {
   'Username': 'Имя пользователя',
   'Use at least 3 characters.': 'Минимум 3 символа.',
   'Display name (optional)': 'Отображаемое имя (необязательно)',
-  'Email': 'Email',
+  'Email': 'Почта',
   'Enter a valid email address.': 'Введите корректный email.',
   'Password': 'Пароль',
   'Use at least 6 characters.': 'Минимум 6 символов.',

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
 import '../../../l10n/tr.dart';
+import '../../../shared/widgets/graphite/graphite.dart';
 import '../../../shared/widgets/photo_actions_sheet.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
 import '../../../shared/widgets/source_badge.dart';
@@ -17,80 +19,104 @@ class FeedScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final posts = ref.watch(feedPostsProvider);
     final repository = ref.watch(feedRepositoryProvider);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(context.tr('Feed')),
-        actions: [
-          IconButton(
-            key: const Key('refresh-feed'),
-            tooltip: context.tr('Refresh feed'),
-            onPressed: () => ref.invalidate(feedPostsProvider),
-            icon: const Icon(Icons.refresh),
+
+    Widget content() {
+      if (repository == null) {
+        return SliverFillRemaining(
+          hasScrollBody: false,
+          child: _FeedMessage(
+            icon: Icons.cloud_off_outlined,
+            title: context.tr('Community feed is not connected'),
+            message: context.tr(
+              'Add Supabase settings to load posts and publish your own photos.',
+            ),
           ),
-        ],
-      ),
+        );
+      }
+      return posts.when(
+        loading: () => const SliverFillRemaining(
+          hasScrollBody: false,
+          child: Center(child: CircularProgressIndicator(strokeWidth: 2)),
+        ),
+        error: (error, stackTrace) => SliverFillRemaining(
+          hasScrollBody: false,
+          child: _FeedMessage(
+            icon: Icons.error_outline,
+            title: context.tr('Feed could not be loaded'),
+            message: context.tr('Check your connection, then try again.'),
+            action: TextButton(
+              onPressed: () => ref.invalidate(feedPostsProvider),
+              child: Text(context.tr('Try again')),
+            ),
+          ),
+        ),
+        data: (items) => items.isEmpty
+            ? SliverFillRemaining(
+                hasScrollBody: false,
+                child: _FeedMessage(
+                  icon: Icons.photo_library_outlined,
+                  title: context.tr('No community posts yet'),
+                  message: context.tr(
+                    'Be the first to share a photo and its shooting notes.',
+                  ),
+                ),
+              )
+            : SliverPadding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
+                sliver: SliverMasonryGrid.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 12,
+                  childCount: items.length,
+                  itemBuilder: (context, index) =>
+                      FeedPostCard(post: items[index]),
+                ),
+              ),
+      );
+    }
+
+    return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         key: const Key('create-post'),
         onPressed: () => context.push('/create'),
-        icon: const Icon(Icons.add),
+        icon: const Icon(Icons.add, size: 20),
         label: Text(context.tr('Post')),
       ),
-      body: repository == null
-          ? _FeedMessage(
-              icon: Icons.cloud_off_outlined,
-              title: context.tr('Community feed is not connected'),
-              message: context.tr(
-                'Add Supabase settings to load posts and publish your own photos.',
-              ),
-            )
-          : posts.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, stackTrace) => _FeedMessage(
-                icon: Icons.error_outline,
-                title: context.tr('Feed could not be loaded'),
-                message: context.tr('Check your connection, then try again.'),
-                action: TextButton(
-                  onPressed: () => ref.invalidate(feedPostsProvider),
-                  child: Text(context.tr('Try again')),
-                ),
-              ),
-              data: (items) => items.isEmpty
-                  ? _FeedMessage(
-                      icon: Icons.photo_library_outlined,
-                      title: context.tr('No community posts yet'),
-                      message: context.tr(
-                        'Be the first to share a photo and its shooting notes.',
-                      ),
-                    )
-                  : RefreshIndicator(
-                      onRefresh: () async {
-                        try {
-                          await ref
-                              .refresh(feedPostsProvider.future)
-                              .then<void>((_) {});
-                        } catch (_) {
-                          // The provider exposes the load error and retry action.
-                        }
-                      },
-                      child: NotificationListener<ScrollNotification>(
-                        onNotification: (notification) {
-                          // Fetch the next page well before the end.
-                          if (notification.metrics.extentAfter < 1200) {
-                            ref.read(feedPostsProvider.notifier).loadMore();
-                          }
-                          return false;
-                        },
-                        child: ListView.separated(
-                          padding: const EdgeInsets.fromLTRB(16, 10, 16, 100),
-                          itemCount: items.length,
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(height: 8),
-                          itemBuilder: (context, index) =>
-                              FeedPostCard(post: items[index]),
-                        ),
-                      ),
+      body: SafeArea(
+        bottom: false,
+        child: RefreshIndicator(
+          onRefresh: () async {
+            try {
+              await ref.refresh(feedPostsProvider.future).then<void>((_) {});
+            } catch (_) {
+              // The provider exposes the load error and retry action.
+            }
+          },
+          child: NotificationListener<ScrollNotification>(
+            onNotification: (notification) {
+              // Fetch the next page well before the end.
+              if (notification.metrics.extentAfter < 1200) {
+                ref.read(feedPostsProvider.notifier).loadMore();
+              }
+              return false;
+            },
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: ScreenTitle(
+                      context.tr('Feed'),
+                      trailing: const StreakBadge(),
                     ),
+                  ),
+                ),
+                content(),
+              ],
             ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -105,11 +131,11 @@ class FeedPostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: shotbookBorderRadius,
+      borderRadius: shotbookCardRadius,
       child: AspectRatio(
-        aspectRatio: 4 / 5,
+        aspectRatio: post.photo.imageAspectRatio,
         child: Material(
-          color: ShotbookColors.card,
+          color: ShotbookColors.placeholder,
           child: InkWell(
             key: Key('post-${post.photo.id}'),
             onTap: () => context.push('/photos/${post.photo.id}'),
@@ -133,10 +159,11 @@ class FeedPostCard extends StatelessWidget {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  PhotoReferenceImage(photo: post.photo),
+                  PhotoReferenceImage(photo: post.photo, thumbnail: true),
+                  const ViewfinderTicks(),
                   Positioned(
-                    left: 8,
-                    bottom: 8,
+                    right: 8,
+                    top: 8,
                     child: SourceBadge(photo: post.photo, compact: true),
                   ),
                 ],

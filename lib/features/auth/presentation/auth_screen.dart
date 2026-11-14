@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/theme.dart';
 import '../../../l10n/tr.dart';
 import '../../../shared/services/friendly_error.dart';
+import '../../../shared/widgets/graphite/graphite.dart';
 import '../../../shared/services/legal_links.dart';
 import '../../../shared/services/supabase_providers.dart';
 import '../application/auth_providers.dart';
@@ -132,18 +133,14 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      'SHOTBOOK',
-                      style: Theme.of(context).textTheme.labelLarge
-                          ?.copyWith(letterSpacing: 2),
-                    ),
-                    const SizedBox(height: 14),
+                    const Text('SHOTBOOK', style: ShotbookText.wordmark),
+                    const SizedBox(height: 44),
                     Text(
                       isReset
                           ? context.tr('Reset password')
                           : isSignUp
                           ? context.tr('Create your account')
-                          : context.tr('Welcome back'),
+                          : context.tr('Sign in'),
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     const SizedBox(height: 8),
@@ -151,60 +148,60 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                       isReset
                           ? context.tr('We will email you a secure reset link.')
                           : context.tr(
-                              'Save references and share what you shoot.',
+                              'Photo recipes, saves and the community feed.',
                             ),
                       style: Theme.of(context).textTheme.bodyMedium
                           ?.copyWith(color: ShotbookColors.secondary),
                     ),
-                    const SizedBox(height: 28),
+                    const SizedBox(height: 40),
                     if (isSignUp) ...[
+                      SectionLabel(context.tr('Username')),
+                      const SizedBox(height: 8),
                       TextFormField(
                         key: const Key('auth-username'),
                         controller: _username,
                         textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                          labelText: context.tr('Username'),
-                        ),
+                        decoration: InputDecoration(),
                         validator: (value) =>
                             value == null || value.trim().length < 3
                             ? context.tr('Use at least 3 characters.')
                             : null,
                       ),
-                      const SizedBox(height: 14),
+                      const SizedBox(height: 20),
+                      SectionLabel(context.tr('Display name (optional)')),
+                      const SizedBox(height: 8),
                       TextField(
                         key: const Key('auth-display-name'),
                         controller: _displayName,
                         textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                          labelText: context.tr('Display name (optional)'),
-                        ),
+                        decoration: InputDecoration(),
                       ),
                       const SizedBox(height: 14),
                     ],
+                    SectionLabel(context.tr('Email')),
+                    const SizedBox(height: 8),
                     TextFormField(
                       key: const Key('auth-email'),
                       controller: _email,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(
-                        labelText: context.tr('Email'),
-                      ),
+                      decoration: InputDecoration(hintText: 'name@mail.ru'),
                       validator: (value) =>
                           value == null || !value.contains('@')
                           ? context.tr('Enter a valid email address.')
                           : null,
                     ),
                     if (!isReset) ...[
-                      const SizedBox(height: 14),
+                      const SizedBox(height: 20),
+                      SectionLabel(context.tr('Password')),
+                      const SizedBox(height: 8),
                       TextFormField(
                         key: const Key('auth-password'),
                         controller: _password,
                         obscureText: true,
                         textInputAction: TextInputAction.done,
                         onFieldSubmitted: (_) => _submit(),
-                        decoration: InputDecoration(
-                          labelText: context.tr('Password'),
-                        ),
+                        decoration: InputDecoration(),
                         validator: (value) => value == null || value.length < 6
                             ? context.tr('Use at least 6 characters.')
                             : null,
@@ -260,7 +257,23 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                       const SizedBox(height: 16),
                       Text(_message!, key: const Key('auth-message')),
                     ],
-                    const SizedBox(height: 22),
+                    if (!isReset && !isSignUp)
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: TextButton(
+                          key: const Key('auth-forgot'),
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                          ),
+                          onPressed: () => setState(() {
+                            _mode = _AuthMode.reset;
+                            _error = null;
+                            _message = null;
+                          }),
+                          child: Text(context.tr('Forgot password?')),
+                        ),
+                      ),
+                    const SizedBox(height: 20),
                     FilledButton(
                       key: const Key('auth-submit'),
                       onPressed: _busy ? null : _submit,
@@ -277,16 +290,10 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                                   : context.tr('Sign in'),
                             ),
                     ),
-                    if (!isReset && !isSignUp)
-                      TextButton(
-                        onPressed: () => setState(() {
-                          _mode = _AuthMode.reset;
-                          _error = null;
-                          _message = null;
-                        }),
-                        child: Text(context.tr('Forgot password?')),
-                      ),
-                    TextButton(
+                    const SizedBox(height: 12),
+                    // Sign in ⇄ create account ⇄ back from reset.
+                    OutlinedButton(
+                      key: const Key('auth-switch-mode'),
                       onPressed: _busy
                           ? null
                           : () => setState(() {
@@ -303,7 +310,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                             ? context.tr('Back to sign in')
                             : isSignUp
                             ? context.tr('Already have an account? Sign in')
-                            : context.tr('Create an account'),
+                            : context.tr('Create account'),
                       ),
                     ),
                     if (!ref.watch(supabaseReadyProvider))
@@ -318,6 +325,25 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                               ?.copyWith(color: ShotbookColors.secondary),
                         ),
                       ),
+                    const SizedBox(height: 40),
+                    const Divider(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              context.tr('Language'),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: ShotbookColors.secondary,
+                              ),
+                            ),
+                          ),
+                          const LanguageSwitch(),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),

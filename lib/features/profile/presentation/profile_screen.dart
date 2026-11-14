@@ -7,11 +7,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../app/theme.dart';
-import '../../../l10n/language_picker.dart';
 import '../../../l10n/tr.dart';
 import '../../../shared/services/friendly_error.dart';
 import '../../../shared/services/image_prep.dart';
 import '../../../shared/services/supabase_providers.dart';
+import '../../../shared/widgets/graphite/graphite.dart';
 import '../../../shared/widgets/photo_actions_sheet.dart';
 import '../../safety/presentation/safety_actions.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
@@ -33,70 +33,90 @@ class ProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(currentUserProvider);
     final targetId = profileId ?? user?.id;
+    final own = profileId == null;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          profileId == null
-              ? context.tr('Profile')
-              : context.tr('Photographer'),
-        ),
-        actions: [
-          if (targetId != null && targetId == user?.id)
-            IconButton(
-              key: const Key('sign-out'),
-              tooltip: context.tr('Sign out'),
-              onPressed: () async {
-                await ref.read(authRepositoryProvider)?.signOut();
-                ref.invalidate(authStateProvider);
-              },
-              icon: const Icon(Icons.logout),
-            ),
-          if (targetId != null && targetId == user?.id)
-            IconButton(
-              key: const Key('open-settings'),
-              tooltip: context.tr('Settings'),
-              onPressed: () => context.push('/settings'),
-              icon: const Icon(Icons.settings_outlined),
-            ),
-          if (targetId != null && targetId != user?.id)
-            PopupMenuButton<String>(
-              key: const Key('profile-menu'),
-              onSelected: (value) async {
-                final name =
-                    ref
-                        .read(profileProvider(targetId))
-                        .asData
-                        ?.value
-                        ?.displayName ??
-                    context.tr('this author');
-                if (value == 'report') {
-                  await showReportSheet(context, ref, userId: targetId);
-                } else if (value == 'block') {
-                  final blocked = await confirmAndBlock(
-                    context,
-                    ref,
-                    userId: targetId,
-                    name: name,
-                  );
-                  if (blocked && context.mounted) context.pop();
-                }
-              },
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  value: 'report',
-                  child: Text(context.tr('Report user')),
-                ),
-                PopupMenuItem(
-                  value: 'block',
-                  child: Text(context.tr('Block user')),
-                ),
+      appBar: own
+          ? null
+          : AppBar(
+              title: Text(context.tr('Photographer')),
+              actions: [
+                if (targetId != null && targetId != user?.id)
+                  PopupMenuButton<String>(
+                    key: const Key('profile-menu'),
+                    onSelected: (value) async {
+                      final name =
+                          ref
+                              .read(profileProvider(targetId))
+                              .asData
+                              ?.value
+                              ?.displayName ??
+                          context.tr('this author');
+                      if (value == 'report') {
+                        await showReportSheet(context, ref, userId: targetId);
+                      } else if (value == 'block') {
+                        final blocked = await confirmAndBlock(
+                          context,
+                          ref,
+                          userId: targetId,
+                          name: name,
+                        );
+                        if (blocked && context.mounted) context.pop();
+                      }
+                    },
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        value: 'report',
+                        child: Text(context.tr('Report user')),
+                      ),
+                      PopupMenuItem(
+                        value: 'block',
+                        child: Text(context.tr('Block user')),
+                      ),
+                    ],
+                  ),
               ],
             ),
-        ],
+      body: SafeArea(
+        top: own,
+        bottom: false,
+        child: Column(
+          children: [
+            if (own)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: ScreenTitle(
+                  context.tr('Profile'),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const LanguageSwitch(),
+                      const SizedBox(width: 4),
+                      IconButton(
+                        key: const Key('open-settings'),
+                        tooltip: context.tr('Settings'),
+                        onPressed: () => context.push('/settings'),
+                        icon: const Icon(
+                          Icons.settings_outlined,
+                          color: ShotbookColors.secondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            Expanded(
+              child: targetId == null
+                  ? _SignedOutProfile(
+                      supabaseReady: ref.watch(supabaseReadyProvider),
+                    )
+                  : _ProfileContent(
+                      userId: targetId,
+                      isOwn: targetId == user?.id,
+                    ),
+            ),
+          ],
+        ),
       ),
-      body: targetId == null
-          ? _SignedOutProfile(supabaseReady: ref.watch(supabaseReadyProvider))
-          : _ProfileContent(userId: targetId, isOwn: targetId == user?.id),
     );
   }
 }
@@ -144,17 +164,7 @@ class _SignedOutProfile extends StatelessWidget {
             onPressed: () => context.push('/auth'),
             child: Text(context.tr('Sign in or create account')),
           ),
-          const SizedBox(height: 24),
-          const Divider(height: 1),
-          const SizedBox(height: 8),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              context.tr('Settings'),
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-          ),
-          const LanguageSettingsTile(),
+          const SizedBox(height: 12),
           const _MoreSettingsTile(),
         ],
       ),
@@ -214,20 +224,15 @@ class _ProfileContent extends ConsumerWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 14, 20, 18),
+                padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        CircleAvatar(
-                          radius: 34,
-                          backgroundColor: ShotbookColors.surface,
-                          backgroundImage: profile.avatarUrl == null
-                              ? null
-                              : NetworkImage(profile.avatarUrl!),
-                          child: profile.avatarUrl == null
-                              ? const Icon(Icons.person_outline)
-                              : null,
+                        _Avatar(
+                          url: profile.avatarUrl,
+                          name: profile.displayName,
                         ),
                         const SizedBox(width: 16),
                         Expanded(
@@ -236,12 +241,12 @@ class _ProfileContent extends ConsumerWidget {
                             children: [
                               Text(
                                 profile.displayName,
-                                style: Theme.of(context).textTheme.titleLarge,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
+                              const SizedBox(height: 6),
                               Text(
                                 '@${profile.username}',
-                                style: Theme.of(context).textTheme.bodyMedium
-                                    ?.copyWith(color: ShotbookColors.secondary),
+                                style: ShotbookText.handle,
                               ),
                             ],
                           ),
@@ -252,46 +257,47 @@ class _ProfileContent extends ConsumerWidget {
                             tooltip: context.tr('Edit profile'),
                             onPressed: () =>
                                 _showEditSheet(context, ref, profile),
-                            icon: const Icon(Icons.edit_outlined),
+                            icon: const Icon(
+                              Icons.edit_outlined,
+                              size: 20,
+                              color: ShotbookColors.secondary,
+                            ),
                           ),
                       ],
                     ),
                     if (profile.bio.isNotEmpty) ...[
-                      const SizedBox(height: 14),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(profile.bio),
+                      const SizedBox(height: 20),
+                      Text(
+                        profile.bio,
+                        style: Theme.of(context).textTheme.bodyMedium
+                            ?.copyWith(color: ShotbookColors.secondary),
                       ),
                     ],
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 12),
                     Row(
                       children: [
-                        _Count(label: context.tr('Posts'), count: posts.length),
-                        const SizedBox(width: 22),
+                        _Count(label: context.tr('posts'), count: posts.length),
                         _Count(
-                          label: context.tr('Saved'),
+                          label: context.tr('saved'),
                           count: savedIds.length,
                         ),
+                        if (isOwn)
+                          _Count(
+                            label: context.tr('presets'),
+                            count: presetsState.asData?.value.length ?? 0,
+                          ),
                       ],
                     ),
                     if (isOwn) ...[
-                      const SizedBox(height: 8),
-                      const Divider(height: 1),
-                      const SizedBox(height: 10),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          context.tr('Settings'),
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                      ),
-                      const LanguageSettingsTile(),
-                      const _MoreSettingsTile(),
+                      const SizedBox(height: 16),
+                      const StreakBadge(),
                     ],
                   ],
                 ),
               ),
               TabBar(
+                isScrollable: true,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 tabs: isOwn
                     ? [
                         Tab(text: context.tr('My Posts')),
@@ -644,13 +650,12 @@ class _ProfilePhotoGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => GridView.builder(
-    padding: const EdgeInsets.all(16),
+    padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
     itemCount: photos.length,
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 3,
-      mainAxisSpacing: 4,
-      crossAxisSpacing: 4,
-      childAspectRatio: 0.8,
+      mainAxisSpacing: 10,
+      crossAxisSpacing: 10,
     ),
     itemBuilder: (context, index) {
       final photo = photos[index];
@@ -701,6 +706,7 @@ class _ProfilePhotoGrid extends StatelessWidget {
   );
 }
 
+/// Stat: big Unbounded number over a small caption (110 px column).
 class _Count extends StatelessWidget {
   const _Count({required this.label, required this.count});
 
@@ -708,16 +714,68 @@ class _Count extends StatelessWidget {
   final int count;
 
   @override
-  Widget build(BuildContext context) => Row(
-    children: [
-      Text('$count', style: Theme.of(context).textTheme.titleSmall),
-      const SizedBox(width: 5),
-      Text(
-        label,
-        style: Theme.of(context).textTheme.bodySmall
-            ?.copyWith(color: ShotbookColors.secondary),
-      ),
-    ],
+  Widget build(BuildContext context) => SizedBox(
+    width: 110,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '$count',
+          style: const TextStyle(
+            fontFamily: shotbookTitleFont,
+            fontWeight: FontWeight.w500,
+            fontSize: 20,
+            color: ShotbookColors.primary,
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          label,
+          style: const TextStyle(fontSize: 12, color: ShotbookColors.secondary),
+        ),
+      ],
+    ),
+  );
+}
+
+/// 72 px round avatar: photo, or initials on the card colour.
+class _Avatar extends StatelessWidget {
+  const _Avatar({required this.url, required this.name});
+
+  final String? url;
+  final String name;
+
+  String get _initials {
+    final parts = name.trim().split(RegExp(r'\s+')).where((p) => p.isNotEmpty);
+    final letters = parts.take(2).map((p) => p.characters.first.toUpperCase());
+    return letters.isEmpty ? '?' : letters.join();
+  }
+
+  @override
+  Widget build(BuildContext context) => Container(
+    width: 72,
+    height: 72,
+    clipBehavior: Clip.antiAlias,
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      color: ShotbookColors.card,
+      border: Border.all(color: ShotbookColors.border),
+      image: url == null
+          ? null
+          : DecorationImage(image: NetworkImage(url!), fit: BoxFit.cover),
+    ),
+    alignment: Alignment.center,
+    child: url == null
+        ? Text(
+            _initials,
+            style: const TextStyle(
+              fontFamily: shotbookTitleFont,
+              fontWeight: FontWeight.w500,
+              fontSize: 20,
+              color: ShotbookColors.primary,
+            ),
+          )
+        : null,
   );
 }
 

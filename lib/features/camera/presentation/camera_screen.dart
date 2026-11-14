@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
 import '../../../l10n/tr.dart';
+import '../../../shared/widgets/graphite/graphite.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
 import '../../discover/application/discover_providers.dart';
 import '../../discover/data/seed_photo_references.dart';
@@ -182,13 +183,12 @@ class CameraDeviceScreen extends ConsumerWidget {
         children: [
           Text(
             context.tr(device.brand).toUpperCase(),
-            style: Theme.of(context).textTheme.labelLarge
-                ?.copyWith(color: ShotbookColors.secondary, letterSpacing: 1),
+            style: ShotbookText.kicker,
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: 8),
           Text(
             context.tr(device.model),
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
           _CameraSection(
             title: context.tr('Cameras'),
@@ -198,28 +198,24 @@ class CameraDeviceScreen extends ConsumerWidget {
             title: context.tr('Shooting tips'),
             children: device.recommendationsFor(russian: context.isRussian),
           ),
-          const SizedBox(height: 20),
-          Text(
-            context.tr('Starting points'),
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 28),
+          SectionLabel(context.tr('Starting points')),
+          const SizedBox(height: 4),
           ...device
               .sampleSettingsFor(russian: context.isRussian)
               .entries
               .map(
-                (entry) => ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(context.tr(entry.key)),
-                  subtitle: Text(entry.value),
+                (entry) => MetaRow(
+                  label: context.tr(entry.key),
+                  value: entry.value,
+                  mono: true,
                 ),
               ),
-          const SizedBox(height: 20),
-          Text(
+          const SizedBox(height: 28),
+          SectionLabel(
             forDevice.isEmpty
                 ? context.tr('Photo examples')
                 : context.tr('Shot recipes for this phone'),
-            style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 10),
           SizedBox(
@@ -279,8 +275,8 @@ class _CameraSection extends StatelessWidget {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: Theme.of(context).textTheme.titleMedium),
-        const SizedBox(height: 8),
+        SectionLabel(title),
+        const SizedBox(height: 12),
         ...children.map(
           (text) => Padding(
             padding: const EdgeInsets.only(bottom: 8),

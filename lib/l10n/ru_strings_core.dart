@@ -253,4 +253,13 @@ const Map<String, String> ruStringsCore = {
 
   // Graphite
   'Start a streak': 'Начни серию',
+
+  // Graphite profile stats
+  'posts': 'постов',
+  'saved': 'сохранённых',
+  'presets': 'пресетов',
+
+  // Graphite sign in
+  'Photo recipes, saves and the community feed.': 'Рецепты фото, сохранения и лента сообщества',
+  'Language': 'Язык',
 };

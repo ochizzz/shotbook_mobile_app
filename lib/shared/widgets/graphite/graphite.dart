@@ -207,3 +207,52 @@ class ScreenTitle extends StatelessWidget {
     ),
   );
 }
+
+/// Filter chip (36 high, radius 8): selected = light fill with dark text,
+/// otherwise a 1 px border with grey text.
+class GraphiteChip extends StatelessWidget {
+  const GraphiteChip({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+    super.key,
+  });
+
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      selected: selected,
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 160),
+          height: 36,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: selected ? ShotbookColors.primary : Colors.transparent,
+            borderRadius: shotbookBorderRadius,
+            border: Border.all(
+              color: selected ? ShotbookColors.primary : ShotbookColors.border,
+            ),
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: selected
+                  ? ShotbookColors.background
+                  : ShotbookColors.secondary,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

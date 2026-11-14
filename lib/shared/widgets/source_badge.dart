@@ -30,9 +30,11 @@ class SourceBadge extends StatelessWidget {
         label: label,
         child: Container(
           key: Key(library ? 'badge-library' : 'badge-member'),
-          padding: const EdgeInsets.all(4),
+          width: 24,
+          height: 24,
+          alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: ShotbookColors.background.withValues(alpha: 0.62),
+            color: ShotbookColors.background.withValues(alpha: 0.72),
             borderRadius: shotbookBorderRadius,
           ),
           child: Icon(icon, size: 13, color: ShotbookColors.primary),

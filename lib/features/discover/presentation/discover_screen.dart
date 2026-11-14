@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
 import '../../../l10n/tr.dart';
+import '../../../shared/widgets/graphite/graphite.dart';
 import '../application/discover_providers.dart';
 import '../data/seed_photo_references.dart';
 import 'discover_empty_state.dart';
@@ -48,104 +49,106 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
           child: CustomScrollView(
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             slivers: [
+              // TopBar (64): wordmark, streak, saved.
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 64,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 8),
+                    child: Row(
+                      children: [
+                        const Expanded(
+                          child: Text('SHOTBOOK', style: ShotbookText.wordmark),
+                        ),
+                        const StreakBadge(),
+                        IconButton(
+                          key: const Key('open-saved'),
+                          tooltip: context.tr('Saved photos'),
+                          onPressed: () => context.push('/saved'),
+                          icon: const Icon(Icons.bookmark_border, size: 24),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               SliverPadding(
-                padding: const EdgeInsets.fromLTRB(20, 14, 20, 18),
+                padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
                 sliver: SliverToBoxAdapter(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              'SHOTBOOK',
-                              style: Theme.of(context).textTheme.titleLarge
-                                  ?.copyWith(fontSize: 23, letterSpacing: 0.4),
-                            ),
-                          ),
-                          IconButton(
-                            key: const Key('open-saved'),
-                            tooltip: context.tr('Saved photos'),
-                            onPressed: () => context.push('/saved'),
-                            icon: const Icon(Icons.bookmark_border),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 9),
                       Text(
                         context.tr('Find a frame'),
-                        style: Theme.of(context).textTheme.headlineSmall,
+                        style: Theme.of(context).textTheme.headlineMedium,
                       ),
-                      const SizedBox(height: 14),
-                      TextField(
-                        key: const Key('discover-search-field'),
-                        controller: _searchController,
-                        onChanged: ref
-                            .read(discoverFiltersProvider.notifier)
-                            .setQuery,
-                        textInputAction: TextInputAction.search,
-                        decoration: InputDecoration(
-                          hintText: context.tr('Search photos or ideas'),
-                          prefixIcon: const Icon(Icons.search),
-                          suffixIcon: _searchController.text.isEmpty
-                              ? null
-                              : IconButton(
-                                  tooltip: context.tr('Clear search'),
-                                  onPressed: () {
-                                    _searchController.clear();
-                                    ref
-                                        .read(discoverFiltersProvider.notifier)
-                                        .setQuery('');
-                                  },
-                                  icon: const Icon(Icons.close),
-                                ),
-                        ),
-                      ),
-                      const SizedBox(height: 14),
+                      const SizedBox(height: 20),
                       SizedBox(
-                        height: 40,
-                        child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: photoCategories.length,
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(width: 8),
-                          itemBuilder: (context, index) {
-                            final category = photoCategories[index];
-                            return ChoiceChip(
-                              label: Text(context.tr(category)),
-                              selected: filters.category == category,
-                              onSelected: (_) => ref
-                                  .read(discoverFiltersProvider.notifier)
-                                  .setCategory(category),
-                              showCheckmark: false,
-                              labelStyle: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium
-                                  ?.copyWith(
-                                    color: filters.category == category
-                                        ? ShotbookColors.background
-                                        : ShotbookColors.secondary,
+                        height: 48,
+                        child: TextField(
+                          key: const Key('discover-search-field'),
+                          controller: _searchController,
+                          onChanged: ref
+                              .read(discoverFiltersProvider.notifier)
+                              .setQuery,
+                          textInputAction: TextInputAction.search,
+                          style: const TextStyle(fontSize: 15),
+                          decoration: InputDecoration(
+                            hintText: context.tr('Search photos or ideas'),
+                            contentPadding: EdgeInsets.zero,
+                            prefixIcon: const Padding(
+                              padding: EdgeInsets.only(left: 14, right: 10),
+                              child: Icon(Icons.search, size: 24),
+                            ),
+                            prefixIconConstraints: const BoxConstraints(),
+                            suffixIcon: _searchController.text.isEmpty
+                                ? null
+                                : IconButton(
+                                    tooltip: context.tr('Clear search'),
+                                    onPressed: () {
+                                      _searchController.clear();
+                                      ref
+                                          .read(
+                                            discoverFiltersProvider.notifier,
+                                          )
+                                          .setQuery('');
+                                    },
+                                    icon: const Icon(Icons.close, size: 20),
                                   ),
-                              selectedColor: ShotbookColors.primary,
-                              backgroundColor: ShotbookColors.background,
-                              side: BorderSide(
-                                color: filters.category == category
-                                    ? ShotbookColors.primary
-                                    : ShotbookColors.border,
-                              ),
-                              shape: shotbookShape,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                              ),
-                            );
-                          },
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 6),
-                      const PhoneFilter(),
+                      const SizedBox(height: 16),
                     ],
                   ),
                 ),
+              ),
+              // Chips run edge to edge, starting at the gutter.
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 36,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    itemCount: photoCategories.length,
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(width: 8),
+                    itemBuilder: (context, index) {
+                      final category = photoCategories[index];
+                      return GraphiteChip(
+                        label: context.tr(category),
+                        selected: filters.category == category,
+                        onTap: () => ref
+                            .read(discoverFiltersProvider.notifier)
+                            .setCategory(category),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              const SliverPadding(
+                padding: EdgeInsets.fromLTRB(20, 10, 20, 14),
+                sliver: SliverToBoxAdapter(child: PhoneFilter()),
               ),
               photos.when(
                 loading: () => const SliverFillRemaining(
@@ -167,8 +170,8 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
                         sliver: SliverMasonryGrid.count(
                           crossAxisCount: 2,
-                          mainAxisSpacing: 8,
-                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 12,
                           childCount: items.length,
                           itemBuilder: (context, index) {
                             final photo = items[index];

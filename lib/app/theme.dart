@@ -318,10 +318,7 @@ final shotbookDarkTheme = ThemeData(
       fontSize: 14,
       fontWeight: FontWeight.w500,
     ),
-    indicator: UnderlineTabIndicator(
-      borderSide: BorderSide(color: ShotbookColors.accent, width: 2),
-      insets: EdgeInsets.only(right: 999),
-    ),
+    indicator: ShortUnderlineIndicator(),
     indicatorSize: TabBarIndicatorSize.label,
     dividerColor: ShotbookColors.border,
     tabAlignment: TabAlignment.start,
@@ -365,3 +362,38 @@ final shotbookDarkTheme = ThemeData(
     ),
   ),
 );
+
+/// Graphite tab indicator: a 20×2 amber line under the start of the label.
+class ShortUnderlineIndicator extends Decoration {
+  const ShortUnderlineIndicator({
+    this.width = 20,
+    this.color = ShotbookColors.accent,
+  });
+
+  final double width;
+  final Color color;
+
+  @override
+  BoxPainter createBoxPainter([VoidCallback? onChanged]) =>
+      _ShortUnderlinePainter(width, color);
+}
+
+class _ShortUnderlinePainter extends BoxPainter {
+  _ShortUnderlinePainter(this.width, this.color);
+
+  final double width;
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
+    final size = configuration.size;
+    if (size == null) return;
+    final rect = Rect.fromLTWH(
+      offset.dx,
+      offset.dy + size.height - 2,
+      width,
+      2,
+    );
+    canvas.drawRect(rect, Paint()..color = color);
+  }
+}

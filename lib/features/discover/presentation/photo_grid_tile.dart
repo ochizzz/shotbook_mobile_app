@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
 import '../../../shared/widgets/photo_actions_sheet.dart';
+import '../../../shared/widgets/graphite/viewfinder_ticks.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
 import '../../../shared/widgets/source_badge.dart';
 import '../../../features/discover/domain/photo_reference.dart';
@@ -22,11 +23,11 @@ class PhotoGridTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: shotbookBorderRadius,
+      borderRadius: shotbookCardRadius,
       child: AspectRatio(
         aspectRatio: photo.imageAspectRatio,
         child: Material(
-          color: ShotbookColors.card,
+          color: ShotbookColors.placeholder,
           child: InkWell(
             key: ValueKey('photo-${photo.id}'),
             onTap: () => context.push('/photos/${photo.id}'),
@@ -41,9 +42,12 @@ class PhotoGridTile extends StatelessWidget {
                 fit: StackFit.expand,
                 children: [
                   PhotoReferenceImage(photo: photo, thumbnail: true),
+                  const ViewfinderTicks(),
+                  // Library vs member mark, where the design keeps its
+                  // corner control.
                   Positioned(
-                    left: 6,
-                    bottom: 6,
+                    right: 8,
+                    top: 8,
                     child: SourceBadge(photo: photo, compact: true),
                   ),
                 ],

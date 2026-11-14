@@ -6,6 +6,7 @@ import '../features/challenges/presentation/challenges_screen.dart';
 import '../features/pose/presentation/show_pose_screen.dart';
 import '../features/share/presentation/share_card_screen.dart';
 import '../l10n/tr.dart';
+import 'theme.dart';
 import '../features/auth/presentation/auth_screen.dart';
 import '../features/auth/presentation/update_password_screen.dart';
 import '../features/feed/presentation/create_post_screen.dart';
@@ -145,46 +146,119 @@ class _AppShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Tab 1 (Camera) is not a branch: it opens the camera over the app.
+    final selected = navigationShell.currentIndex >= 1
+        ? navigationShell.currentIndex + 1
+        : navigationShell.currentIndex;
+    void onTap(int index) {
+      if (index == 1) {
+        context.push('/shoot');
+        return;
+      }
+      final branch = index > 1 ? index - 1 : index;
+      navigationShell.goBranch(
+        branch,
+        initialLocation: branch == navigationShell.currentIndex,
+      );
+    }
+
     return Scaffold(
       body: navigationShell,
-      bottomNavigationBar: NavigationBar(
-        // Tab 1 (Camera) is not a branch: it opens the camera over the app.
-        selectedIndex: navigationShell.currentIndex >= 1
-            ? navigationShell.currentIndex + 1
-            : navigationShell.currentIndex,
-        onDestinationSelected: (index) {
-          if (index == 1) {
-            context.push('/shoot');
-            return;
-          }
-          final branch = index > 1 ? index - 1 : index;
-          navigationShell.goBranch(
-            branch,
-            initialLocation: branch == navigationShell.currentIndex,
-          );
-        },
-        destinations: [
-          NavigationDestination(
-            icon: const Icon(Icons.grid_view_outlined),
-            selectedIcon: const Icon(Icons.grid_view_rounded),
-            label: context.tr('Discover'),
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.camera_alt_outlined),
-            selectedIcon: const Icon(Icons.camera_alt_rounded),
-            label: context.tr('Camera'),
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.view_stream_outlined),
-            selectedIcon: const Icon(Icons.view_stream_rounded),
-            label: context.tr('Feed'),
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.person_outline),
-            selectedIcon: const Icon(Icons.person),
-            label: context.tr('Profile'),
-          ),
+      bottomNavigationBar: _GraphiteNavBar(
+        selected: selected,
+        onTap: onTap,
+        items: [
+          (Icons.grid_view_rounded, context.tr('Discover')),
+          (Icons.photo_camera, context.tr('Camera')),
+          (Icons.view_agenda, context.tr('Feed')),
+          (Icons.person, context.tr('Profile')),
         ],
+      ),
+    );
+  }
+}
+
+/// Graphite bottom nav: 1 px top rule, amber 28×2 indicator over the active
+/// item, 22 px icons, Onest 500 11 labels, inactive items in tertiary grey.
+class _GraphiteNavBar extends StatelessWidget {
+  const _GraphiteNavBar({
+    required this.selected,
+    required this.onTap,
+    required this.items,
+  });
+
+  final int selected;
+  final ValueChanged<int> onTap;
+  final List<(IconData, String)> items;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        color: ShotbookColors.background,
+        border: Border(top: BorderSide(color: ShotbookColors.border)),
+      ),
+      child: SafeArea(
+        top: false,
+        child: SizedBox(
+          height: 71,
+          child: Row(
+            children: [
+              for (var i = 0; i < items.length; i++)
+                Expanded(
+                  child: Semantics(
+                    button: true,
+                    selected: i == selected,
+                    label: items[i].$2,
+                    child: InkResponse(
+                      onTap: () => onTap(i),
+                      highlightShape: BoxShape.rectangle,
+                      child: Stack(
+                        alignment: Alignment.topCenter,
+                        children: [
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            curve: Curves.easeOutCubic,
+                            width: i == selected ? 28 : 0,
+                            height: 2,
+                            color: ShotbookColors.accent,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 12),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  items[i].$1,
+                                  size: 22,
+                                  color: i == selected
+                                      ? ShotbookColors.primary
+                                      : ShotbookColors.tertiary,
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  items[i].$2,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w500,
+                                    color: i == selected
+                                        ? ShotbookColors.primary
+                                        : ShotbookColors.tertiary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }

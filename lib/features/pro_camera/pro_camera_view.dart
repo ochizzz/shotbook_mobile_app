@@ -15,7 +15,7 @@ import 'widgets/zoom_control.dart';
 
 enum _Dial { iso, shutter, ev, wb, focus }
 
-const _accent = Color(0xFFFFD25A);
+const _accent = ShotbookColors.accent;
 const _timers = [0, 3, 10];
 const _flashModes = ['off', 'auto', 'on'];
 
@@ -229,7 +229,7 @@ class _ProCameraViewState extends State<ProCameraView>
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
         key: const Key('pro-camera'),
-        backgroundColor: Colors.black,
+        backgroundColor: ShotbookColors.background,
         body: SafeArea(
           child: Column(
             children: [
@@ -400,7 +400,7 @@ class _ProCameraViewState extends State<ProCameraView>
                         vertical: 3,
                       ),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
+                        borderRadius: shotbookTagRadius,
                         color: rawOn ? _accent : Colors.transparent,
                         border: Border.all(
                           width: 1.2,
@@ -412,8 +412,9 @@ class _ProCameraViewState extends State<ProCameraView>
                       child: Text(
                         'RAW',
                         style: TextStyle(
+                          fontFamily: shotbookMonoFont,
                           fontSize: 10.5,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w500,
                           letterSpacing: 0.8,
                           color: rawOn
                               ? Colors.black
@@ -524,8 +525,9 @@ class _ProCameraViewState extends State<ProCameraView>
                   '$_countdown',
                   key: const Key('pro-countdown'),
                   style: const TextStyle(
-                    fontSize: 96,
-                    fontWeight: FontWeight.w300,
+                    fontFamily: shotbookTitleFont,
+                    fontSize: 88,
+                    fontWeight: FontWeight.w400,
                     color: Colors.white,
                     shadows: [Shadow(blurRadius: 12)],
                   ),
@@ -762,17 +764,18 @@ class _ProCameraViewState extends State<ProCameraView>
         duration: const Duration(milliseconds: 160),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: shotbookTagRadius,
           color: active ? _accent : Colors.transparent,
           border: Border.all(color: active ? _accent : Colors.white38),
         ),
         child: Text(
           label,
           style: TextStyle(
+            fontFamily: shotbookMonoFont,
             fontSize: 10,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w500,
             letterSpacing: 0.6,
-            color: active ? Colors.black : Colors.white,
+            color: active ? ShotbookColors.background : Colors.white,
           ),
         ),
       ),
@@ -947,9 +950,9 @@ class _Readout extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            fontFamily: shotbookBodyFont,
+            fontFamily: shotbookMonoFont,
             fontSize: 9,
-            letterSpacing: 0.9,
+            letterSpacing: 0.6,
             color: enabled
                 ? (selected ? _accent : Colors.white38)
                 : Colors.white24,
@@ -959,7 +962,7 @@ class _Readout extends StatelessWidget {
         AnimatedDefaultTextStyle(
           duration: const Duration(milliseconds: 150),
           style: TextStyle(
-            fontFamily: shotbookBodyFont,
+            fontFamily: shotbookMonoFont,
             fontSize: 13.5,
             fontWeight: manual ? FontWeight.w700 : FontWeight.w500,
             fontFeatures: const [FontFeature.tabularFigures()],

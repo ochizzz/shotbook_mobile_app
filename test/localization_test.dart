@@ -30,10 +30,8 @@ void main() {
 
     await tester.tap(find.text('Профиль').last);
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.byKey(const Key('language-setting')));
-    await tester.tap(find.byKey(const Key('language-setting')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const Key('language-en')));
+    // RU | EN switch in the profile title row.
+    await tester.tap(find.byKey(const Key('language-switch-en')));
     await tester.pumpAndSettle();
 
     expect(find.text('Discover'), findsWidgets);

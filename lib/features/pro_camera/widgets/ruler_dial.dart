@@ -200,7 +200,7 @@ class _RulerPainter extends CustomPainter {
         text: TextSpan(
           text: text,
           style: TextStyle(
-            fontFamily: shotbookBodyFont,
+            fontFamily: shotbookMonoFont,
             fontSize: 9,
             color: Colors.white.withValues(alpha: 0.5 * alpha),
           ),
@@ -213,7 +213,7 @@ class _RulerPainter extends CustomPainter {
     if (startLabel != null) label(startLabel!, 0);
     if (endLabel != null) label(endLabel!, 1);
     final needle = Paint()
-      ..color = const Color(0xFFFFD25A).withValues(alpha: alpha)
+      ..color = ShotbookColors.accent.withValues(alpha: alpha)
       ..strokeWidth = 2
       ..strokeCap = StrokeCap.round;
     canvas.drawLine(
