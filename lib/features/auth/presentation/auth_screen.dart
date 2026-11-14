@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
 import '../../../l10n/tr.dart';
+import '../../../shared/services/friendly_error.dart';
 import '../../../shared/services/legal_links.dart';
 import '../../../shared/services/supabase_providers.dart';
 import '../application/auth_providers.dart';
@@ -108,27 +109,10 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
           break;
       }
     } catch (error) {
-      if (mounted) setState(() => _error = _friendlyAuthError(error));
+      if (mounted) setState(() => _error = friendlyError(context, error));
     } finally {
       if (mounted) setState(() => _busy = false);
     }
-  }
-
-  String _friendlyAuthError(Object error) {
-    final text = error.toString();
-    if (text.contains('over_email_send_rate_limit') ||
-        text.contains('statusCode: 429')) {
-      return context.tr(
-        'Too many emails requested. Wait a minute, then use the newest email.',
-      );
-    }
-    if (text.contains('SocketException') ||
-        text.contains('Failed host lookup')) {
-      return context.tr(
-        'Could not reach Supabase. Check your connection and project settings.',
-      );
-    }
-    return context.tr(text.replaceFirst('Exception: ', ''));
   }
 
   @override

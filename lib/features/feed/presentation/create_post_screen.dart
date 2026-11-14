@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../app/theme.dart';
 import '../../../l10n/tr.dart';
+import '../../../shared/services/friendly_error.dart';
 import '../../../shared/services/image_prep.dart';
 import '../../../shared/services/supabase_providers.dart';
 import '../../auth/application/auth_providers.dart';
@@ -177,16 +178,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
     }
   }
 
-  String _friendlyError(Object error) {
-    final value = error.toString();
-    if (value.contains('SocketException') ||
-        value.contains('Failed host lookup')) {
-      return context.tr(
-        'Could not reach Supabase. Check your connection and try again.',
-      );
-    }
-    return context.tr(value.replaceFirst('Exception: ', ''));
-  }
+  String _friendlyError(Object error) => friendlyError(context, error);
 
   @override
   Widget build(BuildContext context) {

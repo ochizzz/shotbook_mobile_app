@@ -6,6 +6,7 @@ import '../../../app/theme.dart';
 import '../../../l10n/tr.dart';
 import '../../../shared/widgets/photo_actions_sheet.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
+import '../../../shared/widgets/source_badge.dart';
 import '../application/feed_providers.dart';
 import '../domain/feed_post.dart';
 
@@ -129,7 +130,17 @@ class FeedPostCard extends StatelessWidget {
             ),
             child: Semantics(
               label: post.photo.title,
-              child: PhotoReferenceImage(photo: post.photo),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  PhotoReferenceImage(photo: post.photo),
+                  Positioned(
+                    left: 8,
+                    bottom: 8,
+                    child: SourceBadge(photo: post.photo, compact: true),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

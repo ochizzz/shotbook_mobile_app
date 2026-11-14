@@ -9,6 +9,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../app/theme.dart';
 import '../../../l10n/language_picker.dart';
 import '../../../l10n/tr.dart';
+import '../../../shared/services/friendly_error.dart';
 import '../../../shared/services/image_prep.dart';
 import '../../../shared/services/supabase_providers.dart';
 import '../../../shared/widgets/photo_actions_sheet.dart';
@@ -433,7 +434,7 @@ class _ProfileContent extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text(context.tr(error.toString()))));
+        ).showSnackBar(SnackBar(content: Text(friendlyError(context, error))));
       }
     }
   }
@@ -501,11 +502,7 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet> {
       });
     } catch (error) {
       if (mounted) {
-        setState(
-          () => _error = context.tr(
-            error.toString().replaceFirst('FormatException: ', ''),
-          ),
-        );
+        setState(() => _error = friendlyError(context, error));
       }
     }
   }
@@ -562,11 +559,7 @@ class _EditProfileSheetState extends ConsumerState<_EditProfileSheet> {
       if (mounted) Navigator.of(context).pop();
     } catch (error) {
       if (mounted) {
-        setState(
-          () => _error = context.tr(
-            error.toString().replaceFirst('Exception: ', ''),
-          ),
-        );
+        setState(() => _error = friendlyError(context, error));
       }
     } finally {
       if (mounted) setState(() => _busy = false);

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/theme.dart';
 import '../../../l10n/tr.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
+import '../../../shared/widgets/source_badge.dart';
 import '../../discover/application/discover_providers.dart';
 import '../../discover/data/seed_photo_references.dart';
 import '../../discover/domain/photo_reference.dart';
@@ -122,6 +123,15 @@ class _PhotoDetailScreenState extends ConsumerState<PhotoDetailScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SourceBadge(photo: photo),
+                  const SizedBox(height: 6),
+                  Text(
+                    sourceExplanation(context, photo),
+                    key: const Key('source-explanation'),
+                    style: Theme.of(context).textTheme.bodySmall
+                        ?.copyWith(color: ShotbookColors.secondary),
+                  ),
+                  const SizedBox(height: 14),
                   Text(
                     '${context.tr(photo.category)} · ${context.tr('Views: {n}', {'n': '$views'})}',
                     key: const Key('photo-views'),

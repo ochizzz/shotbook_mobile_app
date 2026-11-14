@@ -173,4 +173,35 @@ const Map<String, String> ruStringsCore = {
   'Press and hold any photo to save it, open it or repeat the shot.': 'Нажмите и удерживайте любое фото, чтобы сохранить, открыть или повторить кадр.',
   'Repeat the shot': 'Повтори кадр',
   'The camera shows the reference as a see-through guide. Line it up and shoot.': 'Камера показывает эталон полупрозрачным слоем. Совместите кадр и снимайте.',
+
+  // Friendly errors
+  'Confirm your email first: open the link in the letter we sent.':
+      'Сначала подтвердите email: откройте ссылку из письма.',
+  'Could not sign in. Try again.': 'Не удалось войти. Попробуйте ещё раз.',
+  'No connection. Check the internet and try again.':
+      'Нет соединения. Проверьте интернет и попробуйте снова.',
+  'Sign-up is closed for now.': 'Регистрация временно закрыта.',
+  'The image could not be uploaded. Try again.':
+      'Не удалось загрузить фото. Попробуйте ещё раз.',
+  'The image is too large. Choose a smaller one.':
+      'Фото слишком большое. Выберите поменьше.',
+  'The new password must differ from the old one.':
+      'Новый пароль должен отличаться от старого.',
+  'The password is too weak. Use at least 6 characters, mixing letters and numbers.':
+      'Слишком простой пароль. Минимум 6 символов, буквы и цифры.',
+  'This account is blocked for breaking the rules.':
+      'Аккаунт заблокирован за нарушение правил.',
+  'Too many attempts. Wait a minute and try again.':
+      'Слишком много попыток. Подождите минуту и попробуйте снова.',
+  'Wrong email or password.': 'Неверный email или пароль.',
+  'You do not have permission to do this.': 'У вас нет прав на это действие.',
+  'Your session has ended. Sign in again.':
+      'Сессия закончилась. Войдите снова.',
+
+  // Source badges
+  'SHOTBOOK library': 'База SHOTBOOK',
+  'Member post': 'Пост автора',
+  'A reference from the SHOTBOOK library. It may have been shot on a professional camera; the settings show how to get close on a phone.': 'Референс из базы SHOTBOOK. Он мог быть снят на профессиональную камеру; настройки подсказывают, как приблизиться к нему на телефоне.',
+  'Shot and shared by a SHOTBOOK member.':
+      'Снято и опубликовано участником SHOTBOOK.',
 };

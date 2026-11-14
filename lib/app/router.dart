@@ -54,6 +54,10 @@ GoRouter createAppRouter() {
                 routes: [
                   GoRoute(
                     path: ':deviceId',
+                    // Opens over the whole app so photo pages (outside the
+                    // tab shell) can link to a phone without breaking the
+                    // navigator stack.
+                    parentNavigatorKey: _rootNavigatorKey,
                     builder: (context, state) => CameraDeviceScreen(
                       deviceId: state.pathParameters['deviceId']!,
                     ),

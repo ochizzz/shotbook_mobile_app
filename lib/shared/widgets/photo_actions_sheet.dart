@@ -9,6 +9,7 @@ import '../../features/discover/domain/photo_reference.dart';
 import '../../features/safety/presentation/safety_actions.dart';
 import '../../features/saved/application/saved_photo_provider.dart';
 import '../../l10n/tr.dart';
+import 'source_badge.dart';
 
 /// An extra action shown in the long-press menu, e.g. "Delete post".
 class PhotoSheetAction {
@@ -136,6 +137,11 @@ class _PhotoActionsSheet extends ConsumerWidget {
               style: textTheme.bodySmall?.copyWith(
                 color: ShotbookColors.secondary,
               ),
+            ),
+            const SizedBox(height: 10),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: SourceBadge(photo: photo),
             ),
             const SizedBox(height: 10),
             const Divider(height: 1),

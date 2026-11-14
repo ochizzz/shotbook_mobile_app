@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/theme.dart';
 import '../../../shared/widgets/photo_actions_sheet.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
+import '../../../shared/widgets/source_badge.dart';
 import '../../../features/discover/domain/photo_reference.dart';
 
 /// A clean photo block: no text, no buttons. Tap opens the photo, a long
@@ -36,7 +37,17 @@ class PhotoGridTile extends StatelessWidget {
             ),
             child: Semantics(
               label: photo.title,
-              child: PhotoReferenceImage(photo: photo, thumbnail: true),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  PhotoReferenceImage(photo: photo, thumbnail: true),
+                  Positioned(
+                    left: 6,
+                    bottom: 6,
+                    child: SourceBadge(photo: photo, compact: true),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

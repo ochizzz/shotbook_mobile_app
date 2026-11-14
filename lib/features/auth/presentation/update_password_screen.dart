@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../l10n/tr.dart';
+import '../../../shared/services/friendly_error.dart';
 import '../../../shared/services/supabase_providers.dart';
 
 class UpdatePasswordScreen extends ConsumerStatefulWidget {
@@ -59,11 +60,7 @@ class _UpdatePasswordScreenState extends ConsumerState<UpdatePasswordScreen> {
       }
     } catch (error) {
       if (mounted) {
-        setState(
-          () => _error = context.tr(
-            error.toString().replaceFirst('Exception: ', ''),
-          ),
-        );
+        setState(() => _error = friendlyError(context, error));
       }
     } finally {
       if (mounted) setState(() => _busy = false);
