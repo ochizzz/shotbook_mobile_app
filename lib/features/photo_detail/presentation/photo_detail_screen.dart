@@ -1,4 +1,7 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -6,6 +9,7 @@ import '../../../app/theme.dart';
 import '../../../l10n/tr.dart';
 import '../../../shared/services/supabase_providers.dart';
 import '../../../shared/services/unsplash_tracking.dart';
+import '../../../shared/widgets/graphite/graphite.dart';
 import '../../../shared/widgets/photo_credit.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
 import '../../../shared/widgets/source_badge.dart';
@@ -13,8 +17,21 @@ import '../../discover/application/discover_providers.dart';
 import '../../discover/data/seed_photo_references.dart';
 import '../../discover/domain/photo_reference.dart';
 import '../../saved/application/saved_photo_provider.dart';
+import '../../share/domain/shooting_summary.dart';
 import 'metadata_section.dart';
 
+/// Camera settings keys whose numeric values are shown monospaced.
+const _shootingKeys = {
+  'Focal length',
+  'ISO',
+  'Shutter speed',
+  'Aperture',
+  'Exposure compensation',
+};
+
+/// Recipe detail (Penpot "2 · Recipe detail"): full-bleed photo with the
+/// shooting line, title, pose / camera / editing rows and a sticky bar with
+/// "Show pose" and share.
 class PhotoDetailScreen extends ConsumerStatefulWidget {
   const PhotoDetailScreen({required this.photoId, super.key});
 
@@ -91,28 +108,19 @@ class _PhotoDetailScreenState extends ConsumerState<PhotoDetailScreen> {
     final isSaved =
         savedIds.contains(photo.id) ||
         (photo.remoteId != null && savedIds.contains(photo.remoteId));
+    final textTheme = Theme.of(context).textTheme;
+    final note = textTheme.bodySmall?.copyWith(color: ShotbookColors.secondary);
 
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            expandedHeight: 380,
-            pinned: false,
-            backgroundColor: ShotbookColors.background,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Hero(
-                tag: 'photo-image-${photo.id}',
-                child: SizedBox.expand(
-                  child: PhotoReferenceImage(photo: photo),
-                ),
-              ),
-            ),
-            actions: [
-              IconButton(
-                tooltip: isSaved
-                    ? context.tr('Remove saved frame')
-                    : context.tr('Save frame'),
-                onPressed: () {
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light,
+      child: Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: _RecipeHero(
+                photo: photo,
+                isSaved: isSaved,
+                onToggleSave: () {
                   if (!isSaved) {
                     trackUnsplashUse(ref.read(supabaseClientProvider), photo);
                   }
@@ -120,101 +128,310 @@ class _PhotoDetailScreenState extends ConsumerState<PhotoDetailScreen> {
                       .read(savedPhotoIdsProvider.notifier)
                       .toggle(photo.remoteId ?? photo.id);
                 },
-                icon: Icon(isSaved ? Icons.bookmark : Icons.bookmark_border),
               ),
-              const SizedBox(width: 8),
-            ],
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.fromLTRB(22, 10, 22, 40),
-            sliver: SliverToBoxAdapter(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SourceBadge(photo: photo),
-                  const SizedBox(height: 6),
-                  Text(
-                    sourceExplanation(context, photo),
-                    key: const Key('source-explanation'),
-                    style: Theme.of(context).textTheme.bodySmall
-                        ?.copyWith(color: ShotbookColors.secondary),
-                  ),
-                  const SizedBox(height: 14),
-                  Text(
-                    '${context.tr(photo.category)} · ${context.tr('Views: {n}', {'n': '$views'})}',
-                    key: const Key('photo-views'),
-                    style: Theme.of(context).textTheme.labelLarge
-                        ?.copyWith(color: ShotbookColors.secondary),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    photo.title,
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  const SizedBox(height: 9),
-                  Text(
-                    photo.description,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: ShotbookColors.secondary,
-                      height: 1.5,
-                    ),
-                  ),
-                  const SizedBox(height: 18),
-                  OutlinedButton.icon(
-                    key: const Key('repeat-shot'),
-                    onPressed: () => context.push('/photos/${photo.id}/repeat'),
-                    icon: const Icon(Icons.filter_center_focus),
-                    label: Text(context.tr('Repeat this shot')),
-                  ),
-                  MetadataSection(title: 'Pose', values: photo.poseData),
-                  MetadataSection(
-                    title: 'Camera settings',
-                    values: photo.cameraSettings,
-                  ),
-                  if (photo.sourceType == 'curated') ...[
-                    Text(
-                      context.tr(
-                        'Suggested settings to repeat the shot on this phone, not the original camera data.',
-                      ),
-                      style: Theme.of(context).textTheme.bodySmall
-                          ?.copyWith(color: ShotbookColors.secondary),
-                    ),
-                    if (photo.deviceId != null)
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: TextButton.icon(
-                          key: const Key('open-device-guide'),
-                          style: TextButton.styleFrom(padding: EdgeInsets.zero),
-                          onPressed: () =>
-                              context.push('/camera/${photo.deviceId}'),
-                          icon: const Icon(Icons.camera_alt_outlined, size: 18),
-                          label: Text(
-                            context.tr('Camera guide: {device}', {
-                              'device': photo.device ?? '',
-                            }),
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
+              sliver: SliverToBoxAdapter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            context.tr(photo.category).toUpperCase(),
+                            style: ShotbookText.kicker,
                           ),
                         ),
+                        const SizedBox(width: 12),
+                        Text(
+                          context.tr('Views: {n}', {
+                            'n': '$views',
+                          }).toUpperCase(),
+                          key: const Key('photo-views'),
+                          style: ShotbookText.section,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Text(photo.title, style: textTheme.headlineSmall),
+                    const SizedBox(height: 12),
+                    Text(
+                      photo.description,
+                      style: textTheme.bodyLarge?.copyWith(
+                        color: ShotbookColors.secondary,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    OutlinedButton.icon(
+                      key: const Key('repeat-shot'),
+                      onPressed: () =>
+                          context.push('/photos/${photo.id}/repeat'),
+                      icon: const Icon(Icons.filter_center_focus, size: 20),
+                      label: Text(context.tr('Repeat this shot')),
+                    ),
+                    MetadataSection(title: 'Pose', values: photo.poseData),
+                    MetadataSection(
+                      title: 'Camera settings',
+                      values: photo.cameraSettings,
+                      monoKeys: _shootingKeys,
+                    ),
+                    if (photo.sourceType == 'curated') ...[
+                      if (photo.deviceId != null)
+                        _DeviceGuideRow(
+                          deviceId: photo.deviceId!,
+                          device: photo.device ?? '',
+                        ),
+                      const SizedBox(height: 12),
+                      Text(
+                        context.tr(
+                          'Suggested settings to repeat the shot on this phone, not the original camera data.',
+                        ),
+                        style: note,
+                      ),
+                    ],
+                    MetadataSection(
+                      title: 'Color / editing',
+                      values: photo.editingSettings,
+                    ),
+                    const SizedBox(height: 28),
+                    SectionLabel(context.tr('Source')),
+                    const SizedBox(height: 12),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: SourceBadge(photo: photo),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      sourceExplanation(context, photo),
+                      key: const Key('source-explanation'),
+                      style: note,
+                    ),
+                    const SizedBox(height: 12),
+                    if (photo.sourceType == 'curated')
+                      PhotoCredit(photo: photo)
+                    else
+                      Text(
+                        context.tr('Shared by a SHOTBOOK photographer'),
+                        style: note,
                       ),
                   ],
-                  MetadataSection(
-                    title: 'Color / editing',
-                    values: photo.editingSettings,
-                  ),
-                  const SizedBox(height: 18),
-                  if (photo.sourceType == 'curated')
-                    PhotoCredit(photo: photo)
-                  else
-                    Text(
-                      context.tr('Shared by a SHOTBOOK photographer'),
-                      style: Theme.of(context).textTheme.bodySmall
-                          ?.copyWith(color: ShotbookColors.secondary),
-                    ),
-                ],
+                ),
               ),
+            ),
+          ],
+        ),
+        bottomNavigationBar: _RecipeActionBar(photoId: photo.id),
+      ),
+    );
+  }
+}
+
+/// 300 px photo with back and bookmark buttons, viewfinder ticks and the
+/// shooting line ("ISO 100 · 1/60 · f1.8 · 26 mm") in the bottom-left.
+class _RecipeHero extends StatelessWidget {
+  const _RecipeHero({
+    required this.photo,
+    required this.isSaved,
+    required this.onToggleSave,
+  });
+
+  final PhotoReference photo;
+  final bool isSaved;
+  final VoidCallback onToggleSave;
+
+  static const height = 300.0;
+
+  @override
+  Widget build(BuildContext context) {
+    // Buttons sit 8 px under the status bar (36 px from the top in Penpot).
+    final buttonsTop = math.max(MediaQuery.paddingOf(context).top, 28) + 8;
+    final exif = shootingSummary(photo);
+    return SizedBox(
+      height: height,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Hero(
+            tag: 'photo-image-${photo.id}',
+            child: ColoredBox(
+              color: ShotbookColors.placeholder,
+              child: PhotoReferenceImage(photo: photo),
+            ),
+          ),
+          // Ticks frame the area under the buttons.
+          Positioned(
+            left: 0,
+            right: 0,
+            top: buttonsTop + 40,
+            bottom: 0,
+            child: const ViewfinderTicks(inset: 16, length: 14),
+          ),
+          if (exif != null)
+            Positioned(
+              left: 24,
+              right: 48,
+              bottom: 24,
+              child: Text(
+                exif,
+                key: const Key('photo-exif'),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: ShotbookText.data.copyWith(
+                  // Keeps the line readable over bright photos.
+                  shadows: const [
+                    Shadow(color: Color(0x99000000), blurRadius: 6),
+                  ],
+                ),
+              ),
+            ),
+          Positioned(
+            left: 12,
+            top: buttonsTop - 4,
+            child: _OverlayButton(
+              icon: Icons.arrow_back,
+              tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+              onPressed: () =>
+                  context.canPop() ? context.pop() : context.go('/discover'),
+            ),
+          ),
+          Positioned(
+            right: 12,
+            top: buttonsTop - 4,
+            child: _OverlayButton(
+              icon: isSaved ? Icons.bookmark : Icons.bookmark_border,
+              tooltip: isSaved
+                  ? context.tr('Remove saved frame')
+                  : context.tr('Save frame'),
+              onPressed: onToggleSave,
             ),
           ),
         ],
       ),
     );
   }
+}
+
+/// 40×40 button over the photo: bg at 72 %, radius 10, icon 24 (48 px tap
+/// target).
+class _OverlayButton extends StatelessWidget {
+  const _OverlayButton({
+    required this.icon,
+    required this.tooltip,
+    required this.onPressed,
+  });
+
+  final IconData icon;
+  final String tooltip;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) => IconButton(
+    tooltip: tooltip,
+    onPressed: onPressed,
+    iconSize: 24,
+    style: IconButton.styleFrom(
+      backgroundColor: ShotbookColors.background.withValues(alpha: 0.72),
+      foregroundColor: ShotbookColors.primary,
+      fixedSize: const Size(40, 40),
+      minimumSize: const Size(40, 40),
+      padding: EdgeInsets.zero,
+      shape: shotbookCardShape,
+    ),
+    icon: Icon(icon),
+  );
+}
+
+/// "Camera guide: Xiaomi 15" row that opens the phone's camera guide.
+class _DeviceGuideRow extends StatelessWidget {
+  const _DeviceGuideRow({required this.deviceId, required this.device});
+
+  final String deviceId;
+  final String device;
+
+  @override
+  Widget build(BuildContext context) => InkWell(
+    key: const Key('open-device-guide'),
+    onTap: () => context.push('/camera/$deviceId'),
+    child: Container(
+      constraints: const BoxConstraints(minHeight: 44),
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      decoration: const BoxDecoration(
+        border: Border(bottom: BorderSide(color: ShotbookColors.border)),
+      ),
+      child: Row(
+        children: [
+          const Icon(
+            Icons.photo_camera_outlined,
+            size: 18,
+            color: ShotbookColors.accent,
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              context.tr('Camera guide: {device}', {'device': device}),
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: ShotbookColors.primary,
+              ),
+            ),
+          ),
+          const Icon(
+            Icons.chevron_right,
+            size: 20,
+            color: ShotbookColors.tertiary,
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+/// Sticky 88 px bar: "Show pose" and an outlined share button.
+class _RecipeActionBar extends StatelessWidget {
+  const _RecipeActionBar({required this.photoId});
+
+  final String photoId;
+
+  @override
+  Widget build(BuildContext context) => DecoratedBox(
+    decoration: const BoxDecoration(
+      color: ShotbookColors.background,
+      border: Border(top: BorderSide(color: ShotbookColors.border)),
+    ),
+    child: SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 19, 20, 16),
+        child: Row(
+          children: [
+            Expanded(
+              child: FilledButton(
+                key: const Key('show-pose'),
+                onPressed: () => context.push('/photos/$photoId/pose'),
+                child: Text(context.tr('Show pose')),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Tooltip(
+              message: context.tr('Share'),
+              child: OutlinedButton(
+                key: const Key('share-recipe'),
+                onPressed: () => context.push('/photos/$photoId/share'),
+                style: OutlinedButton.styleFrom(
+                  fixedSize: const Size(56, 52),
+                  minimumSize: const Size(56, 52),
+                  padding: EdgeInsets.zero,
+                ),
+                child: const Icon(Icons.share_outlined, size: 24),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }

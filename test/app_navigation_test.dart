@@ -29,11 +29,11 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('10 MP periscope · 230 mm'), findsOneWidget);
     await tester.scrollUntilVisible(
-      find.text('Shot recipes for this phone'),
+      find.text('SHOT RECIPES FOR THIS PHONE'),
       160,
       scrollable: find.byType(Scrollable).first,
     );
-    expect(find.text('Shot recipes for this phone'), findsOneWidget);
+    expect(find.text('SHOT RECIPES FOR THIS PHONE'), findsOneWidget);
     await tester.pageBack();
     await tester.pumpAndSettle();
 

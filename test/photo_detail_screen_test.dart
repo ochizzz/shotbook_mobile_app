@@ -21,9 +21,10 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('photo-portrait-01')));
     await tester.pumpAndSettle();
 
-    expect(find.text('Pose'), findsOneWidget);
-    expect(find.text('Camera settings'), findsOneWidget);
-    expect(find.text('Color / editing'), findsOneWidget);
+    // Graphite section labels are mono caps.
+    expect(find.text('POSE'), findsOneWidget);
+    expect(find.text('CAMERA SETTINGS'), findsOneWidget);
+    expect(find.text('COLOR / EDITING'), findsOneWidget);
     expect(find.text('Freckled close-up'), findsOneWidget);
     expect(find.text('Light'), findsOneWidget);
     expect(find.text('Focal length'), findsOneWidget);

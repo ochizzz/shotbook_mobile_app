@@ -27,7 +27,8 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(find.text('XIAOMI'), findsOneWidget);
     await tester.scrollUntilVisible(
-      find.text('Shot recipes for this phone'),
+      // Graphite section labels are mono caps.
+      find.text('SHOT RECIPES FOR THIS PHONE'),
       200,
       scrollable: find
           .descendant(
@@ -45,6 +46,6 @@ void main() {
     await tester.tap(ex.first);
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
-    expect(find.text('Camera settings'), findsOneWidget);
+    expect(find.text('CAMERA SETTINGS'), findsOneWidget);
   });
 }

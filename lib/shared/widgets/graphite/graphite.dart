@@ -49,17 +49,22 @@ class MetaRow extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 110,
+          // Label takes what it needs (up to ~40 %), the value the rest:
+          // long words like "Экспокоррекция" never break mid-word.
+          Flexible(
+            flex: 2,
             child: Text(
               label,
+              softWrap: true,
               style: const TextStyle(
                 fontSize: 14,
                 color: ShotbookColors.secondary,
               ),
             ),
           ),
+          const SizedBox(width: 16),
           Expanded(
+            flex: 3,
             child: Text(
               value,
               textAlign: TextAlign.end,
