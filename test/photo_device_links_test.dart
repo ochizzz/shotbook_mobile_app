@@ -16,6 +16,8 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const ValueKey('photo-portrait-01')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('photo-portrait-01')));
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.byKey(const Key('open-device-guide')));

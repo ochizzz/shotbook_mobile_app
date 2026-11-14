@@ -17,13 +17,15 @@ void main() {
 
     expect(find.text('Discover'), findsWidgets);
 
-    await tester.tap(find.text('Camera').last);
+    // Phones live in a small dropdown on Discover.
+    await tester.tap(find.byKey(const Key('phone-filter')));
     await tester.pumpAndSettle();
-    expect(find.text('Camera guide'), findsOneWidget);
-    await tester.enterText(find.byType(TextField), 'S23 Ultra');
+    await tester.enterText(find.byKey(const Key('phone-search')), 'S23 Ultra');
     await tester.pumpAndSettle();
-    expect(find.text('Galaxy S23 Ultra'), findsOneWidget);
-    await tester.tap(find.byKey(const Key('camera-device-samsung-s23-ultra')));
+    await tester.tap(find.byKey(const Key('phone-option-samsung-s23-ultra')));
+    await tester.pumpAndSettle();
+    expect(find.text('Samsung Galaxy S23 Ultra'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('phone-filter-guide')));
     await tester.pumpAndSettle();
     expect(find.text('10 MP periscope · 230 mm'), findsOneWidget);
     await tester.scrollUntilVisible(
@@ -32,6 +34,13 @@ void main() {
       scrollable: find.byType(Scrollable).first,
     );
     expect(find.text('Shot recipes for this phone'), findsOneWidget);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+
+    // The Camera tab opens the camera full screen.
+    await tester.tap(find.text('Camera').last);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('camera-unavailable')), findsOneWidget);
     await tester.pageBack();
     await tester.pumpAndSettle();
 

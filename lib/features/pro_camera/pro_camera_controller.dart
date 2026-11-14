@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
@@ -185,11 +186,16 @@ class ProCameraController extends ChangeNotifier {
 
   Future<bool> loadCapabilities() async {
     try {
-      final map = await _channel.invokeMapMethod<Object?, Object?>(
-        'capabilities',
-      );
+      final map = await _channel
+          .invokeMapMethod<Object?, Object?>('capabilities')
+          // A phone that never answers gets the basic camera.
+          .timeout(const Duration(seconds: 3));
       capabilities = ProCameraCapabilities.fromMap(map ?? const {});
     } on MissingPluginException {
+      capabilities = const ProCameraCapabilities(available: false);
+    } on TimeoutException {
+      capabilities = const ProCameraCapabilities(available: false);
+    } on PlatformException {
       capabilities = const ProCameraCapabilities(available: false);
     }
     notifyListeners();

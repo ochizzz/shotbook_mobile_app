@@ -8,6 +8,7 @@ import '../../../l10n/tr.dart';
 import '../application/discover_providers.dart';
 import '../data/seed_photo_references.dart';
 import 'discover_empty_state.dart';
+import 'phone_filter.dart';
 import 'photo_grid_tile.dart';
 
 class DiscoverScreen extends ConsumerStatefulWidget {
@@ -140,6 +141,8 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                           },
                         ),
                       ),
+                      const SizedBox(height: 6),
+                      const PhoneFilter(),
                     ],
                   ),
                 ),

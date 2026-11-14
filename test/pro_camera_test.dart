@@ -122,12 +122,14 @@ void main() {
 
     expect(find.text('ISO'), findsOneWidget);
     expect(find.byKey(const Key('pro-apply-recipe')), findsOneWidget);
-    final raw = tester.widget<Switch>(find.byKey(const Key('pro-raw')));
-    expect(raw.onChanged, isNull, reason: 'RAW unavailable on this phone');
+    final raw = tester.widget<GestureDetector>(
+      find.byKey(const Key('pro-raw')),
+    );
+    expect(raw.onTap, isNull, reason: 'RAW unavailable on this phone');
     expect(calls, containsAll(['capabilities', 'open', 'setControls']));
 
     await tester.tap(find.byKey(const Key('pro-apply-recipe')));
-    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 60));
     expect(calls.where((c) => c == 'setControls').length, greaterThan(1));
   });
 }

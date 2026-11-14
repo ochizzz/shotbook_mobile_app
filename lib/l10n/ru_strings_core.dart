@@ -213,7 +213,8 @@ const Map<String, String> ruStringsCore = {
   // Pro camera
   'Also save RAW (DNG)': 'Сохранять также RAW (DNG)',
   'Apply photo settings': 'Применить настройки кадра',
-  'Exposure compensation works with automatic ISO and shutter.': 'Экспокоррекция работает при автоматических ISO и выдержке.',
+  'Exposure compensation works with automatic ISO and shutter.':
+      'Экспокоррекция работает при автоматических ISO и выдержке.',
   'FOCUS': 'ФОКУС',
   'GUIDE': 'ЭТАЛОН',
   'Grid': 'Сетка',
@@ -224,15 +225,24 @@ const Map<String, String> ruStringsCore = {
   'WB': 'ББ',
   'near': 'близко',
   'Saved to SHOTBOOK in your gallery.': 'Сохранено в галерею, альбом SHOTBOOK.',
-  'Saved to SHOTBOOK in your gallery: JPEG + RAW.': 'Сохранено в галерею, альбом SHOTBOOK: JPEG + RAW.',
+  'Saved to SHOTBOOK in your gallery: JPEG + RAW.':
+      'Сохранено в галерею, альбом SHOTBOOK: JPEG + RAW.',
   'Settings applied. ISO and shutter stay automatic on this phone or recipe.': 'Настройки применены. ISO и выдержка остаются автоматическими для этого телефона или рецепта.',
   'Settings from the photo applied.': 'Настройки кадра применены.',
-  'This phone does not give RAW to other apps': 'Этот телефон не даёт RAW сторонним приложениям',
-  'This photo has no fixed settings: the camera stays on auto.': 'У этого фото нет точных настроек: камера остаётся в авторежиме.',
+  'This phone does not give RAW to other apps':
+      'Этот телефон не даёт RAW сторонним приложениям',
+  'This photo has no fixed settings: the camera stays on auto.':
+      'У этого фото нет точных настроек: камера остаётся в авторежиме.',
   'Auto': 'Авто',
   'Tungsten': 'Лампа',
   'Fluorescent': 'Флуоресц.',
   'Daylight': 'Дневной',
   'Cloudy': 'Облачно',
   'Shade': 'Тень',
+
+  // Camera tab, phone filter
+  'The SHOTBOOK camera works on Android for now. Open a photo and use "Repeat this shot" to shoot with a guide.': 'Камера SHOTBOOK пока работает на Android. Откройте фото и нажмите «Повторить кадр», чтобы снимать с эталоном.',
+  'All phones': 'Все телефоны',
+  'The number is how many recipes are written for that phone.':
+      'Число — сколько рецептов написано для этого телефона.',
 };

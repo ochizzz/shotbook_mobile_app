@@ -56,16 +56,26 @@ void main() {
     const tile = ValueKey('photo-portrait-01');
 
     // Cards carry no buttons: saving lives in the long-press menu.
+    await tester.ensureVisible(find.byKey(tile));
+    await tester.pumpAndSettle();
     await tester.longPress(find.byKey(tile));
     await tester.pumpAndSettle();
     expect(find.text('Freckled close-up'), findsOneWidget);
     expect(find.text('Repeat this shot'), findsOneWidget);
     await tester.tap(find.byKey(const Key('sheet-save')));
     await tester.pumpAndSettle();
+    // Back to the top, where the Saved button lives.
+    await tester.drag(
+      find.byType(CustomScrollView).first,
+      const Offset(0, 3000),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('open-saved')));
     await tester.pumpAndSettle();
     expect(find.byKey(tile), findsOneWidget);
 
+    await tester.ensureVisible(find.byKey(tile));
+    await tester.pumpAndSettle();
     await tester.longPress(find.byKey(tile));
     await tester.pumpAndSettle();
     expect(find.text('Remove saved frame'), findsOneWidget);

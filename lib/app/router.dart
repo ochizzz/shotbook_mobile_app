@@ -9,6 +9,7 @@ import '../features/feed/presentation/create_post_screen.dart';
 import '../features/feed/presentation/feed_screen.dart';
 import '../features/discover/presentation/discover_screen.dart';
 import '../features/photo_detail/presentation/photo_detail_screen.dart';
+import '../features/pro_camera/shoot_screen.dart';
 import '../features/profile/presentation/profile_screen.dart';
 import '../features/repeat_shot/presentation/repeat_shot_screen.dart';
 import '../features/saved/presentation/saved_photos_screen.dart';
@@ -49,26 +50,6 @@ GoRouter createAppRouter() {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/camera',
-                builder: (context, state) => const CameraScreen(),
-                routes: [
-                  GoRoute(
-                    path: ':deviceId',
-                    // Opens over the whole app so photo pages (outside the
-                    // tab shell) can link to a phone without breaking the
-                    // navigator stack.
-                    parentNavigatorKey: _rootNavigatorKey,
-                    builder: (context, state) => CameraDeviceScreen(
-                      deviceId: state.pathParameters['deviceId']!,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
                 path: '/feed',
                 builder: (context, state) => const FeedScreen(),
               ),
@@ -85,6 +66,18 @@ GoRouter createAppRouter() {
         ],
       ),
       GoRoute(path: '/auth', builder: (context, state) => const AuthScreen()),
+      // The Camera tab opens the camera full screen, without the tab bar.
+      GoRoute(path: '/shoot', builder: (context, state) => const ShootScreen()),
+      // All phones with their camera guides (opened from Discover).
+      GoRoute(
+        path: '/phones',
+        builder: (context, state) => const CameraScreen(),
+      ),
+      GoRoute(
+        path: '/camera/:deviceId',
+        builder: (context, state) =>
+            CameraDeviceScreen(deviceId: state.pathParameters['deviceId']!),
+      ),
       GoRoute(
         path: '/settings',
         builder: (context, state) => const SettingsScreen(),
@@ -138,11 +131,21 @@ class _AppShell extends StatelessWidget {
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: NavigationBar(
-        selectedIndex: navigationShell.currentIndex,
-        onDestinationSelected: (index) => navigationShell.goBranch(
-          index,
-          initialLocation: index == navigationShell.currentIndex,
-        ),
+        // Tab 1 (Camera) is not a branch: it opens the camera over the app.
+        selectedIndex: navigationShell.currentIndex >= 1
+            ? navigationShell.currentIndex + 1
+            : navigationShell.currentIndex,
+        onDestinationSelected: (index) {
+          if (index == 1) {
+            context.push('/shoot');
+            return;
+          }
+          final branch = index > 1 ? index - 1 : index;
+          navigationShell.goBranch(
+            branch,
+            initialLocation: branch == navigationShell.currentIndex,
+          );
+        },
         destinations: [
           NavigationDestination(
             icon: const Icon(Icons.grid_view_outlined),

@@ -17,6 +17,7 @@ List<PhotoReference> filterPhotoReferences(
   Iterable<PhotoReference> photos, {
   String? category,
   String query = '',
+  String? deviceId,
 }) {
   final normalizedCategory = category == null || category == 'All'
       ? null
@@ -32,7 +33,8 @@ List<PhotoReference> filterPhotoReferences(
                 .toLowerCase();
         final matchesQuery =
             normalizedQuery.isEmpty || searchableText.contains(normalizedQuery);
-        return matchesCategory && matchesQuery;
+        final matchesDevice = deviceId == null || photo.deviceId == deviceId;
+        return matchesCategory && matchesQuery && matchesDevice;
       })
       .toList(growable: false);
 }

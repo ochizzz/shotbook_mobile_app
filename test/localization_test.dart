@@ -16,9 +16,10 @@ void main() {
     expect(find.text('Обзор'), findsWidgets);
     expect(find.text('Find a frame'), findsNothing);
 
+    // The Camera tab opens the camera itself (here: the non-Android notice).
     await tester.tap(find.text('Камера').last);
     await tester.pumpAndSettle();
-    expect(find.text('Гид по камере'), findsOneWidget);
+    expect(find.byKey(const Key('camera-unavailable')), findsOneWidget);
   });
 
   testWidgets('language can be switched in profile settings and is saved', (

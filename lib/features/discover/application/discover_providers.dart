@@ -50,20 +50,33 @@ final filteredPhotoReferencesProvider =
               photos,
               category: filters.category,
               query: filters.query,
+              deviceId: filters.deviceId,
             ),
           );
     });
 
 class DiscoverFiltersState {
-  const DiscoverFiltersState({this.category = 'All', this.query = ''});
+  const DiscoverFiltersState({
+    this.category = 'All',
+    this.query = '',
+    this.deviceId,
+  });
 
   final String category;
   final String query;
 
-  DiscoverFiltersState copyWith({String? category, String? query}) {
+  /// Only recipes written for this phone; null shows every phone.
+  final String? deviceId;
+
+  DiscoverFiltersState copyWith({
+    String? category,
+    String? query,
+    String? Function()? deviceId,
+  }) {
     return DiscoverFiltersState(
       category: category ?? this.category,
       query: query ?? this.query,
+      deviceId: deviceId == null ? this.deviceId : deviceId(),
     );
   }
 }
@@ -78,6 +91,10 @@ class DiscoverFiltersNotifier extends Notifier<DiscoverFiltersState> {
 
   void setQuery(String query) {
     state = state.copyWith(query: query);
+  }
+
+  void setDevice(String? deviceId) {
+    state = state.copyWith(deviceId: () => deviceId);
   }
 
   void clear() {
