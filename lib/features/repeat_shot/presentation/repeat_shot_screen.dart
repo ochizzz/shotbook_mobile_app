@@ -6,6 +6,8 @@ import 'package:gal/gal.dart';
 
 import '../../../app/theme.dart';
 import '../../../l10n/tr.dart';
+import '../../../shared/services/supabase_providers.dart';
+import '../../../shared/services/unsplash_tracking.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
 import '../../discover/application/discover_providers.dart';
 import '../../discover/data/seed_photo_references.dart';
@@ -32,14 +34,20 @@ class RepeatShotScreen extends ConsumerWidget {
         ),
       );
     }
-    return _RepeatShotView(photo: photo);
+    return _RepeatShotView(
+      photo: photo,
+      onOpened: () => trackUnsplashUse(ref.read(supabaseClientProvider), photo),
+    );
   }
 }
 
 class _RepeatShotView extends StatefulWidget {
-  const _RepeatShotView({required this.photo});
+  const _RepeatShotView({required this.photo, required this.onOpened});
 
   final PhotoReference photo;
+
+  /// Called once when the screen opens (counts as using the photo).
+  final VoidCallback onOpened;
 
   @override
   State<_RepeatShotView> createState() => _RepeatShotViewState();
@@ -59,6 +67,7 @@ class _RepeatShotViewState extends State<_RepeatShotView>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    widget.onOpened();
     _start();
   }
 

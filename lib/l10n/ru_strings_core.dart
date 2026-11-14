@@ -204,4 +204,9 @@ const Map<String, String> ruStringsCore = {
   'A reference from the SHOTBOOK library. It may have been shot on a professional camera; the settings show how to get close on a phone.': 'Референс из базы SHOTBOOK. Он мог быть снят на профессиональную камеру; настройки подсказывают, как приблизиться к нему на телефоне.',
   'Shot and shared by a SHOTBOOK member.':
       'Снято и опубликовано участником SHOTBOOK.',
+
+  // Credits
+  'Photo by ': 'Фото: ',
+  ' on ': ' на ',
+  'source': 'источник',
 };

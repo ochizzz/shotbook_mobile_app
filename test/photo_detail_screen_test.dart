@@ -27,9 +27,8 @@ void main() {
     expect(find.text('Focal length'), findsOneWidget);
     expect(find.text('Preset'), findsOneWidget);
     expect(find.text('Camera guide: Xiaomi 15'), findsOneWidget);
-    expect(
-      find.textContaining('flickr.com/photos/52365139@N05/19617814358'),
-      findsOneWidget,
-    );
+    final credit = tester.widget<Text>(find.byKey(const Key('photo-credit')));
+    expect(credit.textSpan!.toPlainText(), contains('dvanzuijlekom'));
+    expect(credit.textSpan!.toPlainText(), contains('Flickr'));
   });
 }

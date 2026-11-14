@@ -4,6 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
 import '../../../l10n/tr.dart';
+import '../../../shared/services/supabase_providers.dart';
+import '../../../shared/services/unsplash_tracking.dart';
+import '../../../shared/widgets/photo_credit.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
 import '../../../shared/widgets/source_badge.dart';
 import '../../discover/application/discover_providers.dart';
@@ -109,9 +112,14 @@ class _PhotoDetailScreenState extends ConsumerState<PhotoDetailScreen> {
                 tooltip: isSaved
                     ? context.tr('Remove saved frame')
                     : context.tr('Save frame'),
-                onPressed: () => ref
-                    .read(savedPhotoIdsProvider.notifier)
-                    .toggle(photo.remoteId ?? photo.id),
+                onPressed: () {
+                  if (!isSaved) {
+                    trackUnsplashUse(ref.read(supabaseClientProvider), photo);
+                  }
+                  ref
+                      .read(savedPhotoIdsProvider.notifier)
+                      .toggle(photo.remoteId ?? photo.id);
+                },
                 icon: Icon(isSaved ? Icons.bookmark : Icons.bookmark_border),
               ),
               const SizedBox(width: 8),
@@ -193,30 +201,9 @@ class _PhotoDetailScreenState extends ConsumerState<PhotoDetailScreen> {
                     values: photo.editingSettings,
                   ),
                   const SizedBox(height: 18),
-                  if (photo.sourceType == 'curated') ...[
-                    Text(
-                      context.tr('Photo credit: {credit} · {license}', {
-                        'credit': photo.credit,
-                        'license': photo.license,
-                      }),
-                      style: Theme.of(context).textTheme.bodySmall
-                          ?.copyWith(color: ShotbookColors.secondary),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      context.tr('Source: Flickr via Openverse'),
-                      style: Theme.of(context).textTheme.bodySmall
-                          ?.copyWith(color: ShotbookColors.secondary),
-                    ),
-                    if (photo.sourcePage.isNotEmpty) ...[
-                      const SizedBox(height: 4),
-                      SelectableText(
-                        photo.sourcePage,
-                        style: Theme.of(context).textTheme.bodySmall
-                            ?.copyWith(color: ShotbookColors.secondary),
-                      ),
-                    ],
-                  ] else
+                  if (photo.sourceType == 'curated')
+                    PhotoCredit(photo: photo)
+                  else
                     Text(
                       context.tr('Shared by a SHOTBOOK photographer'),
                       style: Theme.of(context).textTheme.bodySmall

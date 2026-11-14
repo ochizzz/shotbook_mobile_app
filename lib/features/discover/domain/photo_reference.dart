@@ -32,6 +32,7 @@ class PhotoReference {
     this.licenseUrl,
     this.translations = const {},
     this.isHidden = false,
+    this.unsplashId,
   });
 
   final String id;
@@ -77,6 +78,12 @@ class PhotoReference {
 
   /// Hidden by moderation; only its author still sees it.
   final bool isHidden;
+
+  /// Set for photos from Unsplash: attribution and download tracking
+  /// follow the Unsplash API guidelines.
+  final String? unsplashId;
+
+  bool get isUnsplash => unsplashId != null && unsplashId!.isNotEmpty;
 
   String get gridImageUrl =>
       thumbUrl != null && thumbUrl!.isNotEmpty ? thumbUrl! : imageUrl;
@@ -128,6 +135,7 @@ class PhotoReference {
       licenseUrl: licenseUrl,
       translations: translations,
       isHidden: isHidden,
+      unsplashId: unsplashId,
     );
   }
 
@@ -164,6 +172,7 @@ class PhotoReference {
     licenseUrl: licenseUrl,
     translations: translations,
     isHidden: isHidden,
+    unsplashId: unsplashId,
   );
 
   factory PhotoReference.fromJson(Map<String, dynamic> json) {
@@ -201,6 +210,7 @@ class PhotoReference {
           ? Map<String, dynamic>.from(json['translations'] as Map)
           : const {},
       isHidden: json['is_hidden'] as bool? ?? false,
+      unsplashId: json['unsplash_id'] as String?,
       imageAspectRatio: _aspectRatio(json['aspect_ratio']),
     );
   }
@@ -240,6 +250,7 @@ class PhotoReference {
     'creator_url': creatorUrl,
     'license_url': licenseUrl,
     'translations': translations,
+    'unsplash_id': unsplashId,
   };
 
   Map<String, String> get cameraSettings => {

@@ -9,6 +9,8 @@ import '../../features/discover/domain/photo_reference.dart';
 import '../../features/safety/presentation/safety_actions.dart';
 import '../../features/saved/application/saved_photo_provider.dart';
 import '../../l10n/tr.dart';
+import '../services/supabase_providers.dart';
+import '../services/unsplash_tracking.dart';
 import 'source_badge.dart';
 
 /// An extra action shown in the long-press menu, e.g. "Delete post".
@@ -161,6 +163,9 @@ class _PhotoActionsSheet extends ConsumerWidget {
               ),
               onTap: () {
                 Navigator.of(context).pop();
+                if (!isSaved) {
+                  trackUnsplashUse(ref.read(supabaseClientProvider), photo);
+                }
                 ref
                     .read(savedPhotoIdsProvider.notifier)
                     .toggle(photo.remoteId ?? photo.id);
