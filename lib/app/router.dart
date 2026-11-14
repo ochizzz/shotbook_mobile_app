@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/camera/presentation/camera_screen.dart';
+import '../features/challenges/presentation/challenges_screen.dart';
+import '../features/pose/presentation/show_pose_screen.dart';
+import '../features/share/presentation/share_card_screen.dart';
 import '../l10n/tr.dart';
 import '../features/auth/presentation/auth_screen.dart';
 import '../features/auth/presentation/update_password_screen.dart';
@@ -66,6 +69,10 @@ GoRouter createAppRouter() {
         ],
       ),
       GoRoute(path: '/auth', builder: (context, state) => const AuthScreen()),
+      GoRoute(
+        path: '/challenges',
+        builder: (context, state) => const ChallengesScreen(),
+      ),
       // The Camera tab opens the camera full screen, without the tab bar.
       GoRoute(path: '/shoot', builder: (context, state) => const ShootScreen()),
       // All phones with their camera guides (opened from Discover).
@@ -114,6 +121,16 @@ GoRouter createAppRouter() {
             path: 'repeat',
             builder: (context, state) =>
                 RepeatShotScreen(photoId: state.pathParameters['photoId']!),
+          ),
+          GoRoute(
+            path: 'pose',
+            builder: (context, state) =>
+                ShowPoseScreen(photoId: state.pathParameters['photoId']!),
+          ),
+          GoRoute(
+            path: 'share',
+            builder: (context, state) =>
+                ShareCardScreen(photoId: state.pathParameters['photoId']!),
           ),
         ],
       ),

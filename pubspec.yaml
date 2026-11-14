@@ -66,26 +66,30 @@ dev_dependencies:
 flutter:
 
   fonts:
-    # Titles and decorative text.
-    - family: CormorantGaramond
+    # Graphite design system (see design/penpot_graphite.md), all OFL.
+    # Display and wordmark.
+    - family: Unbounded
       fonts:
-        - asset: assets/fonts/CormorantGaramond_500Medium.ttf
-          weight: 500
-        - asset: assets/fonts/CormorantGaramond_600SemiBold.ttf
-          weight: 600
-        - asset: assets/fonts/CormorantGaramond_700Bold.ttf
-          weight: 700
-    # Everything else: body, labels, buttons, settings.
-    - family: Spectral
-      fonts:
-        - asset: assets/fonts/Spectral_400Regular.ttf
+        - asset: assets/fonts/Unbounded_400Regular.ttf
           weight: 400
-        - asset: assets/fonts/Spectral_500Medium.ttf
+        - asset: assets/fonts/Unbounded_500Medium.ttf
           weight: 500
-        - asset: assets/fonts/Spectral_600SemiBold.ttf
+    # Body, labels, buttons.
+    - family: Onest
+      fonts:
+        - asset: assets/fonts/Onest_400Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Onest_500Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Onest_600SemiBold.ttf
           weight: 600
-        - asset: assets/fonts/Spectral_700Bold.ttf
-          weight: 700
+    # Shooting data (ISO, shutter…) and section labels.
+    - family: JetBrainsMono
+      fonts:
+        - asset: assets/fonts/JetBrainsMono_400Regular.ttf
+          weight: 400
+        - asset: assets/fonts/JetBrainsMono_500Medium.ttf
+          weight: 500
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

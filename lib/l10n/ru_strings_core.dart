@@ -250,4 +250,7 @@ const Map<String, String> ruStringsCore = {
   'Flash': 'Вспышка',
   'Timer': 'Таймер',
   'Reset to auto': 'Сбросить в авто',
+
+  // Graphite
+  'Start a streak': 'Начни серию',
 };
