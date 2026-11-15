@@ -9,11 +9,12 @@ import '../../l10n/tr.dart';
 import '../../shared/widgets/photo_reference_image.dart';
 import '../discover/domain/photo_reference.dart';
 import 'camera_recipe.dart';
+import 'photo_look.dart';
 import 'pro_camera_controller.dart';
 import 'widgets/ruler_dial.dart';
 import 'widgets/zoom_control.dart';
 
-enum _Dial { iso, shutter, ev, wb, focus }
+enum _Dial { iso, shutter, ev, wb, focus, look }
 
 const _accent = ShotbookColors.accent;
 const _timers = [0, 3, 10];
@@ -51,6 +52,7 @@ class _ProCameraViewState extends State<ProCameraView>
   bool _unsupported = false;
   String? _error;
   double _opacity = 0.4;
+  String _lookParam = 'contrast';
   bool _showGuide = true;
   bool _grid = true;
   bool _flashBlink = false;
@@ -154,22 +156,60 @@ class _ProCameraViewState extends State<ProCameraView>
       photo,
       mainEquivalentMm: _caps.mainEquivalentMm,
     );
+    final look = lookFromPhoto(photo);
     HapticFeedback.mediumImpact();
-    _set(_camera.settings.withRecipe(recipe, _caps));
-    final manual =
-        _caps.manualSensor && recipe.iso != null && recipe.exposureNs != null;
-    _snack(
-      recipe.isEmpty
-          ? context.tr(
-              'This photo has no fixed settings: the camera stays on auto.',
-            )
-          : manual
-          ? context.tr('Settings from the photo applied.')
-          : context.tr(
-              'Settings applied. ISO and shutter stay automatic on this phone or recipe.',
-            ),
-    );
+    final next = _camera.settings.withRecipe(recipe, _caps, look: look);
+    _set(next);
+    _snack(_recipeSummary(recipe, next, look));
   }
+
+  /// What "Apply photo settings" actually set, so nothing is a surprise.
+  String _recipeSummary(
+    CameraRecipe recipe,
+    ProCameraSettings s,
+    PhotoLook look,
+  ) {
+    final parts = <String>[];
+    if (recipe.zoom != null) {
+      parts.add(
+        _caps.zoomable
+            ? '${_trimZoom(s.zoom)}×'
+            : context.tr('zoom unavailable on this phone'),
+      );
+    }
+    if (!s.autoExposure && _caps.manualSensor) {
+      parts.add('ISO ${s.iso} · ${formatShutter(s.exposureNs)}');
+    } else if (s.ev != 0) {
+      parts.add('${_signed(s.ev)} EV');
+    }
+    if (!s.autoWhiteBalance) parts.add('${s.kelvin}K');
+    if (!look.isNone) {
+      final traits = <String>[
+        if (look.mono) context.tr('B&W'),
+        if (look.warmth > 0.05) context.tr('warmer'),
+        if (look.warmth < -0.05) context.tr('cooler'),
+        if (look.contrast > 0.05) context.tr('more contrast'),
+        if (look.contrast < -0.05) context.tr('softer'),
+        if (look.fade > 0.05) context.tr('matte'),
+        if (look.vignette > 0.05) context.tr('vignette'),
+        if (look.grain > 0.05) context.tr('grain'),
+      ];
+      parts.add(
+        context.tr('filter: {traits}', {
+          'traits': traits.isEmpty ? context.tr('subtle') : traits.join(', '),
+        }),
+      );
+    }
+    if (parts.isEmpty) {
+      return context.tr(
+        'This photo has no fixed settings: the camera stays on auto.',
+      );
+    }
+    return context.tr('Applied: {list}', {'list': parts.join(' · ')});
+  }
+
+  static String _trimZoom(double z) =>
+      z == z.roundToDouble() ? z.toStringAsFixed(0) : z.toStringAsFixed(1);
 
   void _cancelCountdown() {
     _countdownTimer?.cancel();
@@ -239,38 +279,46 @@ class _ProCameraViewState extends State<ProCameraView>
               // bottom. The preview shrinks only on short screens.
               Expanded(
                 child: LayoutBuilder(
-                  builder: (context, box) {
-                    final ratio = _ready ? _camera.portraitAspectRatio : 3 / 4;
-                    final maxH = box.maxHeight - 44 - 44;
-                    final h = (box.maxWidth / ratio).clamp(0.0, maxH);
-                    return Column(
-                      children: [
-                        SizedBox(
-                          width: h * ratio,
-                          height: h,
-                          child: Center(child: _preview(context)),
-                        ),
-                        _ValueBuilder(
-                          camera: _camera,
-                          dial: _dial,
-                          builder: (context, s, dial) =>
-                              _readouts(context, s, dial),
-                        ),
-                        _ValueBuilder(
-                          camera: _camera,
-                          dial: _dial,
-                          builder: (context, s, dial) => AnimatedSize(
-                            duration: const Duration(milliseconds: 200),
-                            curve: Curves.easeOutCubic,
-                            alignment: Alignment.topCenter,
-                            child: dial == null
-                                ? const SizedBox(width: double.infinity)
-                                : _dialPanel(context, s, dial),
+                  builder: (context, box) => ValueListenableBuilder<_Dial?>(
+                    valueListenable: _dial,
+                    builder: (context, open, _) {
+                      final ratio = _ready
+                          ? _camera.portraitAspectRatio
+                          : 3 / 4;
+                      // Room for the settings row and the open panel (the
+                      // filter panel is taller than a single dial).
+                      final panel = open == _Dial.look ? 112.0 : 44.0;
+                      final maxH = box.maxHeight - 44 - panel;
+                      final h = (box.maxWidth / ratio).clamp(0.0, maxH);
+                      return Column(
+                        children: [
+                          SizedBox(
+                            width: h * ratio,
+                            height: h,
+                            child: Center(child: _preview(context)),
                           ),
-                        ),
-                      ],
-                    );
-                  },
+                          _ValueBuilder(
+                            camera: _camera,
+                            dial: _dial,
+                            builder: (context, s, dial) =>
+                                _readouts(context, s, dial),
+                          ),
+                          _ValueBuilder(
+                            camera: _camera,
+                            dial: _dial,
+                            builder: (context, s, dial) => AnimatedSize(
+                              duration: const Duration(milliseconds: 200),
+                              curve: Curves.easeOutCubic,
+                              alignment: Alignment.topCenter,
+                              child: dial == null
+                                  ? const SizedBox(width: double.infinity)
+                                  : _dialPanel(context, s, dial),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
               _bottomBar(context),
@@ -484,7 +532,43 @@ class _ProCameraViewState extends State<ProCameraView>
       child: Stack(
         fit: StackFit.expand,
         children: [
-          RepaintBoundary(child: Texture(textureId: id)),
+          // The look is shown live: a colour matrix over the camera image
+          // plus a vignette; the saved JPEG gets the same processing.
+          ValueListenableBuilder<ProCameraSettings>(
+            valueListenable: _camera.values,
+            builder: (context, s, child) {
+              final look = s.look;
+              if (look.isNone) return child!;
+              return Stack(
+                fit: StackFit.expand,
+                children: [
+                  ColorFiltered(
+                    colorFilter: ColorFilter.matrix(look.colorMatrix),
+                    child: child,
+                  ),
+                  if (look.vignette > 0)
+                    IgnorePointer(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: RadialGradient(
+                            radius: 0.85,
+                            colors: [
+                              Colors.transparent,
+                              Colors.transparent,
+                              Colors.black.withValues(
+                                alpha: (look.vignette * 0.78).clamp(0.0, 1.0),
+                              ),
+                            ],
+                            stops: const [0, 0.55, 1],
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            },
+            child: RepaintBoundary(child: Texture(textureId: id)),
+          ),
           if (photo != null && _showGuide)
             IgnorePointer(
               child: Opacity(
@@ -553,6 +637,7 @@ class _ProCameraViewState extends State<ProCameraView>
     _Dial.ev => _caps.exposureCompensation,
     _Dial.wb => true,
     _Dial.focus => _caps.manualFocus,
+    _Dial.look => true,
   };
 
   bool _isAuto(_Dial dial, ProCameraSettings s) => switch (dial) {
@@ -560,6 +645,7 @@ class _ProCameraViewState extends State<ProCameraView>
     _Dial.ev => s.ev == 0,
     _Dial.wb => s.autoWhiteBalance,
     _Dial.focus => s.autoFocus || !_caps.manualFocus,
+    _Dial.look => s.look.isNone,
   };
 
   String _readout(_Dial dial, ProCameraSettings s) {
@@ -570,6 +656,8 @@ class _ProCameraViewState extends State<ProCameraView>
       _Dial.ev => manual ? '—' : _signed(s.ev),
       _Dial.wb => s.autoWhiteBalance ? 'AWB' : '${s.kelvin}K',
       _Dial.focus => s.autoFocus || !_caps.manualFocus ? 'AF' : 'MF',
+      _Dial.look =>
+        s.look.isNone ? '—' : context.tr(lookNames[s.look.id] ?? 'Custom'),
     };
   }
 
@@ -579,6 +667,7 @@ class _ProCameraViewState extends State<ProCameraView>
     _Dial.ev => s.copyWith(ev: 0),
     _Dial.wb => s.copyWith(autoWhiteBalance: true),
     _Dial.focus => s.copyWith(autoFocus: true),
+    _Dial.look => s.copyWith(look: PhotoLook.none),
   };
 
   Widget _readouts(BuildContext context, ProCameraSettings s, _Dial? open) {
@@ -588,6 +677,7 @@ class _ProCameraViewState extends State<ProCameraView>
       _Dial.ev: 'EV',
       _Dial.wb: context.tr('WB'),
       _Dial.focus: context.tr('FOCUS'),
+      _Dial.look: context.tr('FILTER'),
     };
     return SizedBox(
       height: 44,
@@ -625,6 +715,7 @@ class _ProCameraViewState extends State<ProCameraView>
   }
 
   Widget _dialPanel(BuildContext context, ProCameraSettings s, _Dial dial) {
+    if (dial == _Dial.look) return _lookPanel(context, s);
     Widget? lead;
     late Widget ruler;
     switch (dial) {
@@ -720,6 +811,8 @@ class _ProCameraViewState extends State<ProCameraView>
             ),
           ),
         );
+      case _Dial.look:
+        throw StateError('handled by _lookPanel');
       case _Dial.focus:
         lead = _autoPill(
           s.autoFocus,
@@ -748,6 +841,157 @@ class _ProCameraViewState extends State<ProCameraView>
           ?lead,
           if (lead != null) const SizedBox(width: 6),
           Expanded(child: SizedBox(height: 40, child: ruler)),
+        ],
+      ),
+    );
+  }
+
+  /// Filter panel: ready-made looks, then fine sliders for each trait.
+  Widget _lookPanel(BuildContext context, ProCameraSettings s) {
+    final look = s.look;
+    final photo = _photo;
+    final presets = <PhotoLook>[
+      ...lookPresets.take(1),
+      if (photo != null) lookFromPhoto(photo),
+      ...lookPresets.skip(1),
+    ];
+    // (id, label, min, value)
+    final params = <(String, String, double, double)>[
+      ('contrast', context.tr('Contrast'), -1, look.contrast),
+      ('saturation', context.tr('Saturation'), -1, look.saturation),
+      ('warmth', context.tr('Warmth'), -1, look.warmth),
+      ('tint', context.tr('Tint'), -1, look.tint),
+      ('shadows', context.tr('Shadows'), -1, look.shadows),
+      ('highlights', context.tr('Highlights'), -1, look.highlights),
+      ('fade', context.tr('Fade'), 0, look.fade),
+      ('vignette', context.tr('Vignette'), 0, look.vignette),
+      ('grain', context.tr('Grain'), 0, look.grain),
+    ];
+    final param = params.firstWhere(
+      (p) => p.$1 == _lookParam,
+      orElse: () => params.first,
+    );
+    PhotoLook changed(double v) => switch (param.$1) {
+      'contrast' => look.copyWith(id: 'custom', contrast: v),
+      'saturation' => look.copyWith(id: 'custom', saturation: v),
+      'warmth' => look.copyWith(id: 'custom', warmth: v),
+      'tint' => look.copyWith(id: 'custom', tint: v),
+      'shadows' => look.copyWith(id: 'custom', shadows: v),
+      'highlights' => look.copyWith(id: 'custom', highlights: v),
+      'fade' => look.copyWith(id: 'custom', fade: v),
+      'vignette' => look.copyWith(id: 'custom', vignette: v),
+      _ => look.copyWith(id: 'custom', grain: v),
+    };
+    Widget pill(String label, bool active, VoidCallback onTap, {Key? key}) =>
+        GestureDetector(
+          key: key,
+          onTap: () {
+            HapticFeedback.selectionClick();
+            onTap();
+          },
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 150),
+            margin: const EdgeInsets.only(right: 6),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+              borderRadius: shotbookBorderRadius,
+              color: active ? _accent : Colors.transparent,
+              border: Border.all(color: active ? _accent : Colors.white24),
+            ),
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: active ? ShotbookColors.background : Colors.white,
+              ),
+            ),
+          ),
+        );
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12, 0, 12, 4),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: 30,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                for (final preset in presets)
+                  pill(
+                    context.tr(lookNames[preset.id] ?? 'Custom'),
+                    look.id == preset.id,
+                    () => _set(_camera.settings.copyWith(look: preset)),
+                    key: Key('look-${preset.id}'),
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          SizedBox(
+            height: 22,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                GestureDetector(
+                  key: const Key('look-mono-toggle'),
+                  onTap: () => _set(
+                    _camera.settings.copyWith(
+                      look: look.copyWith(id: 'custom', mono: !look.mono),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 14),
+                    child: Text(
+                      context.tr('B&W'),
+                      style: TextStyle(
+                        fontFamily: shotbookMonoFont,
+                        fontSize: 11,
+                        color: look.mono ? _accent : Colors.white54,
+                      ),
+                    ),
+                  ),
+                ),
+                for (final p in params)
+                  GestureDetector(
+                    key: Key('look-param-${p.$1}'),
+                    onTap: () => setState(() => _lookParam = p.$1),
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 14),
+                      child: Text(
+                        p.$2.toUpperCase(),
+                        style: TextStyle(
+                          fontFamily: shotbookMonoFont,
+                          fontSize: 11,
+                          color: p.$1 == param.$1
+                              ? _accent
+                              : p.$4 != 0
+                              ? Colors.white
+                              : Colors.white54,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 40,
+            child: RulerDial(
+              key: Key('pro-dial-look-${param.$1}'),
+              value: param.$3 < 0 ? (param.$4 + 1) / 2 : param.$4,
+              divisions: param.$3 < 0 ? 40 : 20,
+              majorEvery: 5,
+              startLabel: param.$3 < 0 ? '−100' : '0',
+              endLabel: '+100',
+              onChanged: (t) => _set(
+                _camera.settings.copyWith(
+                  look: changed(param.$3 < 0 ? t * 2 - 1 : t),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -968,7 +1212,11 @@ class _Readout extends StatelessWidget {
             fontFeatures: const [FontFeature.tabularFigures()],
             color: color,
           ),
-          child: Text(value),
+          // One line always: long names (filters) shrink instead of wrapping.
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(value, maxLines: 1, softWrap: false),
+          ),
         ),
       ],
     );

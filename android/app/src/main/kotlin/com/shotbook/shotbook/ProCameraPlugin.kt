@@ -75,6 +75,9 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     private var focusDiopters = 0f
     private var zoom = 1f
     private var flash = "off" // off | auto | on
+    @Volatile private var lookMatrix: FloatArray? = null
+    @Volatile private var lookVignette = 0f
+    @Volatile private var lookGrain = 0f
     @Volatile private var lastAeState: Int? = null
 
     // One preview request reused for every change, so the camera's
@@ -111,7 +114,14 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                     scheduleApply()
                     result.success(null)
                 }
-                "capture" -> capture(call.argument<Boolean>("raw") == true, result)
+                "capture" -> {
+                    // Look (colour matrix, vignette, grain) for this shot.
+                    lookMatrix = call.argument<List<Number>>("colorMatrix")
+                        ?.map { it.toFloat() }?.toFloatArray()
+                    lookVignette = call.argument<Number>("vignette")?.toFloat() ?: 0f
+                    lookGrain = call.argument<Number>("grain")?.toFloat() ?: 0f
+                    capture(call.argument<Boolean>("raw") == true, result)
+                }
 
                 "close" -> {
                     closeCamera()
@@ -658,10 +668,90 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
 
     private fun saveJpeg(image: Image): String {
         val buffer = image.planes[0].buffer
-        val bytes = ByteArray(buffer.remaining()).also { buffer.get(it) }
+        var bytes = ByteArray(buffer.remaining()).also { buffer.get(it) }
+        val matrix = lookMatrix
+        if (matrix != null && matrix.size == 20) {
+            bytes = try {
+                applyLook(bytes, matrix, lookVignette, lookGrain)
+            } catch (e: Throwable) {
+                bytes // Out of memory or a bad frame: keep the plain photo.
+            }
+        }
         val (uri, stream) = insert("SHOTBOOK_${stamp()}.jpg", "image/jpeg")
         stream.use { it.write(bytes) }
         return uri.toString()
+    }
+
+    /**
+     * Bakes the look into the JPEG: upright pixels (EXIF rotation applied),
+     * colour matrix, optional vignette and film grain, re-encoded at 95.
+     */
+    private fun applyLook(jpeg: ByteArray, m: FloatArray, vignette: Float, grain: Float): ByteArray {
+        val rotation = if (Build.VERSION.SDK_INT >= 24) {
+            when (android.media.ExifInterface(java.io.ByteArrayInputStream(jpeg))
+                .getAttributeInt(android.media.ExifInterface.TAG_ORIENTATION, 1)) {
+                android.media.ExifInterface.ORIENTATION_ROTATE_90 -> 90f
+                android.media.ExifInterface.ORIENTATION_ROTATE_180 -> 180f
+                android.media.ExifInterface.ORIENTATION_ROTATE_270 -> 270f
+                else -> 0f
+            }
+        } else 0f
+        var source = android.graphics.BitmapFactory.decodeByteArray(jpeg, 0, jpeg.size)
+            ?: return jpeg
+        if (rotation != 0f) {
+            val r = android.graphics.Matrix().apply { postRotate(rotation) }
+            val rotated = android.graphics.Bitmap.createBitmap(
+                source, 0, 0, source.width, source.height, r, true,
+            )
+            if (rotated != source) source.recycle()
+            source = rotated
+        }
+        val out = android.graphics.Bitmap.createBitmap(
+            source.width, source.height, android.graphics.Bitmap.Config.ARGB_8888,
+        )
+        val canvas = android.graphics.Canvas(out)
+        val paint = android.graphics.Paint(android.graphics.Paint.FILTER_BITMAP_FLAG).apply {
+            colorFilter = android.graphics.ColorMatrixColorFilter(android.graphics.ColorMatrix(m))
+        }
+        canvas.drawBitmap(source, 0f, 0f, paint)
+        source.recycle()
+        val w = out.width.toFloat()
+        val h = out.height.toFloat()
+        if (vignette > 0f) {
+            val radius = Math.hypot(w / 2.0, h / 2.0).toFloat()
+            val shader = android.graphics.RadialGradient(
+                w / 2, h / 2, radius,
+                intArrayOf(0x00000000, 0x00000000, android.graphics.Color.argb((vignette * 200).toInt().coerceIn(0, 255), 0, 0, 0)),
+                floatArrayOf(0f, 0.55f, 1f),
+                android.graphics.Shader.TileMode.CLAMP,
+            )
+            canvas.drawRect(0f, 0f, w, h, android.graphics.Paint().apply { this.shader = shader })
+        }
+        if (grain > 0f) {
+            // A small noise tile repeated over the frame: film-like and fast.
+            val size = 256
+            val pixels = IntArray(size * size)
+            val random = java.util.Random(7)
+            val alpha = (grain * 70).toInt().coerceIn(0, 255)
+            for (i in pixels.indices) {
+                val v = random.nextInt(256)
+                pixels[i] = android.graphics.Color.argb(alpha, v, v, v)
+            }
+            val tile = android.graphics.Bitmap.createBitmap(pixels, size, size, android.graphics.Bitmap.Config.ARGB_8888)
+            val scale = (w / 1400f).coerceAtLeast(1f)
+            val shader = android.graphics.BitmapShader(
+                tile, android.graphics.Shader.TileMode.REPEAT, android.graphics.Shader.TileMode.REPEAT,
+            ).apply { setLocalMatrix(android.graphics.Matrix().apply { setScale(scale, scale) }) }
+            canvas.drawRect(0f, 0f, w, h, android.graphics.Paint().apply {
+                this.shader = shader
+                xfermode = android.graphics.PorterDuffXfermode(android.graphics.PorterDuff.Mode.OVERLAY)
+            })
+            tile.recycle()
+        }
+        val result = java.io.ByteArrayOutputStream()
+        out.compress(android.graphics.Bitmap.CompressFormat.JPEG, 95, result)
+        out.recycle()
+        return result.toByteArray()
     }
 
     private fun saveDng(

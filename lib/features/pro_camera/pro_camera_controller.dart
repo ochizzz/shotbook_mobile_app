@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'camera_recipe.dart';
+import 'photo_look.dart';
 
 /// What the phone's camera allows. Unsupported controls stay disabled.
 class ProCameraCapabilities {
@@ -99,6 +100,7 @@ class ProCameraSettings {
     this.zoom = 1,
     this.raw = false,
     this.flash = 'off',
+    this.look = PhotoLook.none,
   });
 
   final bool autoExposure;
@@ -117,6 +119,9 @@ class ProCameraSettings {
   /// "off", "auto" or "on".
   final String flash;
 
+  /// Processing applied live and baked into the JPEG (RAW stays clean).
+  final PhotoLook look;
+
   ProCameraSettings copyWith({
     bool? autoExposure,
     int? iso,
@@ -129,6 +134,7 @@ class ProCameraSettings {
     double? zoom,
     bool? raw,
     String? flash,
+    PhotoLook? look,
   }) => ProCameraSettings(
     autoExposure: autoExposure ?? this.autoExposure,
     iso: iso ?? this.iso,
@@ -141,19 +147,29 @@ class ProCameraSettings {
     zoom: zoom ?? this.zoom,
     raw: raw ?? this.raw,
     flash: flash ?? this.flash,
+    look: look ?? this.look,
   );
 
   /// Everything back to automatic at 1×; keeps the RAW choice.
   ProCameraSettings reset() => ProCameraSettings(raw: raw, flash: flash);
 
   bool get isDefault =>
-      autoExposure && ev == 0 && autoWhiteBalance && autoFocus && zoom == 1;
+      autoExposure &&
+      ev == 0 &&
+      autoWhiteBalance &&
+      autoFocus &&
+      zoom == 1 &&
+      look.isNone;
 
   /// Applies a photo's recipe within what the phone allows. Manual ISO and
   /// shutter are only used together, and only on phones with manual sensor
   /// control; otherwise exposure stays automatic with the recipe's EV.
-  ProCameraSettings withRecipe(CameraRecipe recipe, ProCameraCapabilities c) {
-    var next = this;
+  ProCameraSettings withRecipe(
+    CameraRecipe recipe,
+    ProCameraCapabilities c, {
+    PhotoLook? look,
+  }) {
+    var next = look == null ? this : copyWith(look: look);
     final manual =
         c.manualSensor && recipe.iso != null && recipe.exposureNs != null;
     if (manual) {
@@ -299,8 +315,15 @@ class ProCameraController extends ChangeNotifier {
     busy = true;
     notifyListeners();
     try {
+      final look = settings.look;
       final map = await _channel.invokeMapMethod<Object?, Object?>('capture', {
         'raw': settings.raw && rawAvailable,
+        // The look is baked into the JPEG on the phone; RAW stays clean.
+        if (!look.isNone) ...{
+          'colorMatrix': look.colorMatrix,
+          'vignette': look.vignette,
+          'grain': look.grain,
+        },
       });
       return ProCameraPhotoResult(
         jpeg: '${map?['jpeg']}',

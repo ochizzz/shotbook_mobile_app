@@ -150,5 +150,8 @@ void main() {
     await tester.tap(find.byKey(const Key('pro-apply-recipe')));
     await tester.pump(const Duration(milliseconds: 60));
     expect(calls.where((c) => c == 'setControls').length, greaterThan(1));
+    // The summary lists what was set, including the photo's filter.
+    expect(find.textContaining('Applied:'), findsOneWidget);
+    expect(find.textContaining('filter:'), findsOneWidget);
   });
 }

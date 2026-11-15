@@ -10,6 +10,7 @@
         tools:replace="android:maxSdkVersion" />
     <application
         android:label="SHOTBOOK"
+        android:largeHeap="true"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -260,6 +260,35 @@ const Map<String, String> ruStringsCore = {
   'presets': 'пресетов',
 
   // Graphite sign in
-  'Photo recipes, saves and the community feed.': 'Рецепты фото, сохранения и лента сообщества',
+  'Photo recipes, saves and the community feed.':
+      'Рецепты фото, сохранения и лента сообщества',
   'Language': 'Язык',
+
+  // Camera filters
+  'Applied: {list}': 'Применено: {list}',
+  'B&W': 'Ч/Б',
+  'FILTER': 'ФИЛЬТР',
+  'Fade': 'Выцветание',
+  'Vignette': 'Виньетка',
+  'Warmth': 'Тепло',
+  'cooler': 'холоднее',
+  'warmer': 'теплее',
+  'filter: {traits}': 'фильтр: {traits}',
+  'grain': 'зерно',
+  'matte': 'матовость',
+  'more contrast': 'контрастнее',
+  'softer': 'мягче',
+  'subtle': 'лёгкий',
+  'vignette': 'виньетка',
+  'zoom unavailable on this phone': 'зум недоступен на этом телефоне',
+  'Original': 'Оригинал',
+  'From photo': 'Из кадра',
+  'Custom': 'Свой',
+  'Noir': 'Нуар',
+  'Warm film': 'Тёплая плёнка',
+  'Warm': 'Тёплый',
+  'Cool': 'Холодный',
+  'Faded': 'Выцветший',
+  'Vivid': 'Яркий',
+  'Cinema': 'Кино',
 };
