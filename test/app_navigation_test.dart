@@ -46,7 +46,9 @@ void main() {
 
     await tester.tap(find.text('Feed').last);
     await tester.pumpAndSettle();
-    expect(find.text('Community feed is not connected'), findsOneWidget);
+    // The feed is built but closed for now.
+    expect(find.byKey(const Key('feed-coming-soon')), findsOneWidget);
+    expect(find.text('Coming soon'), findsOneWidget);
 
     await tester.tap(find.text('Profile').last);
     await tester.pumpAndSettle();

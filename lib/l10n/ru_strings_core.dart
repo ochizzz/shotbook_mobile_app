@@ -291,4 +291,16 @@ const Map<String, String> ruStringsCore = {
   'Faded': 'Выцветший',
   'Vivid': 'Яркий',
   'Cinema': 'Кино',
+
+  // Coming soon, diagnostics
+  'In development': 'В разработке',
+  'Coming soon': 'Скоро добавим',
+  'The feed with photos from SHOTBOOK photographers will open here.':
+      'Здесь появится лента с фото авторов SHOTBOOK.',
+  'Entries open soon': 'Участие скоро откроется',
+  'Camera diagnostics': 'Диагностика камеры',
+  'Copy': 'Копировать',
+  'Diagnostics are not available on this phone.':
+      'Диагностика недоступна на этом телефоне.',
+  'Send this text or a screenshot to the developer if the camera misbehaves.': 'Если камера ведёт себя странно, пришлите этот текст или скриншот разработчику.',
 };

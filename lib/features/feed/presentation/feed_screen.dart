@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
 import '../../../l10n/tr.dart';
+import '../../../shared/services/feature_flags.dart';
 import '../../../shared/widgets/graphite/graphite.dart';
 import '../../../shared/widgets/photo_actions_sheet.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
@@ -17,6 +18,7 @@ class FeedScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if (!ref.watch(communityEnabledProvider)) return const _FeedComingSoon();
     final posts = ref.watch(feedPostsProvider);
     final repository = ref.watch(feedRepositoryProvider);
 
@@ -211,6 +213,61 @@ class _FeedMessage extends StatelessWidget {
                 ?.copyWith(color: ShotbookColors.secondary),
           ),
           if (action != null) ...[const SizedBox(height: 8), action!],
+        ],
+      ),
+    ),
+  );
+}
+
+/// Shown on the Feed tab while the community is not open yet.
+class _FeedComingSoon extends StatelessWidget {
+  const _FeedComingSoon();
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    key: const Key('feed-coming-soon'),
+    body: SafeArea(
+      bottom: false,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: ScreenTitle(context.tr('Feed')),
+          ),
+          Expanded(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(32, 0, 32, 64),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      context.tr('In development').toUpperCase(),
+                      style: ShotbookText.kicker,
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      context.tr('Coming soon'),
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      context.tr(
+                        'The feed with photos from SHOTBOOK photographers will open here.',
+                      ),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        height: 1.4,
+                        color: ShotbookColors.secondary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     ),

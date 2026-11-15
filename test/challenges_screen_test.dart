@@ -12,6 +12,7 @@ import 'package:shotbook/features/challenges/presentation/challenges_screen.dart
 import 'package:shotbook/features/discover/data/seed_photo_references.dart';
 import 'package:shotbook/features/feed/presentation/create_post_screen.dart';
 import 'package:shotbook/l10n/language_provider.dart';
+import 'package:shotbook/shared/services/feature_flags.dart';
 
 /// Saturday; the week of the "Golden hour" challenge.
 final _now = DateTime(2026, 11, 14, 12);
@@ -29,6 +30,7 @@ Future<void> _pumpChallenges(
   WidgetTester tester, {
   String language = 'en',
   Set<DateTime> activeDays = const {},
+  bool community = true,
 }) async {
   tester.view.physicalSize = const Size(1080, 3000);
   tester.view.devicePixelRatio = 3;
@@ -57,6 +59,7 @@ Future<void> _pumpChallenges(
     ProviderScope(
       overrides: [
         initialLanguageProvider.overrideWithValue(language),
+        communityEnabledProvider.overrideWithValue(community),
         challengesClockProvider.overrideWithValue(() => _now),
         streakHistoryProvider.overrideWith(() => _FixedStreak(activeDays)),
       ],
@@ -77,6 +80,15 @@ Future<void> _pumpChallenges(
 }
 
 void main() {
+  testWidgets('while the community is closed there is no Join button', (
+    tester,
+  ) async {
+    await _pumpChallenges(tester, community: false);
+    expect(find.byKey(const Key('challenge-join')), findsNothing);
+    expect(find.text('Entries open soon'), findsOneWidget);
+    expect(find.byKey(const Key('recipe-of-the-day')), findsOneWidget);
+  });
+
   testWidgets('shows the challenge, the week, the recipe and the best', (
     tester,
   ) async {
@@ -158,7 +170,10 @@ void main() {
   testWidgets('a new post shows the preselected challenge', (tester) async {
     Future<void> pump(String? key) => tester.pumpWidget(
       ProviderScope(
-        overrides: [initialLanguageProvider.overrideWithValue('en')],
+        overrides: [
+          initialLanguageProvider.overrideWithValue('en'),
+          communityEnabledProvider.overrideWithValue(true),
+        ],
         child: MaterialApp(
           theme: shotbookDarkTheme,
           home: CreatePostScreen(key: ValueKey(key), challengeKey: key),
@@ -180,7 +195,10 @@ void main() {
     ) async {
       await tester.pumpWidget(
         ProviderScope(
-          overrides: [initialLanguageProvider.overrideWithValue('en')],
+          overrides: [
+            initialLanguageProvider.overrideWithValue('en'),
+            communityEnabledProvider.overrideWithValue(true),
+          ],
           child: ShotbookApp(),
         ),
       );
@@ -195,7 +213,10 @@ void main() {
       SharedPreferences.setMockInitialValues({});
       await tester.pumpWidget(
         ProviderScope(
-          overrides: [initialLanguageProvider.overrideWithValue('en')],
+          overrides: [
+            initialLanguageProvider.overrideWithValue('en'),
+            communityEnabledProvider.overrideWithValue(true),
+          ],
           child: ShotbookApp(),
         ),
       );

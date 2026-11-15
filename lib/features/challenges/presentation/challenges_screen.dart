@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/theme.dart';
 import '../../../l10n/language_provider.dart';
 import '../../../l10n/tr.dart';
+import '../../../shared/services/feature_flags.dart';
 import '../../../shared/widgets/graphite/graphite.dart';
 import '../../../shared/widgets/photo_reference_image.dart';
 import '../../discover/application/discover_providers.dart';
@@ -75,6 +76,7 @@ class ChallengesScreen extends ConsumerWidget {
                   const SizedBox(height: 20),
                   _ChallengeCard(
                     challenge: challenge,
+                    joinable: ref.watch(communityEnabledProvider),
                     entries: catalog == null
                         ? null
                         : challengeEntries(catalog, challenge, now: now).length,
@@ -133,9 +135,13 @@ class _ChallengeCard extends StatelessWidget {
     required this.challenge,
     required this.entries,
     required this.collage,
+    required this.joinable,
   });
 
   final Challenge challenge;
+
+  /// False while the community is not open: no Join, "opens soon" note.
+  final bool joinable;
 
   /// Photos entered so far; null while the catalog loads.
   final int? entries;
@@ -188,7 +194,17 @@ class _ChallengeCard extends StatelessWidget {
                 const SizedBox(height: 12),
                 SizedBox(
                   height: 16,
-                  child: entries == null
+                  child: !joinable
+                      ? Text(
+                          context.tr('Entries open soon'),
+                          key: const Key('challenge-soon'),
+                          style: const TextStyle(
+                            fontSize: 13,
+                            height: 1.2,
+                            color: ShotbookColors.secondary,
+                          ),
+                        )
+                      : entries == null
                       ? null
                       : Text(
                           participantPhotos(context, entries!),
@@ -203,25 +219,26 @@ class _ChallengeCard extends StatelessWidget {
                         ),
                 ),
                 const SizedBox(height: 6),
-                FilledButton(
-                  key: const Key('challenge-join'),
-                  onPressed: () => context.push(
-                    '/create?challenge=${Uri.encodeQueryComponent(challenge.key)}',
-                  ),
-                  style: FilledButton.styleFrom(
-                    minimumSize: const Size(0, 32),
-                    padding: const EdgeInsets.symmetric(horizontal: 13),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    shape: shotbookShape,
-                    textStyle: const TextStyle(
-                      fontFamily: shotbookBodyFont,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      height: 1.2,
+                if (joinable)
+                  FilledButton(
+                    key: const Key('challenge-join'),
+                    onPressed: () => context.push(
+                      '/create?challenge=${Uri.encodeQueryComponent(challenge.key)}',
                     ),
+                    style: FilledButton.styleFrom(
+                      minimumSize: const Size(0, 32),
+                      padding: const EdgeInsets.symmetric(horizontal: 13),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      shape: shotbookShape,
+                      textStyle: const TextStyle(
+                        fontFamily: shotbookBodyFont,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        height: 1.2,
+                      ),
+                    ),
+                    child: Text(context.tr('Join')),
                   ),
-                  child: Text(context.tr('Join')),
-                ),
               ],
             ),
           ),

@@ -79,6 +79,7 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     @Volatile private var lookVignette = 0f
     @Volatile private var lookGrain = 0f
     @Volatile private var lastAeState: Int? = null
+    @Volatile private var lastResult: TotalCaptureResult? = null
 
     // One preview request reused for every change, so the camera's
     // autofocus and exposure loops are not restarted on each dial move.
@@ -106,6 +107,7 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
         try {
             when (call.method) {
                 "capabilities" -> result.success(capabilities())
+                "diagnostics" -> result.success(diagnostics())
                 "open" -> openCamera(result)
                 "setControls" -> {
                     // Values are read now; the request is applied on the
@@ -205,6 +207,75 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
             "zoomMax" to (zoomRange?.upper ?: maxDigital).toDouble(),
             "mainEquivalentMm" to equivalent,
             "flash" to (c.get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true),
+        )
+    }
+
+    /**
+     * Everything needed to debug the camera from a screenshot: the phone,
+     * every camera it exposes to apps, what we asked for and what the
+     * sensor actually did on the latest preview frame.
+     */
+    private fun diagnostics(): Map<String, Any?> {
+        val cameras = manager.cameraIdList.map { id ->
+            val c = manager.getCameraCharacteristics(id)
+            val caps = c.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES)?.toSet() ?: emptySet()
+            val zoom = if (Build.VERSION.SDK_INT >= 30) c.get(CameraCharacteristics.CONTROL_ZOOM_RATIO_RANGE) else null
+            val sensor = c.get(CameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE)
+            val focals = c.get(CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS)?.toList() ?: emptyList()
+            val diag = if (sensor != null) Math.hypot(sensor.width.toDouble(), sensor.height.toDouble()) else null
+            mapOf(
+                "id" to id,
+                "facing" to when (c.get(CameraCharacteristics.LENS_FACING)) {
+                    CameraMetadata.LENS_FACING_BACK -> "back"
+                    CameraMetadata.LENS_FACING_FRONT -> "front"
+                    else -> "external"
+                },
+                "level" to when (c.get(CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL)) {
+                    CameraMetadata.INFO_SUPPORTED_HARDWARE_LEVEL_LEGACY -> "LEGACY"
+                    CameraMetadata.INFO_SUPPORTED_HARDWARE_LEVEL_LIMITED -> "LIMITED"
+                    CameraMetadata.INFO_SUPPORTED_HARDWARE_LEVEL_FULL -> "FULL"
+                    CameraMetadata.INFO_SUPPORTED_HARDWARE_LEVEL_3 -> "LEVEL_3"
+                    else -> "EXTERNAL"
+                },
+                "manualSensor" to caps.contains(CameraMetadata.REQUEST_AVAILABLE_CAPABILITIES_MANUAL_SENSOR),
+                "manualPost" to caps.contains(CameraMetadata.REQUEST_AVAILABLE_CAPABILITIES_MANUAL_POST_PROCESSING),
+                "raw" to caps.contains(CameraMetadata.REQUEST_AVAILABLE_CAPABILITIES_RAW),
+                "logical" to caps.contains(CameraMetadata.REQUEST_AVAILABLE_CAPABILITIES_LOGICAL_MULTI_CAMERA),
+                "physicalIds" to (if (Build.VERSION.SDK_INT >= 28) c.physicalCameraIds.toList() else emptyList()),
+                "equivMm" to focals.map { f -> if (diag != null) Math.round(f * 43.27 / diag).toInt() else null },
+                "zoomMin" to zoom?.lower?.toDouble(),
+                "zoomMax" to zoom?.upper?.toDouble(),
+                "iso" to c.get(CameraCharacteristics.SENSOR_INFO_SENSITIVITY_RANGE)?.let { "${it.lower}-${it.upper}" },
+                "exposureNs" to c.get(CameraCharacteristics.SENSOR_INFO_EXPOSURE_TIME_RANGE)?.let { "${it.lower}-${it.upper}" },
+                "wbMode" to whiteBalanceMode(c),
+            )
+        }
+        val r = lastResult
+        val live = if (r == null) null else mapOf(
+            "iso" to r.get(CaptureResult.SENSOR_SENSITIVITY),
+            "exposureNs" to r.get(CaptureResult.SENSOR_EXPOSURE_TIME),
+            "aeMode" to r.get(CaptureResult.CONTROL_AE_MODE),
+            "ev" to r.get(CaptureResult.CONTROL_AE_EXPOSURE_COMPENSATION),
+            "awbMode" to r.get(CaptureResult.CONTROL_AWB_MODE),
+            "afMode" to r.get(CaptureResult.CONTROL_AF_MODE),
+            "focusDiopters" to r.get(CaptureResult.LENS_FOCUS_DISTANCE)?.toDouble(),
+            "focalMm" to r.get(CaptureResult.LENS_FOCAL_LENGTH)?.toDouble(),
+            "zoomRatio" to (if (Build.VERSION.SDK_INT >= 30) r.get(CaptureResult.CONTROL_ZOOM_RATIO)?.toDouble() else null),
+            "activePhysicalId" to (if (Build.VERSION.SDK_INT >= 29) r.get(CaptureResult.LOGICAL_MULTI_CAMERA_ACTIVE_PHYSICAL_ID) else null),
+        )
+        return mapOf(
+            "device" to "${Build.MANUFACTURER} ${Build.MODEL}",
+            "android" to "${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})",
+            "openCameraId" to cameraId,
+            "sessionRaw" to rawInSession,
+            "requested" to mapOf(
+                "autoExposure" to autoExposure, "iso" to iso, "exposureNs" to exposureNs,
+                "ev" to evSteps, "awbAuto" to awbAuto, "kelvin" to kelvin,
+                "autoFocus" to autoFocus, "focusDiopters" to focusDiopters.toDouble(),
+                "zoom" to zoom.toDouble(), "flash" to flash,
+            ),
+            "live" to live,
+            "cameras" to cameras,
         )
     }
 
@@ -386,6 +457,7 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
         device = null
         previewBuilder = null
         lastTransform = null
+        lastResult = null
         jpegReader?.close(); jpegReader = null
         rawReader?.close(); rawReader = null
         previewSurface?.release(); previewSurface = null
@@ -499,6 +571,7 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 result.get(CaptureResult.COLOR_CORRECTION_TRANSFORM)?.let { lastTransform = it }
             }
             lastAeState = result.get(CaptureResult.CONTROL_AE_STATE)
+            lastResult = result
         }
     }
 

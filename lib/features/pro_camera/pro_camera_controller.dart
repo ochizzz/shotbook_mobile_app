@@ -335,6 +335,17 @@ class ProCameraController extends ChangeNotifier {
     }
   }
 
+  /// Raw report from the native camera; null where unsupported.
+  Future<Map<Object?, Object?>?> diagnostics() async {
+    try {
+      return await _channel.invokeMapMethod<Object?, Object?>('diagnostics');
+    } on MissingPluginException {
+      return null;
+    } on PlatformException {
+      return null;
+    }
+  }
+
   Future<void> close() async {
     _sendTimer?.cancel();
     _sendTimer = null;

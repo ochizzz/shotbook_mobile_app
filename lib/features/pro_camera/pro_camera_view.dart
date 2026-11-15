@@ -8,6 +8,7 @@ import '../../app/theme.dart';
 import '../../l10n/tr.dart';
 import '../../shared/widgets/photo_reference_image.dart';
 import '../discover/domain/photo_reference.dart';
+import 'camera_diagnostics.dart';
 import 'camera_recipe.dart';
 import 'photo_look.dart';
 import 'pro_camera_controller.dart';
@@ -492,6 +493,12 @@ class _ProCameraViewState extends State<ProCameraView>
                     key: const Key('pro-guide'),
                     active: _showGuide,
                   ),
+                _icon(
+                  Icons.info_outline,
+                  () => showCameraDiagnostics(context, _camera),
+                  tooltip: context.tr('Camera diagnostics'),
+                  key: const Key('pro-diagnostics'),
+                ),
                 _icon(
                   Icons.restart_alt,
                   s.isDefault ? null : _reset,
