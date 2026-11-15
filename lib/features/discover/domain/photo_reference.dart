@@ -33,6 +33,7 @@ class PhotoReference {
     this.translations = const {},
     this.isHidden = false,
     this.unsplashId,
+    this.challengeKey,
   });
 
   final String id;
@@ -82,6 +83,9 @@ class PhotoReference {
   /// Set for photos from Unsplash: attribution and download tracking
   /// follow the Unsplash API guidelines.
   final String? unsplashId;
+
+  /// Weekly challenge this post was entered into (`photos.challenge_key`).
+  final String? challengeKey;
 
   bool get isUnsplash => unsplashId != null && unsplashId!.isNotEmpty;
 
@@ -136,6 +140,7 @@ class PhotoReference {
       translations: translations,
       isHidden: isHidden,
       unsplashId: unsplashId,
+      challengeKey: challengeKey,
     );
   }
 
@@ -173,6 +178,7 @@ class PhotoReference {
     translations: translations,
     isHidden: isHidden,
     unsplashId: unsplashId,
+    challengeKey: challengeKey,
   );
 
   factory PhotoReference.fromJson(Map<String, dynamic> json) {
@@ -211,6 +217,7 @@ class PhotoReference {
           : const {},
       isHidden: json['is_hidden'] as bool? ?? false,
       unsplashId: json['unsplash_id'] as String?,
+      challengeKey: json['challenge_key'] as String?,
       imageAspectRatio: _aspectRatio(json['aspect_ratio']),
     );
   }

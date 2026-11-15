@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../features/auth/application/auth_providers.dart';
+import '../features/challenges/application/streak_provider.dart';
 import '../features/onboarding/onboarding.dart';
 import '../l10n/language_provider.dart';
 
@@ -28,6 +29,7 @@ class _ShotbookAppState extends ConsumerState<ShotbookApp> {
   @override
   void initState() {
     super.initState();
+    ref.read(streakHistoryProvider.notifier).markToday();
     _authSubscription = ref.listenManual(authStateProvider, (previous, next) {
       if (next.asData?.value?.event == AuthChangeEvent.passwordRecovery) {
         widget.router.push('/set-password');

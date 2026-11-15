@@ -102,7 +102,10 @@ GoRouter createAppRouter() {
       ),
       GoRoute(
         path: '/create',
-        builder: (context, state) => const CreatePostScreen(),
+        // ?challenge=<key> enters the post into that weekly challenge.
+        builder: (context, state) => CreatePostScreen(
+          challengeKey: state.uri.queryParameters['challenge'],
+        ),
       ),
       GoRoute(
         path: '/users/:profileId',

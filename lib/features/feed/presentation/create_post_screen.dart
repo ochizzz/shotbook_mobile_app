@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../app/theme.dart';
 import '../../../l10n/tr.dart';
@@ -11,14 +12,19 @@ import '../../../shared/services/friendly_error.dart';
 import '../../../shared/services/image_prep.dart';
 import '../../../shared/services/supabase_providers.dart';
 import '../../auth/application/auth_providers.dart';
+import '../../challenges/domain/challenge.dart';
 import '../../discover/application/discover_providers.dart';
 import '../../discover/data/seed_photo_references.dart';
+import '../../discover/domain/photo_reference.dart';
 import '../application/feed_providers.dart';
 import '../data/image_upload_validation.dart';
 import '../../profile/application/profile_providers.dart';
 
 class CreatePostScreen extends ConsumerStatefulWidget {
-  const CreatePostScreen({super.key});
+  const CreatePostScreen({super.key, this.challengeKey});
+
+  /// Weekly challenge to enter the post into (`/create?challenge=<key>`).
+  final String? challengeKey;
 
   @override
   ConsumerState<CreatePostScreen> createState() => _CreatePostScreenState();
@@ -50,6 +56,9 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
   String _category = photoCategories[1];
   String? _error;
   bool _busy = false;
+
+  /// Unknown keys are ignored: only the app's own challenges are entered.
+  Challenge? get _challenge => challengeByKey(widget.challengeKey);
 
   List<TextEditingController> get _controllers => [
     _title,
@@ -156,7 +165,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
       _error = null;
     });
     try {
-      await repository.createPost(
+      final post = await repository.createPost(
         userId: user.id,
         fileName: 'photo.jpg',
         bytes: _imageBytes!,
@@ -167,6 +176,8 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
         preset: _preset.text,
         editingSettings: _editingSettings,
       );
+      final challenge = _challenge;
+      if (challenge != null) await _enterChallenge(post, challenge);
       ref.invalidate(feedPostsProvider);
       ref.invalidate(photoCatalogSourceProvider);
       ref.invalidate(profilePostsProvider);
@@ -175,6 +186,28 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
       if (mounted) setState(() => _error = _friendlyError(error));
     } finally {
       if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  /// Tags the published post with the challenge. Best effort: until
+  /// supabase/migrations/202611150001_challenges.sql is applied the column
+  /// does not exist (42703 / PGRST204) and the post just stays untagged;
+  /// publishing itself never depends on it.
+  Future<void> _enterChallenge(PhotoReference post, Challenge challenge) async {
+    final client = ref.read(supabaseClientProvider);
+    final id = post.remoteId;
+    if (client == null || id == null) return;
+    try {
+      await client
+          .from('photos')
+          .update({'challenge_key': challenge.key})
+          .eq('id', id);
+    } on PostgrestException catch (error) {
+      if (error.code != '42703' && error.code != 'PGRST204') {
+        debugPrint('Post not entered into ${challenge.key}: ${error.message}');
+      }
+    } catch (error) {
+      debugPrint('Post not entered into ${challenge.key}: $error');
     }
   }
 
@@ -196,6 +229,10 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
                     'Connect a Supabase project to publish posts. You can still browse the local catalog.',
                   ),
                 ),
+                const SizedBox(height: 18),
+              ],
+              if (_challenge case final challenge?) ...[
+                _ChallengeNote(challenge: challenge),
                 const SizedBox(height: 18),
               ],
               _imageBytes == null
@@ -328,6 +365,53 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
     child: Text(
       context.tr(title),
       style: Theme.of(context).textTheme.titleMedium,
+    ),
+  );
+}
+
+/// "Challenge: Golden hour" and what to shoot.
+class _ChallengeNote extends StatelessWidget {
+  const _ChallengeNote({required this.challenge});
+
+  final Challenge challenge;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    key: const Key('post-challenge'),
+    padding: const EdgeInsets.all(14),
+    decoration: BoxDecoration(
+      color: ShotbookColors.surface,
+      borderRadius: shotbookCardRadius,
+      border: Border.all(color: ShotbookColors.border),
+    ),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Icon(
+          Icons.emoji_events_outlined,
+          size: 18,
+          color: ShotbookColors.accent,
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                context.tr('Challenge: {title}', {
+                  'title': context.tr(challenge.title),
+                }),
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                context.tr(challenge.description),
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+      ],
     ),
   );
 }
