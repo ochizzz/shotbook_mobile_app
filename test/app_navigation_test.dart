@@ -24,7 +24,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('phone-option-samsung-s23-ultra')));
     await tester.pumpAndSettle();
-    expect(find.text('Samsung Galaxy S23 Ultra'), findsOneWidget);
+    expect(find.text('Galaxy S23 Ultra'), findsOneWidget);
     await tester.tap(find.byKey(const Key('phone-filter-guide')));
     await tester.pumpAndSettle();
     expect(find.text('10 MP periscope · 230 mm'), findsOneWidget);

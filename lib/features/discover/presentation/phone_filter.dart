@@ -23,51 +23,58 @@ class PhoneFilter extends ConsumerWidget {
     final style = Theme.of(context).textTheme.labelMedium;
     return Row(
       children: [
-        InkWell(
-          key: const Key('phone-filter'),
-          borderRadius: shotbookBorderRadius,
-          onTap: () => _open(context, ref),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 6),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.smartphone,
-                  size: 15,
-                  color: ShotbookColors.accent,
-                ),
-                const SizedBox(width: 6),
-                Text(
-                  '${context.tr('My phone')}: ',
-                  style: style?.copyWith(color: ShotbookColors.secondary),
-                ),
-                Text(
-                  device == null
-                      ? context.tr('Choose')
-                      : '${context.tr(device.brand)} ${context.tr(device.model)}',
-                  style: style?.copyWith(color: ShotbookColors.primary),
-                ),
-                const Icon(
-                  Icons.expand_more,
-                  size: 16,
-                  color: ShotbookColors.secondary,
-                ),
-              ],
+        Flexible(
+          child: InkWell(
+            key: const Key('phone-filter'),
+            borderRadius: shotbookBorderRadius,
+            onTap: () => _open(context, ref),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.smartphone,
+                    size: 15,
+                    color: ShotbookColors.accent,
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    '${context.tr('My phone')}: ',
+                    style: style?.copyWith(color: ShotbookColors.secondary),
+                  ),
+                  Flexible(
+                    child: Text(
+                      device == null
+                          ? context.tr('Choose')
+                          : context.tr(device.model),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: style?.copyWith(color: ShotbookColors.primary),
+                    ),
+                  ),
+                  const Icon(
+                    Icons.expand_more,
+                    size: 16,
+                    color: ShotbookColors.secondary,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
         if (device != null) ...[
           const SizedBox(width: 4),
-          TextButton(
+          IconButton(
             key: const Key('phone-filter-guide'),
-            style: TextButton.styleFrom(
-              visualDensity: VisualDensity.compact,
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              textStyle: style,
-            ),
+            tooltip: context.tr('Camera guide'),
+            visualDensity: VisualDensity.compact,
+            iconSize: 18,
             onPressed: () => context.push('/camera/${device.id}'),
-            child: Text(context.tr('Camera guide')),
+            icon: const Icon(
+              Icons.menu_book_outlined,
+              color: ShotbookColors.secondary,
+            ),
           ),
         ],
       ],

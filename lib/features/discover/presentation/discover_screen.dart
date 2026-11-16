@@ -73,16 +73,11 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                 ),
               ),
               SliverPadding(
-                padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+                padding: const EdgeInsets.fromLTRB(20, 4, 20, 12),
                 sliver: SliverToBoxAdapter(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        context.tr('Find a frame'),
-                        style: Theme.of(context).textTheme.headlineMedium,
-                      ),
-                      const SizedBox(height: 20),
                       SizedBox(
                         height: 48,
                         child: TextField(
@@ -94,7 +89,7 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                           textInputAction: TextInputAction.search,
                           style: const TextStyle(fontSize: 15),
                           decoration: InputDecoration(
-                            hintText: context.tr('Search photos or ideas'),
+                            hintText: context.tr('Find a frame'),
                             contentPadding: EdgeInsets.zero,
                             prefixIcon: const Padding(
                               padding: EdgeInsets.only(left: 14, right: 10),
@@ -118,7 +113,6 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 16),
                     ],
                   ),
                 ),
@@ -147,7 +141,7 @@ class _DiscoverScreenState extends ConsumerState<DiscoverScreen> {
                 ),
               ),
               const SliverPadding(
-                padding: EdgeInsets.fromLTRB(20, 10, 20, 14),
+                padding: EdgeInsets.fromLTRB(20, 6, 20, 8),
                 sliver: SliverToBoxAdapter(child: PhoneFilter()),
               ),
               photos.when(
