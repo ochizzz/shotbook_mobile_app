@@ -2,7 +2,7 @@
 
 SHOTBOOK is a Flutter photography app built for Android first.
 
-- **Catalog:** live photos, each with a recipe for repeating the shot on your phone (lens and zoom, ISO, shutter speed, Kelvin white balance, exposure compensation, pose, light and color).
+- **Catalog:** live photos, each with a recipe for repeating the shot on your phone (lens and zoom, ISO, shutter speed, Kelvin white balance, exposure compensation, pose, light and color). Recipes are not tied to one phone: the app works them out for the user's phone from the original shot's real settings.
 - **PRO camera:** a manual camera that loads the recipe settings on its own.
 
 The default language is Russian; English is available.
@@ -11,11 +11,12 @@ The default language is Russian; English is available.
 
 - **Discover**
   - A catalog of Unsplash photos with phone recipes, grouped into eight categories: portrait, street, full body, night, lifestyle, car, couple, product.
-  - Search, plus a phone filter (dropdown list).
+  - Search in the top field ("Find a frame").
+  - **My phone** dropdown: the phone every recipe is worked out for. Detected automatically on Samsung Galaxy S/A and Pixel, otherwise chosen once (saved).
   - Photos are shown in a masonry grid; a long press opens the card menu.
   - Each card has a view counter and can be saved.
 - **Photo page**
-  - Recipe, pose, camera settings and editing notes, plus a guide for the phone in the recipe.
+  - Recipe, pose, camera settings worked out for the chosen phone, advice where the phone can't match the original (step closer, tripod, Portrait mode, night mode), the original camera's settings, editing notes, and a guide for the phone.
   - **Repeat shot** (main button) and **Show pose**.
   - Swipe left or right to go to the next or previous photo.
   - Share card with a QR code.
@@ -24,7 +25,8 @@ The default language is Russian; English is available.
   - iPhone-style zoom, flash, timer, RAW (DNG) where the phone supports it.
   - Filters such as B&W, applied both in the preview and in the saved JPEG.
   - Reference overlay ("repeat shot") and a one-tap reset to defaults.
-  - **Apply recipe** sets everything from the photo; the ⓘ button shows camera diagnostics.
+  - **Apply recipe** sets everything from the photo, adapted to the real limits of this camera (ISO, shutter and zoom ranges); the ⓘ button shows camera diagnostics.
+  - Last-shot thumbnail next to the exit button: opens the photo in the phone's gallery.
 - **Accounts**
   - Email sign-up and sign-in, password recovery, profile.
   - Account deletion inside the app.
@@ -35,6 +37,16 @@ The default language is Russian; English is available.
   - Community feed and posting (the tab shows "coming soon").
   - Challenges.
   - The "N days in a row" badge.
+
+## Recipe engine
+
+Each photo stores the real settings of the original (`photos.original_shot`): camera, focal length and its 35 mm equivalent, aperture, shutter, ISO. The equivalent uses the crop factor of the camera body (`tool/original_shot.py`). The app turns them into a recipe for a phone (`lib/features/recipe/`):
+
+1. **Framing:** zoom = equivalent focal length ÷ main lens; the longest lens not longer than that is used, the rest is crop. Past 4× the longest lens the advice is to step closer.
+2. **Exposure:** same brightness as the original, corrected for the phone lens's aperture. Spare shutter time goes into a lower ISO (phones are noisy), but moving subjects stay frozen (people 1/250, cars 1/500; slower originals keep their intended blur). At the ISO limits the shutter moves; past them come tripod or night-mode advice.
+3. **Depth of field:** compared through the equivalent aperture; a much blurrier original asks for Portrait mode.
+
+Phone lenses (equivalent focal length and aperture, typical specs) are in `phone_profile.dart`; model detection is in `my_phone.dart`. Pose, light, white balance, exposure compensation and filter don't depend on the phone and come from the recipe text.
 
 ## Catalog and Unsplash
 
@@ -50,13 +62,13 @@ The default language is Russian; English is available.
 ### Adding a new batch
 
 1. Collect candidates through the Unsplash API, keeping only photos with full EXIF.
-2. Write the recipes, then join them with the authors and links:
+2. Write the recipe text (title, description, pose, white balance, filter), then join it with the authors, links and original shot data:
 
    ```bash
    python3 tool/merge_unsplash.py <details.jsonl> <folder with out_*.json> <result.json>
    ```
 
-3. Save the result as `supabase/seed/unsplash_batch_NN.json` and push it to GitHub.
+3. Add `original_shot` to each row with `tool/original_shot.py` (from the photo's EXIF), save the result as `supabase/seed/unsplash_batch_NN.json` and push it to GitHub.
 4. Insert the rows into `photos`. The SQL editor can load the JSON with `extensions.http_get` from the file's raw GitHub URL.
 5. Rebuild the offline copy:
 
@@ -91,7 +103,7 @@ flutter run -d <device-id> --dart-define=SUPABASE_URL=https://<project-ref>.supa
    - the tables, RLS policies and Storage buckets;
    - views, reports and blocks;
    - the `delete_my_account` function;
-   - the `unsplash_id` column.
+   - the `unsplash_id` and `original_shot` columns.
 2. Authentication: turn on email/password and add the redirect URL `com.shotbook.shotbook://login-callback`.
 3. Edge Functions: deploy `supabase/functions/unsplash-download` with JWT verification off, and set its secret `UNSPLASH_ACCESS_KEY`.
 
@@ -140,7 +152,8 @@ lib/
   features/
     discover/          catalog, filters, photo model, offline catalog
     photo_detail/      recipe page, swipe between photos
-    pro_camera/        PRO camera: controller, dials, zoom, filters, recipes
+    pro_camera/        PRO camera: controller, dials, zoom, filters, gallery button
+    recipe/            recipe engine: phone profiles, adaptation, my phone
     camera/            phone guides (device list)
     repeat_shot/       repeat a shot with a reference overlay
     pose/              "Show pose" screen
@@ -157,7 +170,7 @@ supabase/
   migrations/          schema, RLS, catalog
   seed/                catalog rows (Unsplash batches)
   functions/           Edge Function unsplash-download
-tool/                  catalog generator and batch merging
+tool/                  catalog generator, batch merging, original shot data
 docs/                  legal pages (GitHub Pages)
 test/                  unit and widget tests
 ```
