@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shotbook/app/app.dart';
 import 'package:shotbook/app/router.dart';
+import 'package:shotbook/features/discover/data/seed_photo_references.dart';
 import 'package:shotbook/features/discover/domain/photo_reference.dart';
 import 'package:shotbook/features/share/domain/shooting_summary.dart';
 import 'package:shotbook/features/share/presentation/share_card_screen.dart';
@@ -46,7 +47,7 @@ Future<void> _openShareCard(WidgetTester tester) async {
     ),
   );
   await tester.pumpAndSettle();
-  router.push('/photos/portrait-01/share');
+  router.push('/photos/us--Keh6vLM7w0/share');
   await tester.pumpAndSettle();
 }
 
@@ -101,10 +102,11 @@ void main() {
 
     expect(find.byType(RecipeShareCard), findsOneWidget);
     expect(find.text('SHOT FROM A RECIPE'), findsOneWidget);
-    expect(find.text('Freckled close-up'), findsOneWidget);
-    expect(find.text('Xiaomi 15 · Portrait mode, 3× lens'), findsOneWidget);
-    expect(find.text('ISO Auto · f2.0'), findsOneWidget);
-    expect(find.text('Preset: Leica Authentic or no filter'), findsOneWidget);
+    expect(find.text('Freckles in her palms'), findsOneWidget);
+    final photo = seedPhotoReferences.first.localized('en');
+    expect(find.text(deviceSummary(photo)!), findsOneWidget);
+    expect(find.text(shootingSummary(photo, focal: false)!), findsOneWidget);
+    expect(find.text('Preset: B&W'), findsOneWidget);
     expect(find.text('SHOTBOOK'), findsOneWidget);
     expect(find.text('Recipe in SHOTBOOK'), findsOneWidget);
     expect(find.text('QR'), findsOneWidget);

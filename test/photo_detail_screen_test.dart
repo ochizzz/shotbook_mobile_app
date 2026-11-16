@@ -16,23 +16,25 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.byKey(const ValueKey('photo-portrait-01')));
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('photo-us--Keh6vLM7w0')),
+    );
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('photo-portrait-01')));
+    await tester.tap(find.byKey(const ValueKey('photo-us--Keh6vLM7w0')));
     await tester.pumpAndSettle();
 
     // Graphite section labels are mono caps.
     expect(find.text('POSE'), findsOneWidget);
     expect(find.text('CAMERA SETTINGS'), findsOneWidget);
     expect(find.text('COLOR / EDITING'), findsOneWidget);
-    expect(find.text('Freckled close-up'), findsOneWidget);
+    expect(find.text('Freckles in her palms'), findsOneWidget);
     expect(find.text('Light'), findsOneWidget);
     expect(find.text('Focal length'), findsOneWidget);
     expect(find.text('Preset'), findsOneWidget);
-    expect(find.text('Camera guide: Xiaomi 15'), findsOneWidget);
+    expect(find.text('Camera guide: Nothing Phone (2)'), findsOneWidget);
     final credit = tester.widget<Text>(find.byKey(const Key('photo-credit')));
-    expect(credit.textSpan!.toPlainText(), contains('dvanzuijlekom'));
-    expect(credit.textSpan!.toPlainText(), contains('Flickr'));
+    expect(credit.textSpan!.toPlainText(), contains('Zulmaury Saavedra'));
+    expect(credit.textSpan!.toPlainText(), contains('Unsplash'));
   });
 
   testWidgets('swiping moves to the next and previous photo', (tester) async {
@@ -43,11 +45,13 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.byKey(const ValueKey('photo-portrait-01')));
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('photo-us--Keh6vLM7w0')),
+    );
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('photo-portrait-01')));
+    await tester.tap(find.byKey(const ValueKey('photo-us--Keh6vLM7w0')));
     await tester.pumpAndSettle();
-    expect(find.text('Freckled close-up'), findsOneWidget);
+    expect(find.text('Freckles in her palms'), findsOneWidget);
     // "Repeat this shot" is the main sticky action, "Show pose" sits inline.
     expect(
       tester.widget(find.byKey(const Key('repeat-shot'))),
@@ -61,7 +65,7 @@ void main() {
       1500,
     );
     await tester.pumpAndSettle();
-    expect(find.text('Freckled close-up'), findsNothing);
+    expect(find.text('Freckles in her palms'), findsNothing);
 
     await tester.fling(
       find.byKey(const Key('photo-pages')),
@@ -69,7 +73,7 @@ void main() {
       1500,
     );
     await tester.pumpAndSettle();
-    expect(find.text('Freckled close-up'), findsOneWidget);
+    expect(find.text('Freckles in her palms'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }

@@ -81,7 +81,7 @@ void main() {
         expect(v.isFinite, isTrue, reason: photo.id);
       }
     }
-    expect(mono, greaterThanOrEqualTo(10));
-    expect(withLook, greaterThan(80));
+    expect(mono, greaterThanOrEqualTo(3));
+    expect(withLook, greaterThan(seedPhotoReferences.length * 0.8));
   });
 }

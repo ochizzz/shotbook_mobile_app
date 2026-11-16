@@ -138,12 +138,12 @@ void main() {
   testWidgets('the best of the week opens a photo', (tester) async {
     await _pumpChallenges(tester);
     await tester.scrollUntilVisible(
-      find.byKey(const ValueKey('photo-portrait-01')),
+      find.byKey(const ValueKey('photo-us--Keh6vLM7w0')),
       200,
     );
-    await tester.tap(find.byKey(const ValueKey('photo-portrait-01')));
+    await tester.tap(find.byKey(const ValueKey('photo-us--Keh6vLM7w0')));
     await tester.pumpAndSettle();
-    expect(find.text('photo portrait-01'), findsOneWidget);
+    expect(find.text('photo us--Keh6vLM7w0'), findsOneWidget);
   });
 
   testWidgets('is in Russian', (tester) async {

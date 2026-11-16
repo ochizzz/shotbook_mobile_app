@@ -66,7 +66,7 @@ class SettingsScreen extends ConsumerWidget {
             icon: Icons.photo_library_outlined,
             title: context.tr('Photo credits'),
             subtitle: context.tr(
-              'Catalog photos are from Flickr under Creative Commons licences. The author and licence are shown on each photo.',
+              'Catalog photos are from Unsplash. The author is credited on each photo.',
             ),
           ),
         ],

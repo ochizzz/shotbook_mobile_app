@@ -123,7 +123,8 @@ const Map<String, String> ruStringsCore = {
   'Block {name}?': 'Заблокировать {name}?',
   'Blocked users': 'Заблокированные',
   'Camera guide: {device}': 'Гид по камере: {device}',
-  'Catalog photos are from Flickr under Creative Commons licences. The author and licence are shown on each photo.': 'Фото каталога взяты с Flickr по лицензиям Creative Commons. Автор и лицензия указаны у каждого фото.',
+  'Catalog photos are from Unsplash. The author is credited on each photo.':
+      'Фото каталога взяты с Unsplash. Автор указан у каждого фото.',
   'Could not open the page.': 'Не удалось открыть страницу.',
   'DELETE': 'УДАЛИТЬ',
   'Delete account': 'Удалить аккаунт',

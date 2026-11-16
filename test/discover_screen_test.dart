@@ -19,8 +19,11 @@ void main() {
 
       await tester.tap(find.text('Street').first);
       await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('photo-street-01')), findsOneWidget);
-      expect(find.byKey(const ValueKey('photo-portrait-01')), findsNothing);
+      expect(
+        find.byKey(const ValueKey('photo-us--F3wMFrZ7z0')),
+        findsOneWidget,
+      );
+      expect(find.byKey(const ValueKey('photo-us--Keh6vLM7w0')), findsNothing);
 
       await tester.enterText(
         find.byKey(const Key('discover-search-field')),
@@ -31,7 +34,10 @@ void main() {
 
       await tester.tap(find.text('Clear filters'));
       await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('photo-portrait-01')), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('photo-us--Keh6vLM7w0')),
+        findsOneWidget,
+      );
     },
   );
 
@@ -53,14 +59,14 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    const tile = ValueKey('photo-portrait-01');
+    const tile = ValueKey('photo-us--Keh6vLM7w0');
 
     // Cards carry no buttons: saving lives in the long-press menu.
     await tester.ensureVisible(find.byKey(tile));
     await tester.pumpAndSettle();
     await tester.longPress(find.byKey(tile));
     await tester.pumpAndSettle();
-    expect(find.text('Freckled close-up'), findsOneWidget);
+    expect(find.text('Freckles in her palms'), findsOneWidget);
     expect(find.text('Repeat this shot'), findsOneWidget);
     await tester.tap(find.byKey(const Key('sheet-save')));
     await tester.pumpAndSettle();

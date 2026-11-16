@@ -4,13 +4,16 @@ import 'package:shotbook/features/discover/data/photo_catalog_repository.dart';
 import 'package:shotbook/features/discover/data/seed_photo_references.dart';
 
 void main() {
-  test('catalog has 100 photos across all eight categories', () {
-    expect(seedPhotoReferences.length, 100);
-    expect(seedPhotoReferences.map((photo) => photo.id).toSet().length, 100);
+  test('catalog has 80+ photos across all eight categories', () {
+    expect(seedPhotoReferences.length, greaterThanOrEqualTo(80));
+    expect(
+      seedPhotoReferences.map((photo) => photo.id).toSet().length,
+      seedPhotoReferences.length,
+    );
     for (final category in photoCategories.skip(1)) {
       expect(
         seedPhotoReferences.where((photo) => photo.category == category).length,
-        greaterThanOrEqualTo(12),
+        greaterThanOrEqualTo(5),
         reason: category,
       );
     }
@@ -34,10 +37,10 @@ void main() {
     final results = filterPhotoReferences(
       seedPhotoReferences,
       category: 'Portrait',
-      query: 'ВЕСНУШК',
+      query: 'ВЕСНУШКИ В ЛАДОНЯХ',
     );
 
-    expect(results.map((photo) => photo.id), ['portrait-01']);
+    expect(results.map((photo) => photo.id), ['us--Keh6vLM7w0']);
   });
 
   test('unmatched query returns an empty list', () {

@@ -13,8 +13,8 @@ void main() {
   ];
 
   test('pose sequence starts with the photo, then its category', () {
-    final sequence = poseSequence(catalog, 'portrait-01');
-    expect(sequence.first.id, 'portrait-01');
+    final sequence = poseSequence(catalog, 'us--Keh6vLM7w0');
+    expect(sequence.first.id, 'us--Keh6vLM7w0');
     expect(sequence.length, maxPoseSequence);
     expect(sequence.map((photo) => photo.id).toSet().length, sequence.length);
     for (final photo in sequence.skip(1)) {
@@ -35,21 +35,22 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    router.push('/photos/portrait-01/pose');
+    router.push('/photos/us--Keh6vLM7w0/pose');
     await tester.pumpAndSettle();
 
-    final sequence = poseSequence(catalog, 'portrait-01');
+    final sequence = poseSequence(catalog, 'us--Keh6vLM7w0');
     final n = sequence.length;
     expect(find.text('POSE 1 / $n'), findsOneWidget);
     expect(find.byKey(const Key('pose-photo')), findsOneWidget);
     // Labels are accent caps, values big text.
     expect(find.text('LIGHT'), findsOneWidget);
     expect(
-      find.text('Soft window light or overcast sky, face turned toward it'),
+      find.text(
+        'Window to the front-side, face turned three-quarters toward it',
+      ),
       findsOneWidget,
     );
-    expect(find.text('ANGLE'), findsOneWidget);
-    expect(find.text('Camera at eye level'), findsOneWidget);
+    expect(find.text('HANDS'), findsOneWidget);
     expect(
       find.text('Show this screen to the person you are photographing'),
       findsOneWidget,
@@ -62,7 +63,7 @@ void main() {
     final second = sequence[1].poseData.entries.first;
     expect(find.text(second.key.toUpperCase()), findsWidgets);
     expect(find.text(second.value), findsOneWidget);
-    expect(find.text('Camera at eye level'), findsNothing);
+    expect(find.text('HANDS'), findsNothing);
 
     for (var i = 2; i < n; i++) {
       await tester.tap(find.byKey(const Key('pose-next')));
@@ -87,7 +88,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    router.push('/photos/street-01/pose');
+    router.push('/photos/us--F3wMFrZ7z0/pose');
     await tester.pumpAndSettle();
     expect(find.byType(ShowPoseScreen), findsOneWidget);
 

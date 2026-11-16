@@ -16,16 +16,18 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.byKey(const ValueKey('photo-portrait-01')));
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('photo-us--Keh6vLM7w0')),
+    );
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('photo-portrait-01')));
+    await tester.tap(find.byKey(const ValueKey('photo-us--Keh6vLM7w0')));
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.byKey(const Key('open-device-guide')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('open-device-guide')));
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
-    expect(find.text('XIAOMI'), findsOneWidget);
+    expect(find.text('NOTHING'), findsOneWidget);
     await tester.scrollUntilVisible(
       // Graphite section labels are mono caps.
       find.text('SHOT RECIPES FOR THIS PHONE'),
