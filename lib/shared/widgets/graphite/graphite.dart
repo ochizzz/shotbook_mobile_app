@@ -47,37 +47,39 @@ class MetaRow extends StatelessWidget {
       decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: ShotbookColors.border)),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Label takes what it needs (up to ~40 %), the value the rest:
-          // long words like "Экспокоррекция" never break mid-word.
-          Flexible(
-            flex: 2,
-            child: Text(
-              label,
-              softWrap: true,
-              style: const TextStyle(
-                fontSize: 14,
-                color: ShotbookColors.secondary,
+      // The label takes what it needs (up to 40 %, so long words like
+      // "Экспокоррекция" never break mid-word); the value fills the rest
+      // and always ends at the right edge.
+      child: LayoutBuilder(
+        builder: (context, box) => Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: box.maxWidth * 0.4),
+              child: Text(
+                label,
+                softWrap: true,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: ShotbookColors.secondary,
+                ),
               ),
             ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            flex: 3,
-            child: Text(
-              value,
-              textAlign: TextAlign.end,
-              style: mono
-                  ? ShotbookText.data.copyWith(fontSize: 13)
-                  : const TextStyle(
-                      fontSize: 14,
-                      color: ShotbookColors.primary,
-                    ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Text(
+                value,
+                textAlign: TextAlign.end,
+                style: mono
+                    ? ShotbookText.data.copyWith(fontSize: 13)
+                    : const TextStyle(
+                        fontSize: 14,
+                        color: ShotbookColors.primary,
+                      ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

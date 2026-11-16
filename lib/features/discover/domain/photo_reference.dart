@@ -288,14 +288,14 @@ class PhotoReference {
     String num(double v) =>
         v == v.roundToDouble() ? '${v.round()}' : v.toStringAsFixed(1);
     final focal = o.focalMm != null && (o.focalMm! - o.equivMm).abs() > 1
-        ? '${num(o.focalMm!)} mm (≈${num(o.equivMm)} mm)'
-        : '${num(o.equivMm)} mm';
+        ? '${num(o.focalMm!)}\u00a0mm (≈${num(o.equivMm)}\u00a0mm)'
+        : '${num(o.equivMm)}\u00a0mm';
     return [
       if (o.camera != null && o.camera!.trim().isNotEmpty) o.camera!.trim(),
       focal,
-      'f/${num(o.aperture)}',
-      formatSeconds(o.seconds),
-      'ISO ${o.iso}',
+      'f/\u2060${num(o.aperture)}',
+      formatSeconds(o.seconds).replaceAll('/', '/\u2060'),
+      'ISO\u00a0${o.iso}',
     ].join(' · ');
   }
 
