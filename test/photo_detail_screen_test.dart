@@ -34,4 +34,42 @@ void main() {
     expect(credit.textSpan!.toPlainText(), contains('dvanzuijlekom'));
     expect(credit.textSpan!.toPlainText(), contains('Flickr'));
   });
+
+  testWidgets('swiping moves to the next and previous photo', (tester) async {
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [initialLanguageProvider.overrideWithValue('en')],
+        child: ShotbookApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const ValueKey('photo-portrait-01')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('photo-portrait-01')));
+    await tester.pumpAndSettle();
+    expect(find.text('Freckled close-up'), findsOneWidget);
+    // "Repeat this shot" is the main sticky action, "Show pose" sits inline.
+    expect(
+      tester.widget(find.byKey(const Key('repeat-shot'))),
+      isA<FilledButton>(),
+    );
+    expect(find.byKey(const Key('show-pose')), findsOneWidget);
+
+    await tester.fling(
+      find.byKey(const Key('photo-pages')),
+      const Offset(-400, 0),
+      1500,
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Freckled close-up'), findsNothing);
+
+    await tester.fling(
+      find.byKey(const Key('photo-pages')),
+      const Offset(400, 0),
+      1500,
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Freckled close-up'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
 }

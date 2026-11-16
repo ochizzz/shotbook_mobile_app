@@ -31,7 +31,8 @@ const _shootingKeys = {
 
 /// Recipe detail (Penpot "2 · Recipe detail"): full-bleed photo with the
 /// shooting line, title, pose / camera / editing rows and a sticky bar with
-/// "Show pose" and share.
+/// "Repeat this shot" and share. Swipe left / right for the next / previous
+/// photo of the list the user came from.
 class PhotoDetailScreen extends ConsumerStatefulWidget {
   const PhotoDetailScreen({required this.photoId, super.key});
 
@@ -42,6 +43,92 @@ class PhotoDetailScreen extends ConsumerStatefulWidget {
 }
 
 class _PhotoDetailScreenState extends ConsumerState<PhotoDetailScreen> {
+  /// The swipe order, fixed on first build so the pages don't reshuffle.
+  List<PhotoReference>? _sequence;
+  PageController? _pages;
+
+  @override
+  void dispose() {
+    _pages?.dispose();
+    super.dispose();
+  }
+
+  List<PhotoReference> _sequenceFor(List<PhotoReference> catalog) {
+    // The filtered Discover list when the photo is in it, else the catalog.
+    final filtered = ref.read(filteredPhotoReferencesProvider).asData?.value;
+    if (filtered != null && filtered.any((p) => p.id == widget.photoId)) {
+      return filtered;
+    }
+    return catalog;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final photoId = widget.photoId;
+    final catalogState = ref.watch(remotePhotoCatalogProvider);
+    if (catalogState.isLoading) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+    if (catalogState.hasError) {
+      return Scaffold(
+        appBar: AppBar(title: Text(context.tr('Photo unavailable'))),
+        body: Center(
+          child: TextButton(
+            onPressed: () => ref.invalidate(photoCatalogSourceProvider),
+            child: Text(context.tr('Could not load this photo. Try again.')),
+          ),
+        ),
+      );
+    }
+    final catalog = catalogState.asData?.value ?? seedPhotoReferences;
+    if (!catalog.any((photo) => photo.id == photoId)) {
+      return Scaffold(
+        appBar: AppBar(title: Text(context.tr('Photo unavailable'))),
+        body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(context.tr('This photo is not in the catalog.')),
+              TextButton(
+                onPressed: () => Navigator.of(context).maybePop(),
+                child: Text(context.tr('Go back')),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    // Pick up language changes and fresh rows without changing the order.
+    final byId = {for (final p in catalog) p.id: p};
+    final sequence = (_sequence ??= _sequenceFor(
+      catalog,
+    )).map((p) => byId[p.id] ?? p).toList();
+    _pages ??= PageController(
+      initialPage: sequence.indexWhere((p) => p.id == photoId),
+    );
+    return PageView.builder(
+      key: const Key('photo-pages'),
+      controller: _pages,
+      itemCount: sequence.length,
+      itemBuilder: (context, index) => _PhotoRecipePage(
+        key: ValueKey(sequence[index].id),
+        photo: sequence[index],
+      ),
+    );
+  }
+}
+
+class _PhotoRecipePage extends ConsumerStatefulWidget {
+  const _PhotoRecipePage({required this.photo, super.key});
+
+  final PhotoReference photo;
+
+  @override
+  ConsumerState<_PhotoRecipePage> createState() => _PhotoRecipePageState();
+}
+
+class _PhotoRecipePageState extends ConsumerState<_PhotoRecipePage> {
   /// Server total after this open was counted; null until it is known.
   int? _views;
   bool _viewRecorded = false;
@@ -64,43 +151,7 @@ class _PhotoDetailScreenState extends ConsumerState<PhotoDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final photoId = widget.photoId;
-    final catalogState = ref.watch(remotePhotoCatalogProvider);
-    if (catalogState.isLoading) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
-    }
-    if (catalogState.hasError) {
-      return Scaffold(
-        appBar: AppBar(title: Text(context.tr('Photo unavailable'))),
-        body: Center(
-          child: TextButton(
-            onPressed: () => ref.invalidate(photoCatalogSourceProvider),
-            child: Text(context.tr('Could not load this photo. Try again.')),
-          ),
-        ),
-      );
-    }
-    final catalog = catalogState.asData?.value ?? seedPhotoReferences;
-    final matches = catalog.where((photo) => photo.id == photoId);
-    if (matches.isEmpty) {
-      return Scaffold(
-        appBar: AppBar(title: Text(context.tr('Photo unavailable'))),
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(context.tr('This photo is not in the catalog.')),
-              TextButton(
-                onPressed: () => Navigator.of(context).maybePop(),
-                child: Text(context.tr('Go back')),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-
-    final photo = matches.first;
+    final photo = widget.photo;
     WidgetsBinding.instance.addPostFrameCallback((_) => _recordViewOnce(photo));
     final views = _views ?? photo.viewCount;
     final savedState = ref.watch(savedPhotoIdsProvider);
@@ -166,11 +217,10 @@ class _PhotoDetailScreenState extends ConsumerState<PhotoDetailScreen> {
                     ),
                     const SizedBox(height: 20),
                     OutlinedButton.icon(
-                      key: const Key('repeat-shot'),
-                      onPressed: () =>
-                          context.push('/photos/${photo.id}/repeat'),
-                      icon: const Icon(Icons.filter_center_focus, size: 20),
-                      label: Text(context.tr('Repeat this shot')),
+                      key: const Key('show-pose'),
+                      onPressed: () => context.push('/photos/${photo.id}/pose'),
+                      icon: const Icon(Icons.accessibility_new, size: 20),
+                      label: Text(context.tr('Show pose')),
                     ),
                     MetadataSection(title: 'Pose', values: photo.poseData),
                     MetadataSection(
@@ -390,7 +440,7 @@ class _DeviceGuideRow extends StatelessWidget {
   );
 }
 
-/// Sticky 88 px bar: "Show pose" and an outlined share button.
+/// Sticky 88 px bar: "Repeat this shot" and an outlined share button.
 class _RecipeActionBar extends StatelessWidget {
   const _RecipeActionBar({required this.photoId});
 
@@ -409,10 +459,11 @@ class _RecipeActionBar extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: FilledButton(
-                key: const Key('show-pose'),
-                onPressed: () => context.push('/photos/$photoId/pose'),
-                child: Text(context.tr('Show pose')),
+              child: FilledButton.icon(
+                key: const Key('repeat-shot'),
+                onPressed: () => context.push('/photos/$photoId/repeat'),
+                icon: const Icon(Icons.filter_center_focus, size: 20),
+                label: Text(context.tr('Repeat this shot')),
               ),
             ),
             const SizedBox(width: 12),

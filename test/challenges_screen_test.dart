@@ -207,6 +207,18 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
+    testWidgets('the streak badge is hidden for now', (tester) async {
+      SharedPreferences.setMockInitialValues({});
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [initialLanguageProvider.overrideWithValue('en')],
+          child: ShotbookApp(),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('streak-badge')), findsNothing);
+    });
+
     testWidgets('opening the app starts a streak; the badge opens Challenges', (
       tester,
     ) async {
@@ -216,6 +228,7 @@ void main() {
           overrides: [
             initialLanguageProvider.overrideWithValue('en'),
             communityEnabledProvider.overrideWithValue(true),
+            streakBadgeEnabledProvider.overrideWithValue(true),
           ],
           child: ShotbookApp(),
         ),

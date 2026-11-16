@@ -6,6 +6,7 @@ import '../../../app/theme.dart';
 import '../../../features/challenges/application/streak_provider.dart';
 import '../../../l10n/language_provider.dart';
 import '../../../l10n/tr.dart';
+import '../../services/feature_flags.dart';
 
 export 'viewfinder_ticks.dart';
 
@@ -91,6 +92,7 @@ class StreakBadge extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if (!ref.watch(streakBadgeEnabledProvider)) return const SizedBox.shrink();
     final days = ref.watch(streakDaysProvider);
     if (days <= 0 && !showWhenEmpty) return const SizedBox.shrink();
     return InkWell(
