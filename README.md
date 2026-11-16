@@ -70,11 +70,17 @@ Phone lenses (equivalent focal length and aperture, typical specs) are in `phone
 
 3. Add `original_shot` to each row with `tool/original_shot.py` (from the photo's EXIF), save the result as `supabase/seed/unsplash_batch_NN.json` and push it to GitHub.
 4. Insert the rows into `photos`. The SQL editor can load the JSON with `extensions.http_get` from the file's raw GitHub URL.
-5. Rebuild the offline copy:
+5. Rebuild the offline copy from all batches combined:
 
    ```bash
-   python3 tool/gen_seed.py supabase/seed/unsplash_batch_NN.json lib/features/discover/data/seed_photo_references.dart
+   python3 -c "import json,glob;json.dump(sum((json.load(open(f)) for f in sorted(glob.glob('supabase/seed/unsplash_batch_*.json'))),[]),open('/tmp/all.json','w'),ensure_ascii=False)"
    ```
+
+   ```bash
+   python3 tool/gen_seed.py /tmp/all.json lib/features/discover/data/seed_photo_references.dart
+   ```
+
+Batches so far: `01` (87 photos), `02` (43 photos, mostly product and full body). New rows take even `sort_order` values so they mix into the existing feed.
 
 ## Requirements
 
