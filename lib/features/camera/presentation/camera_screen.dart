@@ -165,16 +165,11 @@ class CameraDeviceScreen extends ConsumerWidget {
     final catalog =
         ref.watch(remotePhotoCatalogProvider).asData?.value ??
         seedPhotoReferences;
-    // Recipes written for this phone first, then a few general examples.
-    final forDevice = catalog
-        .where((photo) => photo.deviceId == device.id)
-        .toList();
+    // Every recipe adapts to any phone: show one example per category.
+    final seen = <String>{};
     final examples = [
-      ...forDevice,
-      ...catalog
-          .where((photo) => photo.deviceId != device.id)
-          .where((photo) => photo.sourceType == 'curated')
-          .take(forDevice.isEmpty ? 6 : 3),
+      for (final photo in catalog)
+        if (photo.sourceType == 'curated' && seen.add(photo.category)) photo,
     ];
     return Scaffold(
       appBar: AppBar(title: Text(context.tr(device.model))),
@@ -212,11 +207,7 @@ class CameraDeviceScreen extends ConsumerWidget {
                 ),
               ),
           const SizedBox(height: 28),
-          SectionLabel(
-            forDevice.isEmpty
-                ? context.tr('Photo examples')
-                : context.tr('Shot recipes for this phone'),
-          ),
+          SectionLabel(context.tr('Photo examples')),
           const SizedBox(height: 10),
           SizedBox(
             height: 168,

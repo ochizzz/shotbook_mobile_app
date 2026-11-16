@@ -31,7 +31,7 @@ void main() {
     expect(find.text('Light'), findsOneWidget);
     expect(find.text('Focal length'), findsOneWidget);
     expect(find.text('Preset'), findsOneWidget);
-    expect(find.text('Camera guide: Nothing Phone (2)'), findsOneWidget);
+    expect(find.text('Camera guide: Your phone'), findsOneWidget);
     final credit = tester.widget<Text>(find.byKey(const Key('photo-credit')));
     expect(credit.textSpan!.toPlainText(), contains('Zulmaury Saavedra'));
     expect(credit.textSpan!.toPlainText(), contains('Unsplash'));

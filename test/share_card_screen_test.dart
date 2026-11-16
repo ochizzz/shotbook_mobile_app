@@ -8,6 +8,8 @@ import 'package:shotbook/app/app.dart';
 import 'package:shotbook/app/router.dart';
 import 'package:shotbook/features/discover/data/seed_photo_references.dart';
 import 'package:shotbook/features/discover/domain/photo_reference.dart';
+import 'package:shotbook/features/recipe/adapt_photo.dart';
+import 'package:shotbook/features/recipe/phone_profile.dart';
 import 'package:shotbook/features/share/domain/shooting_summary.dart';
 import 'package:shotbook/features/share/presentation/share_card_screen.dart';
 import 'package:shotbook/l10n/language_provider.dart';
@@ -103,7 +105,11 @@ void main() {
     expect(find.byType(RecipeShareCard), findsOneWidget);
     expect(find.text('SHOT FROM A RECIPE'), findsOneWidget);
     expect(find.text('Freckles in her palms'), findsOneWidget);
-    final photo = seedPhotoReferences.first.localized('en');
+    final photo = adaptToPhone(
+      seedPhotoReferences.first.localized('en'),
+      fallbackPhoneId,
+      russian: false,
+    );
     expect(find.text(deviceSummary(photo)!), findsOneWidget);
     expect(find.text(shootingSummary(photo, focal: false)!), findsOneWidget);
     expect(find.text('Preset: B&W'), findsOneWidget);

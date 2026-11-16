@@ -27,10 +27,10 @@ void main() {
     await tester.tap(find.byKey(const Key('open-device-guide')));
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
-    expect(find.text('NOTHING'), findsOneWidget);
+    expect(find.text('OTHER'), findsOneWidget);
     await tester.scrollUntilVisible(
       // Graphite section labels are mono caps.
-      find.text('SHOT RECIPES FOR THIS PHONE'),
+      find.text('PHOTO EXAMPLES'),
       200,
       scrollable: find
           .descendant(

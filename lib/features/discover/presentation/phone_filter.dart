@@ -6,16 +6,18 @@ import 'package:go_router/go_router.dart';
 import '../../../app/theme.dart';
 import '../../../l10n/tr.dart';
 import '../../camera/domain/camera_device.dart';
-import '../application/discover_providers.dart';
+import '../../recipe/my_phone.dart';
+import '../../recipe/phone_profile.dart';
 
-/// A small dropdown under the categories: filter recipes by phone.
+/// A small dropdown under the categories: the phone every recipe is
+/// worked out for ("My phone").
 class PhoneFilter extends ConsumerWidget {
   const PhoneFilter({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedId = ref.watch(discoverFiltersProvider).deviceId;
-    final device = selectedId == null
+    final selectedId = ref.watch(myPhoneProvider);
+    final device = selectedId == fallbackPhoneId
         ? null
         : cameraDevices.where((d) => d.id == selectedId).firstOrNull;
     final style = Theme.of(context).textTheme.labelMedium;
@@ -30,23 +32,21 @@ class PhoneFilter extends ConsumerWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
+                const Icon(
                   Icons.smartphone,
                   size: 15,
-                  color: device == null
-                      ? ShotbookColors.secondary
-                      : ShotbookColors.primary,
+                  color: ShotbookColors.accent,
                 ),
                 const SizedBox(width: 6),
                 Text(
+                  '${context.tr('My phone')}: ',
+                  style: style?.copyWith(color: ShotbookColors.secondary),
+                ),
+                Text(
                   device == null
-                      ? context.tr('All phones')
+                      ? context.tr('Choose')
                       : '${context.tr(device.brand)} ${context.tr(device.model)}',
-                  style: style?.copyWith(
-                    color: device == null
-                        ? ShotbookColors.secondary
-                        : ShotbookColors.primary,
-                  ),
+                  style: style?.copyWith(color: ShotbookColors.primary),
                 ),
                 const Icon(
                   Icons.expand_more,
@@ -68,15 +68,6 @@ class PhoneFilter extends ConsumerWidget {
             ),
             onPressed: () => context.push('/camera/${device.id}'),
             child: Text(context.tr('Camera guide')),
-          ),
-          IconButton(
-            key: const Key('phone-filter-clear'),
-            tooltip: context.tr('All phones'),
-            visualDensity: VisualDensity.compact,
-            iconSize: 16,
-            onPressed: () =>
-                ref.read(discoverFiltersProvider.notifier).setDevice(null),
-            icon: const Icon(Icons.close, color: ShotbookColors.secondary),
           ),
         ],
       ],
@@ -107,13 +98,7 @@ class _PhoneSheetState extends ConsumerState<_PhoneSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final selectedId = ref.watch(discoverFiltersProvider).deviceId;
-    final catalog = ref.watch(remotePhotoCatalogProvider).asData?.value;
-    final counts = <String, int>{};
-    for (final photo in catalog ?? const []) {
-      final id = photo.deviceId;
-      if (id != null) counts[id] = (counts[id] ?? 0) + 1;
-    }
+    final selectedId = ref.watch(myPhoneProvider);
     final q = _query.trim().toLowerCase();
     final devices = cameraDevices
         .where(
@@ -146,7 +131,6 @@ class _PhoneSheetState extends ConsumerState<_PhoneSheet> {
           context,
           key: Key('phone-option-${d.id}'),
           title: context.tr(d.model),
-          trailing: counts[d.id] == null ? null : '${counts[d.id]}',
           selected: d.id == selectedId,
           onTap: () => _select(d.id),
         ),
@@ -175,19 +159,12 @@ class _PhoneSheetState extends ConsumerState<_PhoneSheet> {
               controller: controller,
               padding: const EdgeInsets.only(bottom: 24),
               children: [
-                _row(
-                  context,
-                  key: const Key('phone-option-all'),
-                  title: context.tr('All phones'),
-                  selected: selectedId == null,
-                  onTap: () => _select(null),
-                ),
                 ...rows,
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
                   child: Text(
                     context.tr(
-                      'The number is how many recipes are written for that phone.',
+                      'Every recipe is worked out for the chosen phone from the original shot: lens, ISO and shutter.',
                     ),
                     style: const TextStyle(
                       fontSize: 11,
@@ -203,9 +180,9 @@ class _PhoneSheetState extends ConsumerState<_PhoneSheet> {
     );
   }
 
-  void _select(String? id) {
+  void _select(String id) {
     HapticFeedback.selectionClick();
-    ref.read(discoverFiltersProvider.notifier).setDevice(id);
+    ref.read(myPhoneProvider.notifier).select(id);
     Navigator.of(context).pop();
   }
 

@@ -130,6 +130,9 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                     result.success(null)
                 }
                 "lastPhoto" -> result.success(lastPhoto())
+                "deviceModel" -> result.success(
+                    mapOf("manufacturer" to Build.MANUFACTURER, "model" to Build.MODEL),
+                )
                 "openPhoto" -> {
                     openPhoto(call.argument<String>("uri"))
                     result.success(null)

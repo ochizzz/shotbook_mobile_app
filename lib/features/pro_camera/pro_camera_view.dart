@@ -8,6 +8,8 @@ import '../../app/theme.dart';
 import '../../l10n/tr.dart';
 import '../../shared/widgets/photo_reference_image.dart';
 import '../discover/domain/photo_reference.dart';
+import '../recipe/phone_profile.dart';
+import '../recipe/recipe_engine.dart' show adaptShot;
 import 'camera_diagnostics.dart';
 import 'camera_recipe.dart';
 import 'photo_look.dart';
@@ -166,15 +168,41 @@ class _ProCameraViewState extends State<ProCameraView>
   void _applyRecipe() {
     final photo = _photo;
     if (photo == null || !_ready) return;
-    final recipe = CameraRecipe.fromPhoto(
-      photo,
-      mainEquivalentMm: _caps.mainEquivalentMm,
-    );
+    final recipe = _recipeFor(photo);
     final look = lookFromPhoto(photo);
     HapticFeedback.mediumImpact();
     final next = _camera.settings.withRecipe(recipe, _caps, look: look);
     _set(next);
     _snack(_recipeSummary(recipe, next, look));
+  }
+
+  /// The photo's original shot adapted to this camera's real limits
+  /// (ISO, shutter and zoom ranges); older recipes are read from text.
+  CameraRecipe _recipeFor(PhotoReference photo) {
+    final original = photo.original;
+    if (original == null) {
+      return CameraRecipe.fromPhoto(
+        photo,
+        mainEquivalentMm: _caps.mainEquivalentMm,
+      );
+    }
+    final c = _caps;
+    final phone = phoneProfile(photo.deviceId).withLimits(
+      isoMin: c.isoMin,
+      isoMax: c.isoMax,
+      shortestSeconds: c.exposureMinNs / 1e9,
+      longestSeconds: c.exposureMaxNs / 1e9,
+      zoomMax: c.zoomMax,
+      mainMm: c.mainEquivalentMm,
+    );
+    final r = adaptShot(original, phone, category: photo.category);
+    return CameraRecipe(
+      iso: r.iso,
+      exposureNs: (r.seconds * 1e9).round(),
+      ev: parseEv(photo.exposureCompensation),
+      kelvin: parseKelvin(photo.whiteBalance),
+      zoom: r.zoom,
+    );
   }
 
   /// What "Apply photo settings" actually set, so nothing is a surprise.

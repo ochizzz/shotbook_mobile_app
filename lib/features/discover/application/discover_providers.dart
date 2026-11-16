@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/language_provider.dart';
 import '../../../shared/services/supabase_providers.dart';
+import '../../recipe/adapt_photo.dart';
+import '../../recipe/my_phone.dart';
 import '../data/photo_catalog_repository.dart';
 import '../data/seed_photo_references.dart';
 import '../data/supabase_photo_repository.dart';
@@ -26,13 +28,23 @@ final photoCatalogSourceProvider = FutureProvider<List<PhotoReference>>((
   return photos;
 });
 
-/// The catalog in the interface language.
+/// The catalog in the interface language, with every recipe worked out
+/// for the user's phone.
 final remotePhotoCatalogProvider = FutureProvider<List<PhotoReference>>((
   ref,
 ) async {
   final language = ref.watch(languageProvider);
+  final phone = ref.watch(myPhoneProvider);
   final photos = await ref.watch(photoCatalogSourceProvider.future);
-  return photos.map((photo) => photo.localized(language)).toList();
+  return photos
+      .map(
+        (photo) => adaptToPhone(
+          photo.localized(language),
+          phone,
+          russian: language == 'ru',
+        ),
+      )
+      .toList();
 });
 
 final discoverFiltersProvider =

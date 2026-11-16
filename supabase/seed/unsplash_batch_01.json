@@ -64,7 +64,15 @@
    }
   },
   "sort_order": 1,
-  "unsplash_id": "-Keh6vLM7w0"
+  "unsplash_id": "-Keh6vLM7w0",
+  "original_shot": {
+   "camera": "Canon EOS REBEL T3i",
+   "focal_mm": 18.0,
+   "equiv_mm": 29,
+   "aperture": 4.0,
+   "shutter": "1/500",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us--F3wMFrZ7z0",
@@ -131,7 +139,15 @@
    }
   },
   "sort_order": 3,
-  "unsplash_id": "-F3wMFrZ7z0"
+  "unsplash_id": "-F3wMFrZ7z0",
+  "original_shot": {
+   "camera": "Canon EOS 6D",
+   "focal_mm": 21.0,
+   "equiv_mm": 21,
+   "aperture": 4.0,
+   "shutter": "1/10",
+   "iso": 800
+  }
  },
  {
   "legacy_id": "us-bL6qk2H_o58",
@@ -200,7 +216,15 @@
    }
   },
   "sort_order": 5,
-  "unsplash_id": "bL6qk2H_o58"
+  "unsplash_id": "bL6qk2H_o58",
+  "original_shot": {
+   "camera": "NIKON D7000",
+   "focal_mm": 38.0,
+   "equiv_mm": 57,
+   "aperture": 2.8,
+   "shutter": "1/125",
+   "iso": 1000
+  }
  },
  {
   "legacy_id": "us-bVM7IO7pt7s",
@@ -267,7 +291,15 @@
    }
   },
   "sort_order": 7,
-  "unsplash_id": "bVM7IO7pt7s"
+  "unsplash_id": "bVM7IO7pt7s",
+  "original_shot": {
+   "camera": "Olympus E-M5",
+   "focal_mm": 20.0,
+   "equiv_mm": 40,
+   "aperture": 3.2,
+   "shutter": "1/13",
+   "iso": 640
+  }
  },
  {
   "legacy_id": "us-FoG8lotg7AA",
@@ -334,7 +366,15 @@
    }
   },
   "sort_order": 9,
-  "unsplash_id": "FoG8lotg7AA"
+  "unsplash_id": "FoG8lotg7AA",
+  "original_shot": {
+   "camera": "Olympus PEN-F",
+   "focal_mm": 17.0,
+   "equiv_mm": 34,
+   "aperture": 1.8,
+   "shutter": "1/30",
+   "iso": 800
+  }
  },
  {
   "legacy_id": "us-7lGiQDLnkUs",
@@ -401,7 +441,15 @@
    }
   },
   "sort_order": 11,
-  "unsplash_id": "7lGiQDLnkUs"
+  "unsplash_id": "7lGiQDLnkUs",
+  "original_shot": {
+   "camera": "Sony ILCE-7M3",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 2.2,
+   "shutter": "1/50",
+   "iso": 800
+  }
  },
  {
   "legacy_id": "us-PpZasS086os",
@@ -470,7 +518,15 @@
    }
   },
   "sort_order": 13,
-  "unsplash_id": "PpZasS086os"
+  "unsplash_id": "PpZasS086os",
+  "original_shot": {
+   "camera": "Canon EOS 550D",
+   "focal_mm": 50.0,
+   "equiv_mm": 80,
+   "aperture": 5.0,
+   "shutter": "1/160",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-CjS3QsRuxnE",
@@ -537,7 +593,15 @@
    }
   },
   "sort_order": 15,
-  "unsplash_id": "CjS3QsRuxnE"
+  "unsplash_id": "CjS3QsRuxnE",
+  "original_shot": {
+   "camera": "ONEPLUS A3003",
+   "focal_mm": 4.3,
+   "equiv_mm": 26,
+   "aperture": 2.0,
+   "shutter": "1/25",
+   "iso": 250
+  }
  },
  {
   "legacy_id": "us-3mMvCsW6ZYs",
@@ -604,7 +668,15 @@
    }
   },
   "sort_order": 17,
-  "unsplash_id": "3mMvCsW6ZYs"
+  "unsplash_id": "3mMvCsW6ZYs",
+  "original_shot": {
+   "camera": "Canon EOS 70D",
+   "focal_mm": 24.0,
+   "equiv_mm": 38,
+   "aperture": 7.1,
+   "shutter": "1/80",
+   "iso": 6400
+  }
  },
  {
   "legacy_id": "us-xgXKu6uM9jY",
@@ -671,7 +743,15 @@
    }
   },
   "sort_order": 19,
-  "unsplash_id": "xgXKu6uM9jY"
+  "unsplash_id": "xgXKu6uM9jY",
+  "original_shot": {
+   "camera": "NIKON D850",
+   "focal_mm": 24.0,
+   "equiv_mm": 24,
+   "aperture": 4.5,
+   "shutter": "1/100",
+   "iso": 400
+  }
  },
  {
   "legacy_id": "us-ExliZ-N2GqE",
@@ -738,7 +818,15 @@
    }
   },
   "sort_order": 21,
-  "unsplash_id": "ExliZ-N2GqE"
+  "unsplash_id": "ExliZ-N2GqE",
+  "original_shot": {
+   "camera": "Canon EOS 5D Mark IV",
+   "focal_mm": 35.0,
+   "equiv_mm": 35,
+   "aperture": 4.0,
+   "shutter": "1/160",
+   "iso": 320
+  }
  },
  {
   "legacy_id": "us-a-5R9mE3ryI",
@@ -805,7 +893,15 @@
    }
   },
   "sort_order": 23,
-  "unsplash_id": "a-5R9mE3ryI"
+  "unsplash_id": "a-5R9mE3ryI",
+  "original_shot": {
+   "camera": "Canon EOS 70D",
+   "focal_mm": 18.0,
+   "equiv_mm": 29,
+   "aperture": 5.6,
+   "shutter": "1/60",
+   "iso": 400
+  }
  },
  {
   "legacy_id": "us-52AAiXWoVi0",
@@ -872,7 +968,15 @@
    }
   },
   "sort_order": 25,
-  "unsplash_id": "52AAiXWoVi0"
+  "unsplash_id": "52AAiXWoVi0",
+  "original_shot": {
+   "camera": "Sony ILCE-7RM3",
+   "focal_mm": 85.0,
+   "equiv_mm": 85,
+   "aperture": 1.4,
+   "shutter": "1/1000",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-iRnUeA04kUY",
@@ -939,7 +1043,15 @@
    }
   },
   "sort_order": 27,
-  "unsplash_id": "iRnUeA04kUY"
+  "unsplash_id": "iRnUeA04kUY",
+  "original_shot": {
+   "camera": "NIKON D800",
+   "focal_mm": 105.0,
+   "equiv_mm": 105,
+   "aperture": 4.0,
+   "shutter": "1/25",
+   "iso": 280
+  }
  },
  {
   "legacy_id": "us-rdt2hnOH5gs",
@@ -1006,7 +1118,15 @@
     }
    }
   },
-  "sort_order": 29
+  "sort_order": 29,
+  "original_shot": {
+   "camera": "Canon EOS 5D Mark II",
+   "focal_mm": 70.0,
+   "equiv_mm": 70,
+   "aperture": 2.8,
+   "shutter": "1/200",
+   "iso": 250
+  }
  },
  {
   "legacy_id": "us-wiw9kVxFXnU",
@@ -1073,7 +1193,15 @@
    }
   },
   "sort_order": 31,
-  "unsplash_id": "wiw9kVxFXnU"
+  "unsplash_id": "wiw9kVxFXnU",
+  "original_shot": {
+   "camera": "Canon EOS Rebel T6",
+   "focal_mm": 18.0,
+   "equiv_mm": 29,
+   "aperture": 4.0,
+   "shutter": "1/25",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-xZgkFQ4Hijc",
@@ -1140,7 +1268,15 @@
    }
   },
   "sort_order": 33,
-  "unsplash_id": "xZgkFQ4Hijc"
+  "unsplash_id": "xZgkFQ4Hijc",
+  "original_shot": {
+   "camera": "NIKON D3200",
+   "focal_mm": 35.0,
+   "equiv_mm": 52,
+   "aperture": 1.8,
+   "shutter": "1/500",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-6OOU-VK2bhU",
@@ -1209,7 +1345,15 @@
    }
   },
   "sort_order": 35,
-  "unsplash_id": "6OOU-VK2bhU"
+  "unsplash_id": "6OOU-VK2bhU",
+  "original_shot": {
+   "camera": "Sony ILCE-7M3",
+   "focal_mm": 85.0,
+   "equiv_mm": 85,
+   "aperture": 1.4,
+   "shutter": "1/5000",
+   "iso": 800
+  }
  },
  {
   "legacy_id": "us-jME0rQ9brlA",
@@ -1276,7 +1420,15 @@
    }
   },
   "sort_order": 37,
-  "unsplash_id": "jME0rQ9brlA"
+  "unsplash_id": "jME0rQ9brlA",
+  "original_shot": {
+   "camera": "Canon EOS 70D",
+   "focal_mm": 23.0,
+   "equiv_mm": 37,
+   "aperture": 1.8,
+   "shutter": "1/4000",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-TDDPRyUe0LI",
@@ -1343,7 +1495,15 @@
    }
   },
   "sort_order": 39,
-  "unsplash_id": "TDDPRyUe0LI"
+  "unsplash_id": "TDDPRyUe0LI",
+  "original_shot": {
+   "camera": "Canon EOS 5D Mark IV",
+   "focal_mm": 35.0,
+   "equiv_mm": 35,
+   "aperture": 1.4,
+   "shutter": "1/50",
+   "iso": 1600
+  }
  },
  {
   "legacy_id": "us-2OU30mdtseY",
@@ -1410,7 +1570,15 @@
    }
   },
   "sort_order": 41,
-  "unsplash_id": "2OU30mdtseY"
+  "unsplash_id": "2OU30mdtseY",
+  "original_shot": {
+   "camera": "Samsung NX3000",
+   "focal_mm": 24.0,
+   "equiv_mm": 36,
+   "aperture": 4.0,
+   "shutter": "1/125",
+   "iso": 200
+  }
  },
  {
   "legacy_id": "us-dfkWds6xt-U",
@@ -1477,7 +1645,15 @@
    }
   },
   "sort_order": 43,
-  "unsplash_id": "dfkWds6xt-U"
+  "unsplash_id": "dfkWds6xt-U",
+  "original_shot": {
+   "camera": "Sony ILCE-7M3",
+   "focal_mm": 35.0,
+   "equiv_mm": 35,
+   "aperture": 1.8,
+   "shutter": "1/1250",
+   "iso": 200
+  }
  },
  {
   "legacy_id": "us-d1hBfHYcAF8",
@@ -1544,7 +1720,15 @@
     }
    }
   },
-  "sort_order": 45
+  "sort_order": 45,
+  "original_shot": {
+   "camera": "Canon EOS 5D Mark II",
+   "focal_mm": 35.0,
+   "equiv_mm": 35,
+   "aperture": 1.4,
+   "shutter": "1/2500",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-m_TW76iDs2Q",
@@ -1611,7 +1795,15 @@
     }
    }
   },
-  "sort_order": 47
+  "sort_order": 47,
+  "original_shot": {
+   "camera": "Sony ILCE-6300",
+   "focal_mm": 16.0,
+   "equiv_mm": 24,
+   "aperture": 7.1,
+   "shutter": "1/100",
+   "iso": 800
+  }
  },
  {
   "legacy_id": "us-LyeduBb2Auk",
@@ -1678,7 +1870,15 @@
     }
    }
   },
-  "sort_order": 49
+  "sort_order": 49,
+  "original_shot": {
+   "camera": "Canon EOS 1100D",
+   "focal_mm": 50.0,
+   "equiv_mm": 80,
+   "aperture": 1.4,
+   "shutter": "1/125",
+   "iso": 400
+  }
  },
  {
   "legacy_id": "us-wUZjnOv7t0g",
@@ -1745,7 +1945,15 @@
     }
    }
   },
-  "sort_order": 51
+  "sort_order": 51,
+  "original_shot": {
+   "camera": "NIKON D850",
+   "focal_mm": 180.0,
+   "equiv_mm": 180,
+   "aperture": 7.1,
+   "shutter": "1/400",
+   "iso": 500
+  }
  },
  {
   "legacy_id": "us-cAUdMUoE-B8",
@@ -1812,7 +2020,15 @@
     }
    }
   },
-  "sort_order": 53
+  "sort_order": 53,
+  "original_shot": {
+   "camera": "Canon EOS R",
+   "focal_mm": 35.0,
+   "equiv_mm": 35,
+   "aperture": 1.4,
+   "shutter": "1/200",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-IfzB2uhmlMk",
@@ -1879,7 +2095,15 @@
     }
    }
   },
-  "sort_order": 55
+  "sort_order": 55,
+  "original_shot": {
+   "camera": "Sony ILCE-7M3",
+   "focal_mm": 75.0,
+   "equiv_mm": 75,
+   "aperture": 2.8,
+   "shutter": "1/80",
+   "iso": 2000
+  }
  },
  {
   "legacy_id": "us-8i2fHtStfxk",
@@ -1946,7 +2170,15 @@
     }
    }
   },
-  "sort_order": 57
+  "sort_order": 57,
+  "original_shot": {
+   "camera": "Canon EOS 6D",
+   "focal_mm": 35.0,
+   "equiv_mm": 35,
+   "aperture": 2.0,
+   "shutter": "1/320",
+   "iso": 320
+  }
  },
  {
   "legacy_id": "us-2rH3L9sgUPo",
@@ -2013,7 +2245,15 @@
    }
   },
   "sort_order": 59,
-  "unsplash_id": "2rH3L9sgUPo"
+  "unsplash_id": "2rH3L9sgUPo",
+  "original_shot": {
+   "camera": "Canon EOS R5",
+   "focal_mm": 85.0,
+   "equiv_mm": 85,
+   "aperture": 2.8,
+   "shutter": "1/640",
+   "iso": 1000
+  }
  },
  {
   "legacy_id": "us-x9kIDS9tUCU",
@@ -2080,7 +2320,15 @@
     }
    }
   },
-  "sort_order": 61
+  "sort_order": 61,
+  "original_shot": {
+   "camera": "Canon EOS 60D",
+   "focal_mm": 40.0,
+   "equiv_mm": 64,
+   "aperture": 2.8,
+   "shutter": "1/1250",
+   "iso": 400
+  }
  },
  {
   "legacy_id": "us-cw1MAVs4wV8",
@@ -2147,7 +2395,15 @@
    }
   },
   "sort_order": 63,
-  "unsplash_id": "cw1MAVs4wV8"
+  "unsplash_id": "cw1MAVs4wV8",
+  "original_shot": {
+   "camera": "Canon EOS 5D Mark III",
+   "focal_mm": 100.0,
+   "equiv_mm": 100,
+   "aperture": 14.0,
+   "shutter": "1/160",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-RoH656UZEgY",
@@ -2214,7 +2470,15 @@
     }
    }
   },
-  "sort_order": 65
+  "sort_order": 65,
+  "original_shot": {
+   "camera": "Sony ILCE-7RM2",
+   "focal_mm": 85.0,
+   "equiv_mm": 85,
+   "aperture": 1.4,
+   "shutter": "1/60",
+   "iso": 200
+  }
  },
  {
   "legacy_id": "us-xX2aYSBsyKo",
@@ -2281,7 +2545,15 @@
     }
    }
   },
-  "sort_order": 67
+  "sort_order": 67,
+  "original_shot": {
+   "camera": "Canon EOS 5D Mark IV",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 5.0,
+   "shutter": "1/400",
+   "iso": 640
+  }
  },
  {
   "legacy_id": "us-KVAZCI2nrj4",
@@ -2348,7 +2620,15 @@
    }
   },
   "sort_order": 69,
-  "unsplash_id": "KVAZCI2nrj4"
+  "unsplash_id": "KVAZCI2nrj4",
+  "original_shot": {
+   "camera": "Fujifilm X-H1",
+   "focal_mm": 23.0,
+   "equiv_mm": 34,
+   "aperture": 2.0,
+   "shutter": "1/1250",
+   "iso": 200
+  }
  },
  {
   "legacy_id": "us-fsm2nIe2qCE",
@@ -2415,7 +2695,15 @@
     }
    }
   },
-  "sort_order": 71
+  "sort_order": 71,
+  "original_shot": {
+   "camera": "Fujifilm X-T1",
+   "focal_mm": 35.0,
+   "equiv_mm": 52,
+   "aperture": 2.0,
+   "shutter": "1/125",
+   "iso": 640
+  }
  },
  {
   "legacy_id": "us-1xzSAlZUVSc",
@@ -2482,7 +2770,15 @@
     }
    }
   },
-  "sort_order": 73
+  "sort_order": 73,
+  "original_shot": {
+   "camera": "Canon EOS 70D",
+   "focal_mm": 24.0,
+   "equiv_mm": 38,
+   "aperture": 4.0,
+   "shutter": "1/30",
+   "iso": 1000
+  }
  },
  {
   "legacy_id": "us-HNCSCpWrVJA",
@@ -2549,7 +2845,15 @@
     }
    }
   },
-  "sort_order": 75
+  "sort_order": 75,
+  "original_shot": {
+   "camera": "Canon EOS 6D",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 1.6,
+   "shutter": "1/200",
+   "iso": 200
+  }
  },
  {
   "legacy_id": "us-uTFiFYeQhlI",
@@ -2618,7 +2922,15 @@
    }
   },
   "sort_order": 77,
-  "unsplash_id": "uTFiFYeQhlI"
+  "unsplash_id": "uTFiFYeQhlI",
+  "original_shot": {
+   "camera": "Sony ILCE-7M2",
+   "focal_mm": 105.0,
+   "equiv_mm": 105,
+   "aperture": 2.5,
+   "shutter": "1/2500",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-uluH5a0sRdw",
@@ -2685,7 +2997,15 @@
    }
   },
   "sort_order": 79,
-  "unsplash_id": "uluH5a0sRdw"
+  "unsplash_id": "uluH5a0sRdw",
+  "original_shot": {
+   "camera": "Fujifilm X-T200",
+   "focal_mm": 35.0,
+   "equiv_mm": 52,
+   "aperture": 5.0,
+   "shutter": "1/30",
+   "iso": 400
+  }
  },
  {
   "legacy_id": "us-Ef3AOkt6hHg",
@@ -2752,7 +3072,15 @@
     }
    }
   },
-  "sort_order": 81
+  "sort_order": 81,
+  "original_shot": {
+   "camera": "Canon EOS 77D",
+   "focal_mm": 50.0,
+   "equiv_mm": 80,
+   "aperture": 8.0,
+   "shutter": "1/200",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-p6vPLxc1tL4",
@@ -2819,7 +3147,15 @@
     }
    }
   },
-  "sort_order": 83
+  "sort_order": 83,
+  "original_shot": {
+   "camera": "NIKON Z 6",
+   "focal_mm": 70.0,
+   "equiv_mm": 70,
+   "aperture": 2.8,
+   "shutter": "1/160",
+   "iso": 220
+  }
  },
  {
   "legacy_id": "us-sKa7NauD6p8",
@@ -2886,7 +3222,15 @@
    }
   },
   "sort_order": 85,
-  "unsplash_id": "sKa7NauD6p8"
+  "unsplash_id": "sKa7NauD6p8",
+  "original_shot": {
+   "camera": "NIKON D810",
+   "focal_mm": 210.0,
+   "equiv_mm": 210,
+   "aperture": 5.6,
+   "shutter": "1/100",
+   "iso": 160
+  }
  },
  {
   "legacy_id": "us-y4EkDeDEoSE",
@@ -2953,7 +3297,15 @@
     }
    }
   },
-  "sort_order": 87
+  "sort_order": 87,
+  "original_shot": {
+   "camera": "NIKON Z 6",
+   "focal_mm": 70.0,
+   "equiv_mm": 70,
+   "aperture": 13.0,
+   "shutter": "30",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-g6e641CiHFQ",
@@ -3020,7 +3372,15 @@
     }
    }
   },
-  "sort_order": 89
+  "sort_order": 89,
+  "original_shot": {
+   "camera": "NIKON D600",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 1.8,
+   "shutter": "1/500",
+   "iso": 400
+  }
  },
  {
   "legacy_id": "us-N9Pf2J656aQ",
@@ -3087,7 +3447,15 @@
     }
    }
   },
-  "sort_order": 91
+  "sort_order": 91,
+  "original_shot": {
+   "camera": "Canon EOS 5D Mark III",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 1.4,
+   "shutter": "1/640",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-rVw_iaMwkTw",
@@ -3156,7 +3524,15 @@
    }
   },
   "sort_order": 93,
-  "unsplash_id": "rVw_iaMwkTw"
+  "unsplash_id": "rVw_iaMwkTw",
+  "original_shot": {
+   "camera": "Canon EOS 5D Mark IV",
+   "focal_mm": 35.0,
+   "equiv_mm": 35,
+   "aperture": 2.8,
+   "shutter": "1/100",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-Ajcipx1VDXI",
@@ -3223,7 +3599,15 @@
     }
    }
   },
-  "sort_order": 95
+  "sort_order": 95,
+  "original_shot": {
+   "camera": "Canon EOS Rebel T6",
+   "focal_mm": 18.0,
+   "equiv_mm": 29,
+   "aperture": 3.5,
+   "shutter": "1/200",
+   "iso": 200
+  }
  },
  {
   "legacy_id": "us-rDEOVtE7vOs",
@@ -3290,7 +3674,15 @@
    }
   },
   "sort_order": 97,
-  "unsplash_id": "rDEOVtE7vOs"
+  "unsplash_id": "rDEOVtE7vOs",
+  "original_shot": {
+   "camera": "Canon EOS 60D",
+   "focal_mm": 50.0,
+   "equiv_mm": 80,
+   "aperture": 1.8,
+   "shutter": "1/3200",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-PI8Hk-3ZcCU",
@@ -3357,7 +3749,15 @@
    }
   },
   "sort_order": 99,
-  "unsplash_id": "PI8Hk-3ZcCU"
+  "unsplash_id": "PI8Hk-3ZcCU",
+  "original_shot": {
+   "camera": "Fujifilm X-T2",
+   "focal_mm": 23.0,
+   "equiv_mm": 34,
+   "aperture": 8.0,
+   "shutter": "1/320",
+   "iso": 800
+  }
  },
  {
   "legacy_id": "us-om-Cvae8PUo",
@@ -3424,7 +3824,15 @@
     }
    }
   },
-  "sort_order": 101
+  "sort_order": 101,
+  "original_shot": {
+   "camera": "Canon EOS 700D",
+   "focal_mm": 30.0,
+   "equiv_mm": 48,
+   "aperture": 1.4,
+   "shutter": "1/250",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-C3FWqB4GIKg",
@@ -3491,7 +3899,15 @@
     }
    }
   },
-  "sort_order": 103
+  "sort_order": 103,
+  "original_shot": {
+   "camera": "Canon EOS 80D",
+   "focal_mm": 10.0,
+   "equiv_mm": 16,
+   "aperture": 7.1,
+   "shutter": "4",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-u_z0X-yrJIE",
@@ -3558,7 +3974,15 @@
    }
   },
   "sort_order": 105,
-  "unsplash_id": "u_z0X-yrJIE"
+  "unsplash_id": "u_z0X-yrJIE",
+  "original_shot": {
+   "camera": "Canon EOS 5D Mark III",
+   "focal_mm": 42.0,
+   "equiv_mm": 42,
+   "aperture": 4.0,
+   "shutter": "1/50",
+   "iso": 320
+  }
  },
  {
   "legacy_id": "us-gQYUUn5byyE",
@@ -3625,7 +4049,15 @@
     }
    }
   },
-  "sort_order": 107
+  "sort_order": 107,
+  "original_shot": {
+   "camera": "Canon EOS R5",
+   "focal_mm": 35.0,
+   "equiv_mm": 35,
+   "aperture": 1.4,
+   "shutter": "1/4000",
+   "iso": 640
+  }
  },
  {
   "legacy_id": "us-6zGfuF27Nwc",
@@ -3692,7 +4124,15 @@
    }
   },
   "sort_order": 109,
-  "unsplash_id": "6zGfuF27Nwc"
+  "unsplash_id": "6zGfuF27Nwc",
+  "original_shot": {
+   "camera": "Sony ILCE-7M3",
+   "focal_mm": 55.0,
+   "equiv_mm": 55,
+   "aperture": 2.8,
+   "shutter": "1/2500",
+   "iso": 640
+  }
  },
  {
   "legacy_id": "us-lGl3spVIU0g",
@@ -3759,7 +4199,15 @@
     }
    }
   },
-  "sort_order": 111
+  "sort_order": 111,
+  "original_shot": {
+   "camera": "Google Pixel 3 XL",
+   "focal_mm": 4.4,
+   "equiv_mm": 26,
+   "aperture": 1.8,
+   "shutter": "1/52",
+   "iso": 53
+  }
  },
  {
   "legacy_id": "us-b2bXKspL5MY",
@@ -3826,7 +4274,15 @@
    }
   },
   "sort_order": 113,
-  "unsplash_id": "b2bXKspL5MY"
+  "unsplash_id": "b2bXKspL5MY",
+  "original_shot": {
+   "camera": "NIKON D7100",
+   "focal_mm": 35.0,
+   "equiv_mm": 52,
+   "aperture": 5.0,
+   "shutter": "1/1000",
+   "iso": 800
+  }
  },
  {
   "legacy_id": "us-buYlndcNnjM",
@@ -3893,7 +4349,15 @@
    }
   },
   "sort_order": 115,
-  "unsplash_id": "buYlndcNnjM"
+  "unsplash_id": "buYlndcNnjM",
+  "original_shot": {
+   "camera": "Canon EOS 5D Mark III",
+   "focal_mm": 16.0,
+   "equiv_mm": 16,
+   "aperture": 4.0,
+   "shutter": "1/200",
+   "iso": 400
+  }
  },
  {
   "legacy_id": "us-6OAgcfO2Ujo",
@@ -3960,7 +4424,15 @@
     }
    }
   },
-  "sort_order": 117
+  "sort_order": 117,
+  "original_shot": {
+   "camera": "Sony ILCE-6300",
+   "focal_mm": 60.0,
+   "equiv_mm": 90,
+   "aperture": 2.8,
+   "shutter": "1/125",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-_noSmX8Kgoo",
@@ -4027,7 +4499,15 @@
    }
   },
   "sort_order": 119,
-  "unsplash_id": "_noSmX8Kgoo"
+  "unsplash_id": "_noSmX8Kgoo",
+  "original_shot": {
+   "camera": "Sony ILCE-7RM3",
+   "focal_mm": 18.0,
+   "equiv_mm": 18,
+   "aperture": 2.8,
+   "shutter": "1/200",
+   "iso": 640
+  }
  },
  {
   "legacy_id": "us-QESaXJBiB8Y",
@@ -4094,7 +4574,15 @@
    }
   },
   "sort_order": 121,
-  "unsplash_id": "QESaXJBiB8Y"
+  "unsplash_id": "QESaXJBiB8Y",
+  "original_shot": {
+   "camera": "Apple iPhone 7",
+   "focal_mm": 4.0,
+   "equiv_mm": 28,
+   "aperture": 1.8,
+   "shutter": "1/15",
+   "iso": 64
+  }
  },
  {
   "legacy_id": "us-uEUhaRu-TGY",
@@ -4161,7 +4649,15 @@
    }
   },
   "sort_order": 123,
-  "unsplash_id": "uEUhaRu-TGY"
+  "unsplash_id": "uEUhaRu-TGY",
+  "original_shot": {
+   "camera": "Sony ILCE-7M3",
+   "focal_mm": 35.0,
+   "equiv_mm": 35,
+   "aperture": 1.2,
+   "shutter": "1/125",
+   "iso": 800
+  }
  },
  {
   "legacy_id": "us-cDYarwsH4h4",
@@ -4228,7 +4724,15 @@
     }
    }
   },
-  "sort_order": 125
+  "sort_order": 125,
+  "original_shot": {
+   "camera": "Sony ILCE-7M3",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 3.2,
+   "shutter": "1/160",
+   "iso": 250
+  }
  },
  {
   "legacy_id": "us-25WM4IEnPIg",
@@ -4295,7 +4799,15 @@
    }
   },
   "sort_order": 127,
-  "unsplash_id": "25WM4IEnPIg"
+  "unsplash_id": "25WM4IEnPIg",
+  "original_shot": {
+   "camera": "Canon EOS 6D",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 1.4,
+   "shutter": "1/1000",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-CytpJ4cuV9g",
@@ -4362,7 +4874,15 @@
    }
   },
   "sort_order": 129,
-  "unsplash_id": "CytpJ4cuV9g"
+  "unsplash_id": "CytpJ4cuV9g",
+  "original_shot": {
+   "camera": "Canon EOS 6D",
+   "focal_mm": 24.0,
+   "equiv_mm": 24,
+   "aperture": 10.0,
+   "shutter": "2.5",
+   "iso": 400
+  }
  },
  {
   "legacy_id": "us-37rVmK3jY-c",
@@ -4429,7 +4949,15 @@
     }
    }
   },
-  "sort_order": 131
+  "sort_order": 131,
+  "original_shot": {
+   "camera": "Sony ILCE-6500",
+   "focal_mm": 19.0,
+   "equiv_mm": 28,
+   "aperture": 7.1,
+   "shutter": "1/200",
+   "iso": 200
+  }
  },
  {
   "legacy_id": "us-uDvcxeACIV0",
@@ -4496,7 +5024,15 @@
    }
   },
   "sort_order": 133,
-  "unsplash_id": "uDvcxeACIV0"
+  "unsplash_id": "uDvcxeACIV0",
+  "original_shot": {
+   "camera": "Sony ILCE-6000",
+   "focal_mm": 30.0,
+   "equiv_mm": 45,
+   "aperture": 1.4,
+   "shutter": "1/160",
+   "iso": 800
+  }
  },
  {
   "legacy_id": "us-yjBqHrRXIx8",
@@ -4563,7 +5099,15 @@
    }
   },
   "sort_order": 135,
-  "unsplash_id": "yjBqHrRXIx8"
+  "unsplash_id": "yjBqHrRXIx8",
+  "original_shot": {
+   "camera": "Sony ILCE-6000",
+   "focal_mm": 30.0,
+   "equiv_mm": 45,
+   "aperture": 4.0,
+   "shutter": "1/160",
+   "iso": 125
+  }
  },
  {
   "legacy_id": "us-u2B4RxGrXRk",
@@ -4630,7 +5174,15 @@
    }
   },
   "sort_order": 137,
-  "unsplash_id": "u2B4RxGrXRk"
+  "unsplash_id": "u2B4RxGrXRk",
+  "original_shot": {
+   "camera": "Canon EOS RP",
+   "focal_mm": 24.0,
+   "equiv_mm": 24,
+   "aperture": 2.8,
+   "shutter": "1/200",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-IGw-EIurw6M",
@@ -4697,7 +5249,15 @@
     }
    }
   },
-  "sort_order": 139
+  "sort_order": 139,
+  "original_shot": {
+   "camera": "NIKON D7500",
+   "focal_mm": 35.0,
+   "equiv_mm": 52,
+   "aperture": 4.0,
+   "shutter": "1/500",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-dE6c9RZoyL8",
@@ -4764,7 +5324,15 @@
     }
    }
   },
-  "sort_order": 141
+  "sort_order": 141,
+  "original_shot": {
+   "camera": "Canon EOS 60D",
+   "focal_mm": 30.0,
+   "equiv_mm": 48,
+   "aperture": 1.4,
+   "shutter": "1/500",
+   "iso": 320
+  }
  },
  {
   "legacy_id": "us-yVUQlyRlJSw",
@@ -4831,7 +5399,15 @@
     }
    }
   },
-  "sort_order": 143
+  "sort_order": 143,
+  "original_shot": {
+   "camera": "Sony ILCE-7RM3",
+   "focal_mm": 85.0,
+   "equiv_mm": 85,
+   "aperture": 1.8,
+   "shutter": "1/200",
+   "iso": 800
+  }
  },
  {
   "legacy_id": "us-VdK6V2wwwtk",
@@ -4898,7 +5474,15 @@
    }
   },
   "sort_order": 145,
-  "unsplash_id": "VdK6V2wwwtk"
+  "unsplash_id": "VdK6V2wwwtk",
+  "original_shot": {
+   "camera": "Huawei VOG-L29",
+   "focal_mm": 14.5,
+   "equiv_mm": 87,
+   "aperture": 3.4,
+   "shutter": "1/50",
+   "iso": 125
+  }
  },
  {
   "legacy_id": "us-_wkd7XBRfU4",
@@ -4965,7 +5549,15 @@
     }
    }
   },
-  "sort_order": 147
+  "sort_order": 147,
+  "original_shot": {
+   "camera": "NIKON D810",
+   "focal_mm": 35.0,
+   "equiv_mm": 35,
+   "aperture": 2.2,
+   "shutter": "1/1600",
+   "iso": 250
+  }
  },
  {
   "legacy_id": "us-6JV62Wtl878",
@@ -5032,7 +5624,15 @@
    }
   },
   "sort_order": 149,
-  "unsplash_id": "6JV62Wtl878"
+  "unsplash_id": "6JV62Wtl878",
+  "original_shot": {
+   "camera": "Canon EOS 5D Mark III",
+   "focal_mm": 63.0,
+   "equiv_mm": 63,
+   "aperture": 2.8,
+   "shutter": "1/100",
+   "iso": 640
+  }
  },
  {
   "legacy_id": "us-IjdzkDxKjc4",
@@ -5099,7 +5699,15 @@
     }
    }
   },
-  "sort_order": 151
+  "sort_order": 151,
+  "original_shot": {
+   "camera": "NIKON D750",
+   "focal_mm": 35.0,
+   "equiv_mm": 35,
+   "aperture": 2.8,
+   "shutter": "1/2500",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-CGKYNN3uuVo",
@@ -5166,7 +5774,15 @@
     }
    }
   },
-  "sort_order": 153
+  "sort_order": 153,
+  "original_shot": {
+   "camera": "Fujifilm X-T3",
+   "focal_mm": 56.0,
+   "equiv_mm": 84,
+   "aperture": 1.2,
+   "shutter": "1/2000",
+   "iso": 320
+  }
  },
  {
   "legacy_id": "us-K7oqWgDJQ6E",
@@ -5233,7 +5849,15 @@
     }
    }
   },
-  "sort_order": 155
+  "sort_order": 155,
+  "original_shot": {
+   "camera": "Sony ILCE-6000",
+   "focal_mm": 35.0,
+   "equiv_mm": 52,
+   "aperture": 4.0,
+   "shutter": "1/100",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-D6Bk1A3-gMA",
@@ -5300,7 +5924,15 @@
     }
    }
   },
-  "sort_order": 157
+  "sort_order": 157,
+  "original_shot": {
+   "camera": "Canon EOS 70D",
+   "focal_mm": 24.0,
+   "equiv_mm": 38,
+   "aperture": 2.8,
+   "shutter": "1/30",
+   "iso": 1000
+  }
  },
  {
   "legacy_id": "us-q9nZUFC1nTw",
@@ -5367,7 +5999,15 @@
     }
    }
   },
-  "sort_order": 159
+  "sort_order": 159,
+  "original_shot": {
+   "camera": "Canon EOS 5D Mark IV",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 1.4,
+   "shutter": "1/800",
+   "iso": 125
+  }
  },
  {
   "legacy_id": "us-HBop_t9V9kM",
@@ -5434,7 +6074,15 @@
     }
    }
   },
-  "sort_order": 161
+  "sort_order": 161,
+  "original_shot": {
+   "camera": "Panasonic DC-GH5S",
+   "focal_mm": 12.0,
+   "equiv_mm": 24,
+   "aperture": 1.2,
+   "shutter": "1/160",
+   "iso": 80
+  }
  },
  {
   "legacy_id": "us-a4gn0tegY_g",
@@ -5501,7 +6149,15 @@
     }
    }
   },
-  "sort_order": 163
+  "sort_order": 163,
+  "original_shot": {
+   "camera": "Canon EOS 6D",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 5.0,
+   "shutter": "1/640",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-ZEZeFBLfiLs",
@@ -5568,7 +6224,15 @@
     }
    }
   },
-  "sort_order": 165
+  "sort_order": 165,
+  "original_shot": {
+   "camera": "Canon EOS 5D Mark IV",
+   "focal_mm": 35.0,
+   "equiv_mm": 35,
+   "aperture": 1.4,
+   "shutter": "1/160",
+   "iso": 3200
+  }
  },
  {
   "legacy_id": "us-l_ExpFwwOEg",
@@ -5635,7 +6299,15 @@
     }
    }
   },
-  "sort_order": 167
+  "sort_order": 167,
+  "original_shot": {
+   "camera": "Sony ILCE-6300",
+   "focal_mm": 14.0,
+   "equiv_mm": 21,
+   "aperture": 7.1,
+   "shutter": "1/250",
+   "iso": 100
+  }
  },
  {
   "legacy_id": "us-x8l63IUeuwQ",
@@ -5702,7 +6374,15 @@
     }
    }
   },
-  "sort_order": 169
+  "sort_order": 169,
+  "original_shot": {
+   "camera": "Canon EOS 5D Mark III",
+   "focal_mm": 32.0,
+   "equiv_mm": 32,
+   "aperture": 4.0,
+   "shutter": "1/160",
+   "iso": 800
+  }
  },
  {
   "legacy_id": "us-LPWIw9YMl-o",
@@ -5769,7 +6449,15 @@
     }
    }
   },
-  "sort_order": 171
+  "sort_order": 171,
+  "original_shot": {
+   "camera": "NIKON D3000",
+   "focal_mm": 50.0,
+   "equiv_mm": 75,
+   "aperture": 1.8,
+   "shutter": "1/80",
+   "iso": 400
+  }
  },
  {
   "legacy_id": "us-Qduk0VAAziE",
@@ -5836,6 +6524,14 @@
     }
    }
   },
-  "sort_order": 173
+  "sort_order": 173,
+  "original_shot": {
+   "camera": "NIKON D750",
+   "focal_mm": 75.0,
+   "equiv_mm": 75,
+   "aperture": 2.8,
+   "shutter": "1/800",
+   "iso": 100
+  }
  }
 ]

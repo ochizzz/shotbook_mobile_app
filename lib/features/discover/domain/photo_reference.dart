@@ -1,3 +1,5 @@
+import '../../recipe/recipe_engine.dart';
+
 class PhotoReference {
   const PhotoReference({
     required this.id,
@@ -34,6 +36,8 @@ class PhotoReference {
     this.isHidden = false,
     this.unsplashId,
     this.challengeKey,
+    this.original,
+    this.phoneNotes = const [],
   });
 
   final String id;
@@ -87,6 +91,13 @@ class PhotoReference {
   /// Weekly challenge this post was entered into (`photos.challenge_key`).
   final String? challengeKey;
 
+  /// Real settings of the original photo; the app adapts them to the
+  /// user's phone (see recipe_engine.dart).
+  final OriginalShot? original;
+
+  /// Advice from adapting the recipe to the phone (step closer, tripod…).
+  final List<String> phoneNotes;
+
   bool get isUnsplash => unsplashId != null && unsplashId!.isNotEmpty;
 
   String get gridImageUrl =>
@@ -106,20 +117,9 @@ class PhotoReference {
       return value is Map ? _stringMap(value) : fallback;
     }
 
-    return PhotoReference(
-      id: id,
-      title: text('title', title)!,
-      description: text('description', description)!,
-      imageUrl: imageUrl,
-      category: category,
-      sourcePage: sourcePage,
-      credit: credit,
-      license: license,
-      sourceType: sourceType,
-      authorId: authorId,
-      storagePath: storagePath,
-      createdAt: createdAt,
-      remoteId: remoteId,
+    return copyWith(
+      title: text('title', title),
+      description: text('description', description),
       poseData: map('pose_data', poseData),
       device: text('device', device),
       camera: text('camera', camera),
@@ -129,25 +129,32 @@ class PhotoReference {
       aperture: text('aperture', aperture),
       whiteBalance: text('white_balance', whiteBalance),
       exposureCompensation: text('exposure_compensation', exposureCompensation),
-      presetName: null,
       editingData: map('editing_data', editingData),
-      imageAspectRatio: imageAspectRatio,
-      viewCount: viewCount,
-      thumbUrl: thumbUrl,
-      deviceId: deviceId,
-      creatorUrl: creatorUrl,
-      licenseUrl: licenseUrl,
-      translations: translations,
-      isHidden: isHidden,
-      unsplashId: unsplashId,
-      challengeKey: challengeKey,
+      clearPreset: true,
     );
   }
 
-  PhotoReference copyWith({int? viewCount}) => PhotoReference(
+  PhotoReference copyWith({
+    int? viewCount,
+    String? title,
+    String? description,
+    Map<String, String>? poseData,
+    String? device,
+    String? deviceId,
+    String? camera,
+    String? focalLength,
+    String? iso,
+    String? shutterSpeed,
+    String? aperture,
+    String? whiteBalance,
+    String? exposureCompensation,
+    Map<String, String>? editingData,
+    List<String>? phoneNotes,
+    bool clearPreset = false,
+  }) => PhotoReference(
     id: id,
-    title: title,
-    description: description,
+    title: title ?? this.title,
+    description: description ?? this.description,
     imageUrl: imageUrl,
     category: category,
     sourcePage: sourcePage,
@@ -158,27 +165,29 @@ class PhotoReference {
     storagePath: storagePath,
     createdAt: createdAt,
     remoteId: remoteId,
-    poseData: poseData,
-    device: device,
-    camera: camera,
-    focalLength: focalLength,
-    iso: iso,
-    shutterSpeed: shutterSpeed,
-    aperture: aperture,
-    whiteBalance: whiteBalance,
-    exposureCompensation: exposureCompensation,
-    presetName: presetName,
-    editingData: editingData,
+    poseData: poseData ?? this.poseData,
+    device: device ?? this.device,
+    camera: camera ?? this.camera,
+    focalLength: focalLength ?? this.focalLength,
+    iso: iso ?? this.iso,
+    shutterSpeed: shutterSpeed ?? this.shutterSpeed,
+    aperture: aperture ?? this.aperture,
+    whiteBalance: whiteBalance ?? this.whiteBalance,
+    exposureCompensation: exposureCompensation ?? this.exposureCompensation,
+    presetName: clearPreset ? null : presetName,
+    editingData: editingData ?? this.editingData,
     imageAspectRatio: imageAspectRatio,
     viewCount: viewCount ?? this.viewCount,
     thumbUrl: thumbUrl,
-    deviceId: deviceId,
+    deviceId: deviceId ?? this.deviceId,
     creatorUrl: creatorUrl,
     licenseUrl: licenseUrl,
     translations: translations,
     isHidden: isHidden,
     unsplashId: unsplashId,
     challengeKey: challengeKey,
+    original: original,
+    phoneNotes: phoneNotes ?? this.phoneNotes,
   );
 
   factory PhotoReference.fromJson(Map<String, dynamic> json) {
@@ -218,6 +227,7 @@ class PhotoReference {
       isHidden: json['is_hidden'] as bool? ?? false,
       unsplashId: json['unsplash_id'] as String?,
       challengeKey: json['challenge_key'] as String?,
+      original: OriginalShot.fromJson(json['original_shot']),
       imageAspectRatio: _aspectRatio(json['aspect_ratio']),
     );
   }
@@ -258,6 +268,7 @@ class PhotoReference {
     'license_url': licenseUrl,
     'translations': translations,
     'unsplash_id': unsplashId,
+    if (original != null) 'original_shot': original!.toJson(),
   };
 
   Map<String, String> get cameraSettings => {
@@ -270,7 +281,23 @@ class PhotoReference {
     if (_hasValue(whiteBalance)) 'White balance': whiteBalance!,
     if (_hasValue(exposureCompensation))
       'Exposure compensation': exposureCompensation!,
+    if (original != null) 'Original': _originalLine(original!),
   };
+
+  static String _originalLine(OriginalShot o) {
+    String num(double v) =>
+        v == v.roundToDouble() ? '${v.round()}' : v.toStringAsFixed(1);
+    final focal = o.focalMm != null && (o.focalMm! - o.equivMm).abs() > 1
+        ? '${num(o.focalMm!)} mm (≈${num(o.equivMm)} mm)'
+        : '${num(o.equivMm)} mm';
+    return [
+      if (o.camera != null && o.camera!.trim().isNotEmpty) o.camera!.trim(),
+      focal,
+      'f/${num(o.aperture)}',
+      formatSeconds(o.seconds),
+      'ISO ${o.iso}',
+    ].join(' · ');
+  }
 
   Map<String, String> get editingSettings => {
     if (_hasValue(presetName)) 'Preset': presetName!,

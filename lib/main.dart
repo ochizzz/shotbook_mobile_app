@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import 'features/recipe/my_phone.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -26,6 +29,7 @@ Future<void> main() async {
 
   final language = await loadSavedLanguage();
   final onboarded = await loadOnboardingDone();
+  final phone = await loadMyPhone();
 
   runApp(
     ProviderScope(
@@ -33,6 +37,7 @@ Future<void> main() async {
         supabaseReadyProvider.overrideWithValue(supabaseReady),
         initialLanguageProvider.overrideWithValue(language),
         initialOnboardingDoneProvider.overrideWithValue(onboarded),
+        initialPhoneProvider.overrideWithValue(phone),
       ],
       child: const _ShotbookRoot(),
     ),

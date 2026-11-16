@@ -228,6 +228,11 @@ class _PhotoRecipePageState extends ConsumerState<_PhotoRecipePage> {
                       values: photo.cameraSettings,
                       monoKeys: _shootingKeys,
                     ),
+                    if (photo.phoneNotes.isNotEmpty) ...[
+                      const SizedBox(height: 12),
+                      for (final text in photo.phoneNotes)
+                        _PhoneNote(text: text),
+                    ],
                     if (photo.sourceType == 'curated') ...[
                       if (photo.deviceId != null)
                         _DeviceGuideRow(
@@ -236,9 +241,14 @@ class _PhotoRecipePageState extends ConsumerState<_PhotoRecipePage> {
                         ),
                       const SizedBox(height: 12),
                       Text(
-                        context.tr(
-                          'Suggested settings to repeat the shot on this phone, not the original camera data.',
-                        ),
+                        photo.original != null
+                            ? context.tr(
+                                'Worked out for your phone from the original shot. Change the phone in Discover.',
+                              )
+                            : context.tr(
+                                'Suggested settings to repeat the shot on this phone, not the original camera data.',
+                              ),
+                        key: const Key('recipe-explanation'),
                         style: note,
                       ),
                     ],
@@ -391,6 +401,40 @@ class _OverlayButton extends StatelessWidget {
       shape: shotbookCardShape,
     ),
     icon: Icon(icon),
+  );
+}
+
+/// Advice from adapting the recipe to the phone (step closer, tripod…).
+class _PhoneNote extends StatelessWidget {
+  const _PhoneNote({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(bottom: 8),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(top: 2),
+          child: Icon(
+            Icons.tips_and_updates_outlined,
+            size: 16,
+            color: ShotbookColors.accent,
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            text,
+            key: const Key('phone-note'),
+            style: Theme.of(context).textTheme.bodyMedium
+                ?.copyWith(color: ShotbookColors.primary),
+          ),
+        ),
+      ],
+    ),
   );
 }
 

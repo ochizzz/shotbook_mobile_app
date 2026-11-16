@@ -306,4 +306,8 @@ const Map<String, String> ruStringsCore = {
   'Send this text or a screenshot to the developer if the camera misbehaves.': 'Если камера ведёт себя странно, пришлите этот текст или скриншот разработчику.',
   'Gallery': 'Галерея',
   'Could not open the gallery.': 'Не удалось открыть галерею.',
+  'My phone': 'Мой телефон',
+  'Choose': 'Выбрать',
+  'Every recipe is worked out for the chosen phone from the original shot: lens, ISO and shutter.': 'Каждый рецепт пересчитывается под выбранный телефон из настроек оригинала: объектив, ISO и выдержка.',
+  'Worked out for your phone from the original shot. Change the phone in Discover.': 'Пересчитано под ваш телефон из настроек оригинала. Сменить телефон можно в Обзоре.',
 };
