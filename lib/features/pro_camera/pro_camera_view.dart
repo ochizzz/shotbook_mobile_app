@@ -60,6 +60,7 @@ class _ProCameraViewState extends State<ProCameraView>
   int _timer = 0;
   int? _countdown;
   Timer? _countdownTimer;
+  ProCameraLastPhoto? _lastShot;
 
   PhotoReference? get _photo => widget.photo;
   ProCameraCapabilities get _caps => _camera.capabilities;
@@ -123,12 +124,24 @@ class _ProCameraViewState extends State<ProCameraView>
     try {
       await _camera.open();
       if (mounted) setState(() => _ready = true);
+      unawaited(_refreshLastShot());
     } on PlatformException {
       if (mounted) setState(() => _error = 'The camera could not be started.');
     }
   }
 
   void _set(ProCameraSettings next) => _camera.update(next);
+
+  Future<void> _refreshLastShot() async {
+    final last = await _camera.lastPhoto();
+    if (mounted && last != null) setState(() => _lastShot = last);
+  }
+
+  Future<void> _openGallery() async {
+    HapticFeedback.selectionClick();
+    final failText = context.tr('Could not open the gallery.');
+    if (!await _camera.openPhoto(_lastShot?.uri) && mounted) _snack(failText);
+  }
 
   void _snack(String text) {
     ScaffoldMessenger.of(context)
@@ -258,6 +271,7 @@ class _ProCameraViewState extends State<ProCameraView>
     try {
       final result = await _camera.capture();
       if (mounted) _snack(result.dng != null ? rawText : jpegText);
+      unawaited(_refreshLastShot());
     } on PlatformException {
       if (mounted) _snack(failText);
     }
@@ -1054,11 +1068,22 @@ class _ProCameraViewState extends State<ProCameraView>
             Expanded(
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: _roundButton(
-                  key: const Key('pro-close'),
-                  tooltip: context.tr('Close'),
-                  onTap: () => Navigator.of(context).maybePop(),
-                  child: const Icon(Icons.close, color: Colors.white, size: 22),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _roundButton(
+                      key: const Key('pro-close'),
+                      tooltip: context.tr('Close'),
+                      onTap: () => Navigator.of(context).maybePop(),
+                      child: const Icon(
+                        Icons.close,
+                        color: Colors.white,
+                        size: 22,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    _galleryButton(context),
+                  ],
                 ),
               ),
             ),
@@ -1112,6 +1137,40 @@ class _ProCameraViewState extends State<ProCameraView>
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  /// Last shot as a small rounded square (as on the iPhone); opens it in
+  /// the gallery app. A gallery icon until the first shot.
+  Widget _galleryButton(BuildContext context) {
+    final thumb = _lastShot?.thumb;
+    return Tooltip(
+      message: context.tr('Gallery'),
+      child: GestureDetector(
+        key: const Key('pro-gallery'),
+        onTap: _openGallery,
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 220),
+          child: Container(
+            key: ValueKey(_lastShot?.uri),
+            width: 44,
+            height: 44,
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              color: Colors.white10,
+              borderRadius: shotbookBorderRadius,
+              border: Border.all(color: Colors.white24),
+            ),
+            child: thumb == null
+                ? const Icon(
+                    Icons.photo_library_outlined,
+                    color: Colors.white,
+                    size: 20,
+                  )
+                : Image.memory(thumb, fit: BoxFit.cover, gaplessPlayback: true),
+          ),
         ),
       ),
     );

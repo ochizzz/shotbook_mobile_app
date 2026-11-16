@@ -93,6 +93,7 @@ void main() {
     tester,
   ) async {
     final calls = <String>[];
+    final opened = <String?>[];
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
       const MethodChannel('shotbook/pro_camera'),
       (call) async {
@@ -119,6 +120,10 @@ void main() {
               'previewHeight': 1080,
               'raw': false,
             };
+          case 'lastPhoto':
+            return {'uri': 'content://media/external/images/media/7'};
+          case 'openPhoto':
+            opened.add(call.arguments['uri'] as String?);
         }
         return null;
       },
@@ -153,5 +158,11 @@ void main() {
     // The summary lists what was set, including the photo's filter.
     expect(find.textContaining('Applied:'), findsOneWidget);
     expect(find.textContaining('filter:'), findsOneWidget);
+
+    // The gallery button opens the last shot in the gallery app.
+    expect(calls, contains('lastPhoto'));
+    await tester.tap(find.byKey(const Key('pro-gallery')));
+    await tester.pump();
+    expect(opened, ['content://media/external/images/media/7']);
   });
 }

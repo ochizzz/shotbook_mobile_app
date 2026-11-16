@@ -205,6 +205,13 @@ class ProCameraPhotoResult {
   final String? dng;
 }
 
+class ProCameraLastPhoto {
+  const ProCameraLastPhoto({required this.uri, this.thumb});
+
+  final String uri;
+  final Uint8List? thumb;
+}
+
 /// Talks to the native camera (Android, ProCameraPlugin.kt).
 ///
 /// [values] holds the live settings: widgets listen to it directly, so a
@@ -332,6 +339,30 @@ class ProCameraController extends ChangeNotifier {
     } finally {
       busy = false;
       notifyListeners();
+    }
+  }
+
+  /// The newest SHOTBOOK photo in the gallery (uri + small JPEG thumbnail).
+  Future<ProCameraLastPhoto?> lastPhoto() async {
+    try {
+      final map = await _channel
+          .invokeMapMethod<Object?, Object?>('lastPhoto')
+          .timeout(const Duration(seconds: 3));
+      final uri = map?['uri'] as String?;
+      if (uri == null) return null;
+      return ProCameraLastPhoto(uri: uri, thumb: map?['thumb'] as Uint8List?);
+    } on Object {
+      return null;
+    }
+  }
+
+  /// Opens [uri] (or the gallery when null) in the phone's gallery app.
+  Future<bool> openPhoto(String? uri) async {
+    try {
+      await _channel.invokeMethod<void>('openPhoto', {'uri': uri});
+      return true;
+    } on Object {
+      return false;
     }
   }
 

@@ -129,6 +129,11 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                     closeCamera()
                     result.success(null)
                 }
+                "lastPhoto" -> result.success(lastPhoto())
+                "openPhoto" -> {
+                    openPhoto(call.argument<String>("uri"))
+                    result.success(null)
+                }
                 else -> result.notImplemented()
             }
         } catch (e: CameraAccessException) {
@@ -720,6 +725,67 @@ class ProCameraPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 }
             }
         }, handler)
+    }
+
+    /** Newest SHOTBOOK JPEG with a small thumbnail, or null. */
+    private fun lastPhoto(): Map<String, Any?>? {
+        val resolver = context.contentResolver
+        val collection = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        val (where, args) = if (Build.VERSION.SDK_INT >= 29) {
+            "${MediaStore.Images.Media.RELATIVE_PATH} LIKE ? AND ${MediaStore.Images.Media.MIME_TYPE} = ?" to
+                arrayOf("Pictures/SHOTBOOK%", "image/jpeg")
+        } else {
+            "${MediaStore.Images.Media.DISPLAY_NAME} LIKE ? AND ${MediaStore.Images.Media.MIME_TYPE} = ?" to
+                arrayOf("SHOTBOOK_%", "image/jpeg")
+        }
+        val uri = try {
+            resolver.query(
+                collection,
+                arrayOf(MediaStore.Images.Media._ID),
+                where,
+                args,
+                "${MediaStore.Images.Media.DATE_ADDED} DESC",
+            )?.use { cursor ->
+                if (!cursor.moveToFirst()) null
+                else android.content.ContentUris.withAppendedId(collection, cursor.getLong(0))
+            }
+        } catch (e: Exception) {
+            null // No access to older files (e.g. after a reinstall).
+        } ?: return null
+        val thumb = try {
+            val bitmap = if (Build.VERSION.SDK_INT >= 29) {
+                resolver.loadThumbnail(uri, Size(192, 192), null)
+            } else {
+                val opts = android.graphics.BitmapFactory.Options().apply { inSampleSize = 16 }
+                resolver.openInputStream(uri)?.use {
+                    android.graphics.BitmapFactory.decodeStream(it, null, opts)
+                }
+            }
+            bitmap?.let {
+                val out = java.io.ByteArrayOutputStream()
+                it.compress(android.graphics.Bitmap.CompressFormat.JPEG, 85, out)
+                out.toByteArray()
+            }
+        } catch (e: Exception) {
+            null
+        }
+        return mapOf("uri" to uri.toString(), "thumb" to thumb)
+    }
+
+    /** Opens the photo (or the gallery) in the phone's gallery app. */
+    private fun openPhoto(uri: String?) {
+        val intent = android.content.Intent(android.content.Intent.ACTION_VIEW).apply {
+            if (uri != null) {
+                setDataAndType(android.net.Uri.parse(uri), "image/*")
+            } else {
+                setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
+            }
+            addFlags(
+                android.content.Intent.FLAG_ACTIVITY_NEW_TASK or
+                    android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION,
+            )
+        }
+        context.startActivity(intent)
     }
 
     private fun stamp() = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
