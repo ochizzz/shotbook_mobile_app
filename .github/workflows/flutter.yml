@@ -23,6 +23,14 @@ jobs:
           flutter-version: 3.47.9
           cache: true
 
+      - name: Add Firebase config (optional)
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          if [ -n "$GOOGLE_SERVICES_JSON" ]; then
+            printf '%s' "$GOOGLE_SERVICES_JSON" > android/app/google-services.json
+          fi
+
       - name: Install dependencies
         run: flutter pub get
 
