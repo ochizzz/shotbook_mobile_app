@@ -80,7 +80,7 @@ Phone lenses (equivalent focal length and aperture, typical specs) are in `phone
    python3 tool/gen_seed.py /tmp/all.json lib/features/discover/data/seed_photo_references.dart
    ```
 
-Batches so far: `01` (87 photos), `02` (43), `03` (49). New rows take even `sort_order` values so they mix into the existing feed.
+Batches so far: `01` (87 photos), `02` (43), `03` (49), `04` (56). New rows take even `sort_order` values so they mix into the existing feed.
 
 ## Requirements
 

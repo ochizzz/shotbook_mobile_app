@@ -1,0 +1,4208 @@
+[
+ {
+  "legacy_id": "us--m0xspcr6Xw",
+  "unsplash_id": "-m0xspcr6Xw",
+  "title": "Чай, книга и жёлтый плед",
+  "description": "Кадр сверху: открытая книга на коленях, кружка с чаем и растение на столике, а жёлтый плед даёт тёплое пятно справа. Цветовые акценты — синий и жёлтый — держат кадр. Главное — снимать строго сверху и аккуратно сложить предметы в углы квадрата.",
+  "image_url": "https://images.unsplash.com/photo-1517596107285-5ce3dd0f61df?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUwfA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1517596107285-5ce3dd0f61df?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUwfA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/book-opened-on-persons-legs--m0xspcr6Xw",
+  "credit": "Emily Rudolph",
+  "creator_url": "https://unsplash.com/@emrudolphart",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Lifestyle",
+  "source_type": "curated",
+  "device_id": "google-pixel-a",
+  "device": "Google Pixel 7a / 8a / 9a",
+  "camera": "Режим Pro, основной объектив",
+  "focal_length": "24 мм (1×)",
+  "iso": "160",
+  "shutter_speed": "1/100 с",
+  "aperture": "f/1.9 (фикс.), вся сцена в резкости — глубина не нужна",
+  "white_balance": "5000K, нейтральный",
+  "exposure_compensation": "+0,3 EV",
+  "pose_data": {
+   "Свет": "Дневной свет из окна, слева",
+   "Ракурс": "Строго сверху, телефон параллельно полу",
+   "Композиция": "Квадрат 1:1, книга внизу, чашка и растение вверху слева",
+   "Поза": "Ноги скрещены, книга на коленях",
+   "Фокус": "Тап по чашке"
+  },
+  "editing_data": {
+   "Пресет": "Тёплый, нежный",
+   "Контраст": "+8",
+   "Насыщенность": "+10",
+   "Тени": "+10",
+   "Цвет": "теплее 6"
+  },
+  "aspect_ratio": 1.0,
+  "translations": {
+   "en": {
+    "title": "Tea, a book and a yellow throw",
+    "description": "A top-down shot: an open book on the lap, a mug of tea and a plant on the little table, with a yellow throw adding a warm patch on the right. The blue and yellow accents hold the frame. Shoot straight down and arrange the objects in the corners of the square.",
+    "camera": "Pro mode, main lens",
+    "focal_length": "24 mm (1×)",
+    "iso": "160",
+    "shutter_speed": "1/100 s",
+    "aperture": "f/1.9 (fixed), the whole scene stays sharp, so no depth effect is needed",
+    "white_balance": "5000K, neutral",
+    "exposure_compensation": "+0.3 EV",
+    "pose_data": {
+     "Light": "Daylight from a window, on the left",
+     "Angle": "Straight down, phone parallel to the floor",
+     "Composition": "Square 1:1, book at the bottom, mug and plant upper left",
+     "Pose": "Legs crossed, book on the lap",
+     "Focus": "Tap the mug"
+    },
+    "editing_data": {
+     "Preset": "Warm, gentle",
+     "Contrast": "+8",
+     "Saturation": "+10",
+     "Shadows": "+10",
+     "Color": "warmer 6"
+    }
+   }
+  },
+  "sort_order": 175,
+  "original_shot": {
+   "camera": "Canon EOS 70D",
+   "focal_mm": 18.0,
+   "equiv_mm": 29,
+   "aperture": 5.0,
+   "shutter": "1/100",
+   "iso": 1000
+  }
+ },
+ {
+  "legacy_id": "us-b12Ft0W0q-o",
+  "unsplash_id": "b12Ft0W0q-o",
+  "title": "Переулок у вокзала",
+  "description": "Узкая улица в сумерках: светящиеся витрины, фонари и цепочка размытых огней машин. Длинная выдержка рисует след от автомобиля, а здания остаются резкими. Поставьте телефон на опору у перекрёстка и используйте выдержку около секунды.",
+  "image_url": "https://images.unsplash.com/photo-1540652980807-db4655e8fa60?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU5fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1540652980807-db4655e8fa60?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU5fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/architectural-photography-of-white-building-b12Ft0W0q-o",
+  "credit": "amandazi photography",
+  "creator_url": "https://unsplash.com/@amandazi_photography",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Street",
+  "source_type": "curated",
+  "device_id": "samsung-s25",
+  "device": "Samsung Galaxy S25 / S25+",
+  "camera": "Режим Pro, основной объектив, кроп 1,5×",
+  "focal_length": "36 мм (1,5×)",
+  "iso": "50",
+  "shutter_speed": "1 с, со штатива или опоры",
+  "aperture": "f/1.8 (фикс.), вся сцена в резкости, как на f/8–f/11",
+  "white_balance": "4500K, прохладные сумерки",
+  "exposure_compensation": "−1,0 EV",
+  "pose_data": {
+   "Свет": "Сумерки, витрины и фонари как акценты",
+   "Ракурс": "Низко над дорогой, горизонт по центру",
+   "Композиция": "Перекрёсток слева, здание справа, огни по горизонтали",
+   "Момент": "Ждите проезда машины на выдержке",
+   "Фокус": "Тап по витрине, блокировка AE/AF"
+  },
+  "editing_data": {
+   "Пресет": "Кино, холодный",
+   "Экспозиция": "−0,3",
+   "Тени": "+12",
+   "Насыщенность": "+8",
+   "Цвет": "холоднее 8"
+  },
+  "aspect_ratio": 1.603,
+  "translations": {
+   "en": {
+    "title": "The alley by the station",
+    "description": "A narrow street at dusk: glowing shop windows, street lamps and a streak of blurred car lights. The long exposure draws a car trail while the buildings stay sharp. Rest the phone on a support at the crossing and use roughly a one-second shutter.",
+    "camera": "Pro mode, main lens, 1.5× crop",
+    "focal_length": "36 mm (1.5×)",
+    "iso": "50",
+    "shutter_speed": "1 s, from a tripod or support",
+    "aperture": "f/1.8 (fixed), the whole scene stays sharp, as at f/8–f/11",
+    "white_balance": "4500K, cool dusk",
+    "exposure_compensation": "−1.0 EV",
+    "pose_data": {
+     "Light": "Dusk, shop windows and lamps as accents",
+     "Angle": "Low over the road, horizon in the centre",
+     "Composition": "Crossing on the left, building on the right, lights across the horizon",
+     "Moment": "Wait for a car to pass during the exposure",
+     "Focus": "Tap a shop window, lock AE/AF"
+    },
+    "editing_data": {
+     "Preset": "Cinema, cool",
+     "Exposure": "−0.3",
+     "Shadows": "+12",
+     "Saturation": "+8",
+     "Color": "cooler 8"
+    }
+   }
+  },
+  "sort_order": 175,
+  "original_shot": {
+   "camera": "NIKON D7100",
+   "focal_mm": 24.0,
+   "equiv_mm": 36,
+   "aperture": 22.0,
+   "shutter": "1.3",
+   "iso": 200
+  }
+ },
+ {
+  "legacy_id": "us-Ex2ZjzacfwQ",
+  "unsplash_id": "Ex2ZjzacfwQ",
+  "title": "Хром и чёрная кожа",
+  "description": "Ретро-салон снят сбоку: руль, хромированные приборы и рычаг с белым набалдашником выстраиваются в диагональ. Тёмный тон и блики на хроме дают дорогой, музейный вид. Главное — стать так, чтобы руль и рычаг оказались на двух концах диагонали.",
+  "image_url": "https://images.unsplash.com/photo-1571025597614-91b22b54d8cc?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUwfA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1571025597614-91b22b54d8cc?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUwfA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/vehicle-interior-Ex2ZjzacfwQ",
+  "credit": "Tim Mossholder",
+  "creator_url": "https://unsplash.com/@timmossholder",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Car",
+  "source_type": "curated",
+  "device_id": "apple-iphone-16",
+  "device": "Apple iPhone 16 / 16 Plus",
+  "camera": "Режим Pro, основной объектив, кроп 2×",
+  "focal_length": "52 мм (2×)",
+  "iso": "50",
+  "shutter_speed": "1/200 с",
+  "aperture": "f/1.6 (фикс.), глубину резкости даёт близкая дистанция до руля",
+  "white_balance": "5000K, нейтральный",
+  "exposure_compensation": "−0,7 EV",
+  "pose_data": {
+   "Свет": "Мягкая тень салона, блики только на хроме",
+   "Ракурс": "Через открытую дверь, на уровне руля, чуть сверху",
+   "Композиция": "Руль слева, рычаг внизу справа — линия по диагонали",
+   "Фокус": "Тап по ободу руля, дальний ряд приборов уйдёт в мягкость",
+   "Дистанция": "1–1,5 м от руля"
+  },
+  "editing_data": {
+   "Пресет": "Драма, мягкий",
+   "Контраст": "+15",
+   "Тени": "−20",
+   "Насыщенность": "−10",
+   "Цвет": "холоднее 5"
+  },
+  "aspect_ratio": 1.5,
+  "translations": {
+   "en": {
+    "title": "Chrome and black leather",
+    "description": "A vintage interior shot from the side: the wheel, chrome gauges and a white-knobbed shifter line up on a diagonal. The dark tone and highlights on the chrome give it a museum-grade feel. Stand so the wheel and the shifter sit at opposite ends of that diagonal.",
+    "camera": "Pro mode, main lens, 2× crop",
+    "focal_length": "52 mm (2×)",
+    "iso": "50",
+    "shutter_speed": "1/200 s",
+    "aperture": "f/1.6 (fixed), shallow depth comes from standing close to the wheel",
+    "white_balance": "5000K, neutral",
+    "exposure_compensation": "−0.7 EV",
+    "pose_data": {
+     "Light": "Soft cabin shade, highlights only on the chrome",
+     "Angle": "Through the open door at wheel height, slightly from above",
+     "Composition": "Wheel on the left, shifter bottom right, a line along the diagonal",
+     "Focus": "Tap the wheel rim, the far gauges fall into softness",
+     "Distance": "1–1.5 m from the wheel"
+    },
+    "editing_data": {
+     "Preset": "Dramatic, soft",
+     "Contrast": "+15",
+     "Shadows": "−20",
+     "Saturation": "−10",
+     "Color": "cooler 5"
+    }
+   }
+  },
+  "sort_order": 176,
+  "original_shot": {
+   "camera": "NIKON D850",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 1.6,
+   "shutter": "1/200",
+   "iso": 31
+  }
+ },
+ {
+  "legacy_id": "us-21H2_zcDEhc",
+  "unsplash_id": "21H2_zcDEhc",
+  "title": "Прогулка в контровом свете",
+  "description": "Пара идёт по траве, а закатное солнце бьёт из-за деревьев и красит край кадра золотом. Жёлтая блузка и белая рубашка чётко отделяют пару от зелёного фона. Попросите идти прямо на вас и шутить: живой смех получается только в движении.",
+  "image_url": "https://images.unsplash.com/photo-1586935410406-c00932c3010e?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU1fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1586935410406-c00932c3010e?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU1fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/man-in-white-dress-shirt-and-woman-in-orange-long-sleeve-shirt-standing-on-green-grass-21H2_zcDEhc",
+  "credit": "Allen Taylor",
+  "creator_url": "https://unsplash.com/@allentaylorjr",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Couple",
+  "source_type": "curated",
+  "device_id": "samsung-s25",
+  "device": "Samsung Galaxy S25 / S25+",
+  "camera": "Режим Pro, основной объектив, кроп 2×",
+  "focal_length": "48 мм (2×)",
+  "iso": "100",
+  "shutter_speed": "1/250 с",
+  "aperture": "f/1.8 (фикс.), фон размыть режимом «Портрет» ≈ f/2.8",
+  "white_balance": "6500K, тёплый вечер",
+  "exposure_compensation": "+0,3 EV",
+  "pose_data": {
+   "Свет": "Солнце сзади-сбоку, ореол в волосах",
+   "Ракурс": "Уровень груди, камера чуть наклонена вверх",
+   "Поза": "Идут обнявшись, смотрят друг на друга",
+   "Фон": "Деревья в контровом свете, без людей",
+   "Движение": "Серия, пока пара идёт навстречу"
+  },
+  "editing_data": {
+   "Пресет": "Тёплый, нежный",
+   "Экспозиция": "+0,2",
+   "Света": "−25",
+   "Насыщенность": "+10",
+   "Цвет": "теплее 10"
+  },
+  "aspect_ratio": 0.667,
+  "translations": {
+   "en": {
+    "title": "A walk in backlight",
+    "description": "The couple walks across the grass while the setting sun comes through the trees and paints the frame edge gold. The yellow top and white shirt separate them cleanly from the green. Ask them to walk toward you and joke around: real laughter only happens in motion.",
+    "camera": "Pro mode, main lens, 2× crop",
+    "focal_length": "48 mm (2×)",
+    "iso": "100",
+    "shutter_speed": "1/250 s",
+    "aperture": "f/1.8 (fixed), blur the background with Portrait mode ≈ f/2.8",
+    "white_balance": "6500K, warm evening",
+    "exposure_compensation": "+0.3 EV",
+    "pose_data": {
+     "Light": "Sun behind and to the side, halo in the hair",
+     "Angle": "Chest height, camera tilted slightly up",
+     "Pose": "Walking arm in arm, looking at each other",
+     "Background": "Backlit trees, no other people",
+     "Motion": "Burst while the couple walks toward you"
+    },
+    "editing_data": {
+     "Preset": "Warm, gentle",
+     "Exposure": "+0.2",
+     "Highlights": "−25",
+     "Saturation": "+10",
+     "Color": "warmer 10"
+    }
+   }
+  },
+  "sort_order": 177,
+  "original_shot": {
+   "camera": "Sony A7 III",
+   "focal_mm": 50.0,
+   "equiv_mm": 75,
+   "aperture": 2.8,
+   "shutter": "1/100",
+   "iso": 100
+  }
+ },
+ {
+  "legacy_id": "us-1XNTqpskyAc",
+  "unsplash_id": "1XNTqpskyAc",
+  "title": "Серый шёлк на брусчатке",
+  "description": "Девушка в серо-голубом платье встала на улице в позу из журнала: рука у лица, нога выставлена вперёд. Телевик сжимает деревья и машины в мягкий фон, а мягкая тень под ногами не рвёт кадр. Снимайте с 6–8 м и ждите момента, когда поза замирает.",
+  "image_url": "https://images.unsplash.com/photo-1651744258699-d322dff9632c?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUyfA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1651744258699-d322dff9632c?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUyfA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/a-person-wearing-a-white-dress-and-sunglasses-walking-on-a-sidewalk-1XNTqpskyAc",
+  "credit": "Ali Ahmadi",
+  "creator_url": "https://unsplash.com/@aliahmadin",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Full Body",
+  "source_type": "curated",
+  "device_id": "xiaomi-14-ultra",
+  "device": "Xiaomi 14 Ultra",
+  "camera": "Режим Pro, объектив 3×",
+  "focal_length": "75 мм (3×)",
+  "iso": "50",
+  "shutter_speed": "1/4000 с",
+  "aperture": "f/1.8 (фикс.), фон дополнительно размыть режимом «Портрет» ≈ f/2.8",
+  "white_balance": "5400K, дневной",
+  "exposure_compensation": "−0,3 EV",
+  "pose_data": {
+   "Свет": "Яркий день, лёгкая тень от деревьев",
+   "Ракурс": "На уровне пояса, вертикально, в полный рост",
+   "Поза": "Рука к лицу, вес на задней ноге, носок вперёд",
+   "Фон": "Улица с деревьями, без ярких пятен",
+   "Дистанция": "6–8 м, телевик 3×"
+  },
+  "editing_data": {
+   "Пресет": "Мягкий, холодный",
+   "Контраст": "+8",
+   "Насыщенность": "−10",
+   "Тени": "+12",
+   "Цвет": "холоднее 8"
+  },
+  "aspect_ratio": 0.8,
+  "translations": {
+   "en": {
+    "title": "Grey silk on cobblestones",
+    "description": "A girl in a blue-grey outfit strikes a magazine pose on the street: one hand at her face, one leg forward. The telephoto squeezes trees and cars into a soft background, and a gentle shadow underfoot does not break the frame. Shoot from 6–8 m and wait for the pose to hold.",
+    "camera": "Pro mode, 3× lens",
+    "focal_length": "75 mm (3×)",
+    "iso": "50",
+    "shutter_speed": "1/4000 s",
+    "aperture": "f/1.8 (fixed), add Portrait mode for more blur ≈ f/2.8",
+    "white_balance": "5400K, daylight",
+    "exposure_compensation": "−0.3 EV",
+    "pose_data": {
+     "Light": "Bright day, light shade from the trees",
+     "Angle": "Waist height, vertical, full length",
+     "Pose": "Hand to the face, weight on the back leg, toe forward",
+     "Background": "Tree-lined street, no bright spots",
+     "Distance": "6–8 m, 3× telephoto"
+    },
+    "editing_data": {
+     "Preset": "Soft, cool",
+     "Contrast": "+8",
+     "Saturation": "−10",
+     "Shadows": "+12",
+     "Color": "cooler 8"
+    }
+   }
+  },
+  "sort_order": 177,
+  "original_shot": {
+   "camera": "Canon EOS 700D",
+   "focal_mm": 50.0,
+   "equiv_mm": 80,
+   "aperture": 2.8,
+   "shutter": "1/4000",
+   "iso": 100
+  }
+ },
+ {
+  "legacy_id": "us-5yh1rvaoEBQ",
+  "unsplash_id": "5yh1rvaoEBQ",
+  "title": "Роза на белом дереве",
+  "description": "Одна розовая лизиантус лежит на белых досках, а мягкая тень слева даёт объём без студийного света. Много пустого места делает кадр лёгким и чистым. Снимайте сверху у окна и выровняйте стебель строго вертикально.",
+  "image_url": "https://images.unsplash.com/photo-1690643917092-aa4105a91263?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY3fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1690643917092-aa4105a91263?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY3fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/a-single-pink-rose-sitting-on-top-of-a-white-wall-5yh1rvaoEBQ",
+  "credit": "Natalie Kinnear",
+  "creator_url": "https://unsplash.com/@nataliekinnear",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Product",
+  "source_type": "curated",
+  "device_id": "redmi-note-pro",
+  "device": "Xiaomi Redmi Note 13 Pro / 14 Pro",
+  "camera": "Режим Pro, основной объектив 200 МП, кроп 2×",
+  "focal_length": "48 мм (2×)",
+  "iso": "100",
+  "shutter_speed": "1/250 с",
+  "aperture": "f/1.7 (фикс.), вся сцена в резкости — это то, что нужно плоской раскладке",
+  "white_balance": "5400K, дневной",
+  "exposure_compensation": "+1,0 EV",
+  "pose_data": {
+   "Свет": "Мягкий свет окна сбоку, без прямого солнца",
+   "Ракурс": "Строго сверху, телефон параллельно столу",
+   "Композиция": "Стебель вертикально по центру, цветок на верхней трети",
+   "Фон": "Белые доски без швов и теней",
+   "Фокус": "Тап по бутону, затем яркость вверх"
+  },
+  "editing_data": {
+   "Пресет": "Светлый, воздушный",
+   "Экспозиция": "+0,3",
+   "Контраст": "−8",
+   "Насыщенность": "−5",
+   "Цвет": "теплее 4"
+  },
+  "aspect_ratio": 0.667,
+  "translations": {
+   "en": {
+    "title": "Rose on white wood",
+    "description": "A single pink lisianthus lies on white boards, and a soft shadow on the left adds volume without studio light. The generous empty space keeps the frame light and clean. Shoot from above by a window and align the stem perfectly vertical.",
+    "camera": "Pro mode, 200 MP main lens, 2× crop",
+    "focal_length": "48 mm (2×)",
+    "iso": "100",
+    "shutter_speed": "1/250 s",
+    "aperture": "f/1.7 (fixed), the whole scene stays sharp, which is what a flat lay needs",
+    "white_balance": "5400K, daylight",
+    "exposure_compensation": "+1.0 EV",
+    "pose_data": {
+     "Light": "Soft window light from the side, no direct sun",
+     "Angle": "Straight down, phone parallel to the table",
+     "Composition": "Stem vertical in the centre, the bloom on the upper third",
+     "Background": "White boards without seams or shadows",
+     "Focus": "Tap the bloom, then brightness up"
+    },
+    "editing_data": {
+     "Preset": "Bright and airy",
+     "Exposure": "+0.3",
+     "Contrast": "−8",
+     "Saturation": "−5",
+     "Color": "warmer 4"
+    }
+   }
+  },
+  "sort_order": 178,
+  "original_shot": {
+   "camera": "Canon EOS 5D Mark III",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 11.0,
+   "shutter": "1/250",
+   "iso": 250
+  }
+ },
+ {
+  "legacy_id": "us-z2Sk5rok8rA",
+  "unsplash_id": "z2Sk5rok8rA",
+  "title": "Неон над переулком",
+  "description": "Сверху вниз видно узкую улицу с единственной неоновой вывеской, а остальной город утонул в сине-зелёном полумраке. Один тёплый акцент на холодном фоне делает кадр. Снимайте с балкона или крыши на длинный зум и обязательно прижмите телефон к опоре.",
+  "image_url": "https://images.unsplash.com/photo-1674510891276-bd1fc1a13889?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU0fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1674510891276-bd1fc1a13889?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU0fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/a-city-street-at-night-with-a-neon-sign-on-the-building-z2Sk5rok8rA",
+  "credit": "Syria Cipettini",
+  "creator_url": "https://unsplash.com/@syriacipi",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Night",
+  "source_type": "curated",
+  "device_id": "vivo-x100-pro",
+  "device": "Vivo X100 Pro",
+  "camera": "Режим Pro, перископ 100 мм и цифровой зум 10×",
+  "focal_length": "230 мм (10×)",
+  "iso": "200",
+  "shutter_speed": "1/160 с, держите телефон на опоре",
+  "aperture": "f/2.5 (фикс. на перископе), вся сцена в резкости",
+  "white_balance": "4000K, холодная ночь",
+  "exposure_compensation": "−1,7 EV",
+  "pose_data": {
+   "Свет": "Одна неоновая вывеска, остальное в сумраке",
+   "Ракурс": "Сверху вниз под углом 30°, вертикально",
+   "Композиция": "Вывеска в центре, улица диагональю слева направо",
+   "Фокус": "Тап по вывеске, блокировка AE/AF",
+   "Дистанция": "Телевик 10×, с балкона или крыши"
+  },
+  "editing_data": {
+   "Пресет": "Кино, холодный",
+   "Экспозиция": "−0,3",
+   "Тени": "+10",
+   "Насыщенность": "+10",
+   "Цвет": "холоднее 12"
+  },
+  "aspect_ratio": 0.667,
+  "translations": {
+   "en": {
+    "title": "Neon above the alley",
+    "description": "From above you see a narrow street with a single neon sign, while the rest of the city sinks into blue-green dusk. One warm accent against a cool background makes the frame. Shoot from a balcony or roof at long zoom, and brace the phone on a support.",
+    "camera": "Pro mode, 100 mm periscope plus 10× digital zoom",
+    "focal_length": "230 mm (10×)",
+    "iso": "200",
+    "shutter_speed": "1/160 s, rest the phone on a support",
+    "aperture": "f/2.5 (fixed on the periscope), the whole scene stays sharp",
+    "white_balance": "4000K, cool night",
+    "exposure_compensation": "−1.7 EV",
+    "pose_data": {
+     "Light": "One neon sign, the rest in dusk",
+     "Angle": "From above at 30°, vertical",
+     "Composition": "Sign centred, the street running diagonally left to right",
+     "Focus": "Tap the sign, lock AE/AF",
+     "Distance": "10× telephoto from a balcony or roof"
+    },
+    "editing_data": {
+     "Preset": "Cinema, cool",
+     "Exposure": "−0.3",
+     "Shadows": "+10",
+     "Saturation": "+10",
+     "Color": "cooler 12"
+    }
+   }
+  },
+  "sort_order": 179,
+  "original_shot": {
+   "camera": "NIKON D3100",
+   "focal_mm": 200.0,
+   "equiv_mm": 300,
+   "aperture": 6.3,
+   "shutter": "1/160",
+   "iso": 200
+  }
+ },
+ {
+  "legacy_id": "us-T4bFs7q9E94",
+  "unsplash_id": "T4bFs7q9E94",
+  "title": "Взгляд в упор",
+  "description": "Крупный портрет: голубые глаза в фокусе, мягкий ореол волос и размытый светлый коридор за спиной. Холодная палитра подчёркивает взгляд, а светлая размытость отделяет лицо. Поставьте человека лицом к окну и сфокусируйтесь на ближнем глазу.",
+  "image_url": "https://images.unsplash.com/photo-1605124305733-fe7ecf960b0e?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUwfA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1605124305733-fe7ecf960b0e?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUwfA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/woman-in-black-and-white-shirt-T4bFs7q9E94",
+  "credit": "Andrey Zvyagintsev",
+  "creator_url": "https://unsplash.com/@zvandrei",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Portrait",
+  "source_type": "curated",
+  "device_id": "samsung-s23",
+  "device": "Samsung Galaxy S23 / S23+",
+  "camera": "Режим Pro, основной объектив, кроп 2×",
+  "focal_length": "46 мм (2×)",
+  "iso": "200",
+  "shutter_speed": "1/250 с",
+  "aperture": "f/1.8 (фикс.), фон размыть режимом «Портрет» ≈ f/2.2",
+  "white_balance": "5000K, нейтральный",
+  "exposure_compensation": "+0,3 EV",
+  "pose_data": {
+   "Свет": "Мягкий свет из окна спереди-сбоку",
+   "Ракурс": "Уровень глаз, голова чуть повёрнута",
+   "Взгляд": "Прямо в объектив, подбородок чуть вниз",
+   "Фокус": "Тап по ближнему глазу",
+   "Фон": "Светлый коридор, далеко за спиной"
+  },
+  "editing_data": {
+   "Пресет": "Мягкий, холодный",
+   "Контраст": "+8",
+   "Насыщенность": "−10",
+   "Тени": "+10",
+   "Цвет": "холоднее 6"
+  },
+  "aspect_ratio": 1.5,
+  "translations": {
+   "en": {
+    "title": "A direct gaze",
+    "description": "A tight portrait: blue eyes in focus, a soft halo of hair and a blurred pale corridor behind. The cool palette underlines the gaze and the pale blur separates the face. Put the subject facing the window and focus on the nearer eye.",
+    "camera": "Pro mode, main lens, 2× crop",
+    "focal_length": "46 mm (2×)",
+    "iso": "200",
+    "shutter_speed": "1/250 s",
+    "aperture": "f/1.8 (fixed), blur the background with Portrait mode ≈ f/2.2",
+    "white_balance": "5000K, neutral",
+    "exposure_compensation": "+0.3 EV",
+    "pose_data": {
+     "Light": "Soft window light from front and side",
+     "Angle": "Eye level, head slightly turned",
+     "Gaze": "Straight into the lens, chin slightly down",
+     "Focus": "Tap the nearer eye",
+     "Background": "A pale corridor far behind"
+    },
+    "editing_data": {
+     "Preset": "Soft, cool",
+     "Contrast": "+8",
+     "Saturation": "−10",
+     "Shadows": "+10",
+     "Color": "cooler 6"
+    }
+   }
+  },
+  "sort_order": 179,
+  "original_shot": {
+   "camera": "Canon EOS RP",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 2.2,
+   "shutter": "1/250",
+   "iso": 320
+  }
+ },
+ {
+  "legacy_id": "us-toTwUApQ4v4",
+  "unsplash_id": "toTwUApQ4v4",
+  "title": "Рыжий хозяин кровати",
+  "description": "Кот лежит на сером пледе в уютной спальне, а позади размыты подушки и гирлянда из фотографий. Тёплая рыжина кота выделяется на сером фоне. Опуститесь на уровень глаз кота и подождите, когда он посмотрит в объектив.",
+  "image_url": "https://images.unsplash.com/photo-1609660791404-afdd1da51718?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU4fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1609660791404-afdd1da51718?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU4fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/orange-tabby-cat-lying-on-bed-toTwUApQ4v4",
+  "credit": "Jose Hernandez-Uribe",
+  "creator_url": "https://unsplash.com/@josefhu15",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Lifestyle",
+  "source_type": "curated",
+  "device_id": "oneplus-10-pro",
+  "device": "OnePlus 10 Pro",
+  "camera": "Режим Pro, объектив 3×",
+  "focal_length": "77 мм (3×)",
+  "iso": "640",
+  "shutter_speed": "1/80 с",
+  "aperture": "f/2.4 (фикс.), фон размыть режимом «Портрет» ≈ f/2.8 или подойти к коту ближе",
+  "white_balance": "5200K, нейтральный",
+  "exposure_compensation": "+0,3 EV",
+  "pose_data": {
+   "Свет": "Мягкий свет окна, ровный по комнате",
+   "Ракурс": "На уровне глаз кота, вертикально",
+   "Фокус": "Тап по глазам кота, режим следящего AF",
+   "Фон": "Подушки и кружка в размытии",
+   "Момент": "Кот смотрит на камеру, серия"
+  },
+  "editing_data": {
+   "Пресет": "Тёплый, мягкий",
+   "Контраст": "+5",
+   "Насыщенность": "+8",
+   "Тени": "+10",
+   "Цвет": "теплее 6"
+  },
+  "aspect_ratio": 0.667,
+  "translations": {
+   "en": {
+    "title": "The ginger owner of the bed",
+    "description": "A cat lies on a grey throw in a cosy bedroom, with pillows and a string of photos blurred behind. The cat's warm ginger stands out against the grey. Get down to cat eye level and wait until it looks into the lens.",
+    "camera": "Pro mode, 3× lens",
+    "focal_length": "77 mm (3×)",
+    "iso": "640",
+    "shutter_speed": "1/80 s",
+    "aperture": "f/2.4 (fixed), blur the background with Portrait mode ≈ f/2.8 or get closer to the cat",
+    "white_balance": "5200K, neutral",
+    "exposure_compensation": "+0.3 EV",
+    "pose_data": {
+     "Light": "Soft window light, even across the room",
+     "Angle": "At cat eye level, vertical",
+     "Focus": "Tap the cat's eyes, continuous AF",
+     "Background": "Pillows and a mug in blur",
+     "Moment": "The cat looks at the camera, shoot a burst"
+    },
+    "editing_data": {
+     "Preset": "Warm, soft",
+     "Contrast": "+5",
+     "Saturation": "+8",
+     "Shadows": "+10",
+     "Color": "warmer 6"
+    }
+   }
+  },
+  "sort_order": 180,
+  "original_shot": {
+   "camera": "Canon EOS 6D",
+   "focal_mm": 85.0,
+   "equiv_mm": 85,
+   "aperture": 2.8,
+   "shutter": "1/80",
+   "iso": 800
+  }
+ },
+ {
+  "legacy_id": "us-f3u87ifZZPk",
+  "unsplash_id": "f3u87ifZZPk",
+  "title": "Ларёк в вечернем свете",
+  "description": "Киоск с росписью светится тёплым светом в синем вечере, а силуэт у окна выдачи делает кадр живым. Холодная тень улицы и тёплый свет окна дают контраст. Подождите, пока у окна появится человек, и снимайте с другой стороны улицы.",
+  "image_url": "https://images.unsplash.com/photo-1628803184377-c5167a0cb6fd?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY1fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1628803184377-c5167a0cb6fd?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY1fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/brown-wooden-table-and-chairs-near-store-during-night-time-f3u87ifZZPk",
+  "credit": "Ozan Öztaskiran",
+  "creator_url": "https://unsplash.com/@ozanoz",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Street",
+  "source_type": "curated",
+  "device_id": "xiaomi-14-ultra",
+  "device": "Xiaomi 14 Ultra",
+  "camera": "Режим Pro, объектив 3×",
+  "focal_length": "75 мм (3×)",
+  "iso": "320",
+  "shutter_speed": "1/125 с",
+  "aperture": "f/1.8 (фикс.), фон слегка размыть режимом «Портрет» ≈ f/2.4",
+  "white_balance": "4000K, вечерний",
+  "exposure_compensation": "−0,3 EV",
+  "pose_data": {
+   "Свет": "Тёплый свет окна против синего вечера",
+   "Ракурс": "С другой стороны улицы, на уровне глаз",
+   "Композиция": "Киоск по центру, фигура у окна в левой трети",
+   "Момент": "Человек у окна, серия",
+   "Дистанция": "15–20 м, телевик 3×"
+  },
+  "editing_data": {
+   "Пресет": "Кино, тёплый",
+   "Экспозиция": "−0,2",
+   "Контраст": "+10",
+   "Тени": "+10",
+   "Цвет": "теплее 6"
+  },
+  "aspect_ratio": 1.6,
+  "translations": {
+   "en": {
+    "title": "A kiosk in evening light",
+    "description": "A painted kiosk glows warm in a blue evening, and a figure at the service window brings the frame to life. The cool street shade and the warm window light make the contrast. Wait until someone steps up to the window and shoot from across the street.",
+    "camera": "Pro mode, 3× lens",
+    "focal_length": "75 mm (3×)",
+    "iso": "320",
+    "shutter_speed": "1/125 s",
+    "aperture": "f/1.8 (fixed), blur the background lightly with Portrait mode ≈ f/2.4",
+    "white_balance": "4000K, evening",
+    "exposure_compensation": "−0.3 EV",
+    "pose_data": {
+     "Light": "Warm window light against the blue evening",
+     "Angle": "From across the street at eye level",
+     "Composition": "Kiosk centred, the figure at the window in the left third",
+     "Moment": "A person at the window, shoot a burst",
+     "Distance": "15–20 m, 3× telephoto"
+    },
+    "editing_data": {
+     "Preset": "Cinema, warm",
+     "Exposure": "−0.2",
+     "Contrast": "+10",
+     "Shadows": "+10",
+     "Color": "warmer 6"
+    }
+   }
+  },
+  "sort_order": 181,
+  "original_shot": {
+   "camera": "Canon EOS M50",
+   "focal_mm": 56.0,
+   "equiv_mm": 90,
+   "aperture": 1.4,
+   "shutter": "1/125",
+   "iso": 200
+  }
+ },
+ {
+  "legacy_id": "us-mUHwpYNpq_c",
+  "unsplash_id": "mUHwpYNpq_c",
+  "title": "Красный салон Bel Air",
+  "description": "Красный руль и приборная панель видны сквозь дверной проём и белое крыло, а передний план специально размыт. Низкое солнце красит кожу в насыщенный алый. Снимайте через дверной проём на телевик, чтобы передний план мягко ушёл в размытие.",
+  "image_url": "https://images.unsplash.com/photo-1589222032627-458d1f9ab478?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU5fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1589222032627-458d1f9ab478?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU5fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/red-and-black-steering-wheel-mUHwpYNpq_c",
+  "credit": "Stephanie Valencia",
+  "creator_url": "https://unsplash.com/@anieva",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Car",
+  "source_type": "curated",
+  "device_id": "samsung-s23",
+  "device": "Samsung Galaxy S23 / S23+",
+  "camera": "Режим Pro, объектив 3×",
+  "focal_length": "69 мм (3×)",
+  "iso": "200",
+  "shutter_speed": "1/1250 с",
+  "aperture": "f/2.4 (фикс.), размытие переднего плана — за счёт телевика и близкого крыла",
+  "white_balance": "6200K, чуть теплее дневного",
+  "exposure_compensation": "−0,7 EV",
+  "pose_data": {
+   "Свет": "Низкое боковое солнце, тени в глубине салона",
+   "Ракурс": "Вертикально, через дверной проём, на уровне руля",
+   "Композиция": "Руль в левой трети, белое крыло рамкой сверху и снизу",
+   "Фокус": "Тап по рулю, блокировка AE/AF",
+   "Фон": "Размытая улица за лобовым стеклом"
+  },
+  "editing_data": {
+   "Пресет": "Тёплый, насыщенный",
+   "Контраст": "+10",
+   "Тени": "−15",
+   "Света": "−20",
+   "Цвет": "теплее 8"
+  },
+  "aspect_ratio": 0.667,
+  "translations": {
+   "en": {
+    "title": "Red Bel Air cabin",
+    "description": "The red wheel and dashboard show through the door opening and the white fender, with the foreground blurred on purpose. Low sun turns the leather a rich scarlet. Shoot through the doorway on the telephoto so the foreground melts into blur.",
+    "camera": "Pro mode, 3× lens",
+    "focal_length": "69 mm (3×)",
+    "iso": "200",
+    "shutter_speed": "1/1250 s",
+    "aperture": "f/2.4 (fixed), foreground blur comes from the telephoto and the nearby fender",
+    "white_balance": "6200K, slightly warmer than daylight",
+    "exposure_compensation": "−0.7 EV",
+    "pose_data": {
+     "Light": "Low side sun, shadows deep in the cabin",
+     "Angle": "Vertical, through the doorway at wheel height",
+     "Composition": "Wheel in the left third, white fender framing top and bottom",
+     "Focus": "Tap the wheel, lock AE/AF",
+     "Background": "Blurred street behind the windscreen"
+    },
+    "editing_data": {
+     "Preset": "Warm, vivid",
+     "Contrast": "+10",
+     "Shadows": "−15",
+     "Highlights": "−20",
+     "Color": "warmer 8"
+    }
+   }
+  },
+  "sort_order": 181,
+  "original_shot": {
+   "camera": "Canon EOS 7D Mark II",
+   "focal_mm": 50.0,
+   "equiv_mm": 75,
+   "aperture": 1.4,
+   "shutter": "1/2500",
+   "iso": 100
+  }
+ },
+ {
+  "legacy_id": "us-qF9yLB5QtT8",
+  "unsplash_id": "qF9yLB5QtT8",
+  "title": "Объятие в лесу",
+  "description": "Парень поднимает девушку на тропе, а ряды стволов сходятся в перспективу и фокусируют внимание на паре. Приглушённые зелёно-коричневые тона делают кадр спокойным. Главное — снять момент в воздухе: просите повторить подъём 5–6 раз.",
+  "image_url": "https://images.unsplash.com/photo-1620034067336-7863a9a7e953?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODYyfA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1620034067336-7863a9a7e953?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODYyfA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/man-in-black-jacket-and-blue-denim-jeans-running-on-road-during-daytime-qF9yLB5QtT8",
+  "credit": "Szőcs Viola",
+  "creator_url": "https://unsplash.com/@szcsviola",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Couple",
+  "source_type": "curated",
+  "device_id": "oneplus-10-pro",
+  "device": "OnePlus 10 Pro",
+  "camera": "Режим Pro, основной объектив, кроп 2×",
+  "focal_length": "46 мм (2×)",
+  "iso": "200",
+  "shutter_speed": "1/640 с",
+  "aperture": "f/1.8 (фикс.), фон размыть режимом «Портрет» ≈ f/2.2",
+  "white_balance": "6000K, пасмурный день",
+  "exposure_compensation": "0 EV",
+  "pose_data": {
+   "Свет": "Рассеянный свет пасмурного дня",
+   "Ракурс": "Уровень груди, сбоку",
+   "Поза": "Он поднимает её, ноги согнуты в воздухе",
+   "Композиция": "Пара в центре, тропа и стволы сходятся к ним",
+   "Момент": "Кадр на пике подъёма, серия"
+  },
+  "editing_data": {
+   "Пресет": "Приглушённый",
+   "Контраст": "+8",
+   "Насыщенность": "−12",
+   "Тени": "+10",
+   "Виньетка": "−12"
+  },
+  "aspect_ratio": 1.5,
+  "translations": {
+   "en": {
+    "title": "Embrace in the forest",
+    "description": "He lifts her on the trail, and the rows of trunks converge in perspective to point at the couple. Muted green and brown tones keep the mood calm. The key is catching the moment in mid-air: ask them to repeat the lift five or six times.",
+    "camera": "Pro mode, main lens, 2× crop",
+    "focal_length": "46 mm (2×)",
+    "iso": "200",
+    "shutter_speed": "1/640 s",
+    "aperture": "f/1.8 (fixed), blur the background with Portrait mode ≈ f/2.2",
+    "white_balance": "6000K, overcast day",
+    "exposure_compensation": "0 EV",
+    "pose_data": {
+     "Light": "Soft overcast light",
+     "Angle": "Chest height, from the side",
+     "Pose": "He lifts her, legs bent in the air",
+     "Composition": "Couple centred, the trail and trunks leading to them",
+     "Moment": "The peak of the lift, shoot a burst"
+    },
+    "editing_data": {
+     "Preset": "Muted",
+     "Contrast": "+8",
+     "Saturation": "−12",
+     "Shadows": "+10",
+     "Vignette": "−12"
+    }
+   }
+  },
+  "sort_order": 182,
+  "original_shot": {
+   "camera": "Canon EOS 6D",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 1.8,
+   "shutter": "1/640",
+   "iso": 200
+  }
+ },
+ {
+  "legacy_id": "us-7cJfKHa7fDA",
+  "unsplash_id": "7cJfKHa7fDA",
+  "title": "Человек на оранжевых скалах",
+  "description": "Фигура в тёмной одежде стоит на красных камнях, а за ней — чистое синее небо. Тёмный силуэт на синем и контраст оранжевых скал дают яркую картинку. Снимайте снизу вверх, чтобы небо заняло половину кадра и фигура поднялась над камнями.",
+  "image_url": "https://images.unsplash.com/photo-1630251414251-ee3ec87f5a93?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU4fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1630251414251-ee3ec87f5a93?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU4fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/man-in-gray-jacket-and-black-pants-standing-on-brown-rock-during-daytime-7cJfKHa7fDA",
+  "credit": "Robiul Islam Pailot",
+  "creator_url": "https://unsplash.com/@robiulislampailot",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Full Body",
+  "source_type": "curated",
+  "device_id": "apple-iphone-15",
+  "device": "Apple iPhone 15 / 15 Plus",
+  "camera": "Режим Pro, основной объектив, кроп 2×",
+  "focal_length": "52 мм (2×)",
+  "iso": "80",
+  "shutter_speed": "1/4000 с",
+  "aperture": "f/1.6 (фикс.), чтобы фон мягче уходил в размытие, поставьте фигуру подальше от камней",
+  "white_balance": "5300K, нейтральный",
+  "exposure_compensation": "−0,7 EV",
+  "pose_data": {
+   "Свет": "Яркий день, высокое солнце",
+   "Ракурс": "Снизу вверх, телефон у камней",
+   "Поза": "Стоит прямо, куртка через плечо",
+   "Фон": "Чистое синее небо без облаков",
+   "Композиция": "Фигура по центру, камни снизу рамкой"
+  },
+  "editing_data": {
+   "Пресет": "Яркий",
+   "Контраст": "+12",
+   "Насыщенность": "−8",
+   "Тени": "+10",
+   "Света": "−15"
+  },
+  "aspect_ratio": 1.5,
+  "translations": {
+   "en": {
+    "title": "A figure on orange rocks",
+    "description": "A figure in dark clothes stands on red stones with a clean blue sky behind. The dark silhouette against the blue and the orange rocks give a punchy picture. Shoot from low so the sky fills half the frame and the figure rises above the rocks.",
+    "camera": "Pro mode, main lens, 2× crop",
+    "focal_length": "52 mm (2×)",
+    "iso": "80",
+    "shutter_speed": "1/4000 s",
+    "aperture": "f/1.6 (fixed), keep the subject well away from the rocks for a gentle blur",
+    "white_balance": "5300K, neutral",
+    "exposure_compensation": "−0.7 EV",
+    "pose_data": {
+     "Light": "Bright day, high sun",
+     "Angle": "From below, phone near the rocks",
+     "Pose": "Standing tall, jacket over the shoulder",
+     "Background": "Clean blue sky without clouds",
+     "Composition": "Figure centred, rocks framing from below"
+    },
+    "editing_data": {
+     "Preset": "Vivid",
+     "Contrast": "+12",
+     "Saturation": "−8",
+     "Shadows": "+10",
+     "Highlights": "−15"
+    }
+   }
+  },
+  "sort_order": 183,
+  "original_shot": {
+   "camera": "Canon EOS 6D Mark II",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 1.8,
+   "shutter": "1/4000",
+   "iso": 100
+  }
+ },
+ {
+  "legacy_id": "us-Yky-zNv4fIg",
+  "unsplash_id": "Yky-zNv4fIg",
+  "title": "Нежный флакон в белом",
+  "description": "Флакон с розоватой жидкостью стоит на мятой белой ткани, а мягкий свет окна растворяет границы. Светлый кадр на светлом фоне с одним нежным акцентом. Подложите белую ткань мягкими складками и снимайте с лёгким наклоном сверху.",
+  "image_url": "https://images.unsplash.com/photo-1680607622631-1e243ddd6782?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY5fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1680607622631-1e243ddd6782?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY5fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/a-bottle-of-narciso-on-a-white-sheet-Yky-zNv4fIg",
+  "credit": "Kate Laine",
+  "creator_url": "https://unsplash.com/@kikimora33",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Product",
+  "source_type": "curated",
+  "device_id": "nothing-phone-2",
+  "device": "Nothing Phone (2)",
+  "camera": "Режим Pro, основной объектив, кроп 2×",
+  "focal_length": "48 мм (2×)",
+  "iso": "50",
+  "shutter_speed": "1/125 с",
+  "aperture": "f/1.9 (фикс.), фон размыть режимом «Портрет» ≈ f/2.8",
+  "white_balance": "5400K, дневной",
+  "exposure_compensation": "+1,0 EV",
+  "pose_data": {
+   "Свет": "Мягкий свет окна сбоку, рассеянный белой тканью",
+   "Ракурс": "Чуть сверху, вертикально",
+   "Композиция": "Флакон по центру, ткань складками вокруг",
+   "Фон": "Белая ткань без ярких пятен",
+   "Фокус": "Тап по этикетке"
+  },
+  "editing_data": {
+   "Пресет": "Светлый, воздушный",
+   "Экспозиция": "+0,3",
+   "Контраст": "−10",
+   "Света": "−15",
+   "Цвет": "теплее 4"
+  },
+  "aspect_ratio": 0.667,
+  "translations": {
+   "en": {
+    "title": "A delicate bottle in white",
+    "description": "A bottle of pinkish liquid stands on crumpled white fabric while soft window light dissolves the edges. A light frame on a light background with one gentle accent. Lay white fabric in soft folds and shoot with a slight tilt from above.",
+    "camera": "Pro mode, main lens, 2× crop",
+    "focal_length": "48 mm (2×)",
+    "iso": "50",
+    "shutter_speed": "1/125 s",
+    "aperture": "f/1.9 (fixed), blur the background with Portrait mode ≈ f/2.8",
+    "white_balance": "5400K, daylight",
+    "exposure_compensation": "+1.0 EV",
+    "pose_data": {
+     "Light": "Soft window light from the side, diffused by white fabric",
+     "Angle": "Slightly from above, vertical",
+     "Composition": "Bottle centred, fabric folds around it",
+     "Background": "White fabric without bright spots",
+     "Focus": "Tap the label"
+    },
+    "editing_data": {
+     "Preset": "Bright and airy",
+     "Exposure": "+0.3",
+     "Contrast": "−10",
+     "Highlights": "−15",
+     "Color": "warmer 4"
+    }
+   }
+  },
+  "sort_order": 184,
+  "original_shot": {
+   "camera": "Sony ZV-E10",
+   "focal_mm": 36.8,
+   "equiv_mm": 55,
+   "aperture": 9.0,
+   "shutter": "1/125",
+   "iso": 100
+  }
+ },
+ {
+  "legacy_id": "us-m0A0RswUGJ0",
+  "title": "Неон под дождём",
+  "description": "Мокрый асфальт отражает красный и синий неон, а одинокий прохожий с зонтом задаёт масштаб и сюжет. Ждите, когда фигура окажется на светлом пятне отражения, и снимайте с рук на высокой скорости.",
+  "image_url": "https://images.unsplash.com/photo-1608558259020-0ba7302dc3d1?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTQ5fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1608558259020-0ba7302dc3d1?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTQ5fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/man-in-black-jacket-and-blue-denim-jeans-walking-on-street-during-night-time-m0A0RswUGJ0",
+  "credit": "Soheb Zaidi",
+  "creator_url": "https://unsplash.com/@msohebzaidi",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Night",
+  "source_type": "curated",
+  "device_id": "oneplus-13",
+  "device": "OnePlus 13",
+  "camera": "Режим Pro, основная камера с кропом 2×",
+  "focal_length": "46 мм (2×)",
+  "iso": "3200",
+  "shutter_speed": "1/250 с",
+  "aperture": "f/1.6 (фикс.), глубина резкости большая, фон остаётся читаемым",
+  "white_balance": "4200K, холодный неоновый",
+  "exposure_compensation": "−0,7 EV",
+  "pose_data": {
+   "Свет": "Неоновые вывески и мокрая дорога как отражатель",
+   "Ракурс": "На уровне глаз, чуть вдоль улицы",
+   "Композиция": "Человек в нижней трети, вывески сверху",
+   "Момент": "Фигура на яркой луже, зонт раскрыт",
+   "Движение": "Шаг на 1/250 — без смаза"
+  },
+  "editing_data": {
+   "Экспозиция": "−0,2",
+   "Контраст": "+15",
+   "Насыщенность": "+10",
+   "Тени": "+10",
+   "Света": "−25"
+  },
+  "aspect_ratio": 1.5,
+  "translations": {
+   "en": {
+    "title": "Neon in the rain",
+    "description": "Wet asphalt reflects the red and blue neon, and a lone walker with an umbrella gives scale and story. Wait until the figure steps onto a bright patch of reflection and shoot handheld at a fast shutter.",
+    "camera": "Pro mode, main camera with 2× crop",
+    "focal_length": "46 mm (2×)",
+    "iso": "3200",
+    "shutter_speed": "1/250 s",
+    "aperture": "f/1.6 (fixed), deep depth of field, the background stays legible",
+    "white_balance": "4200K, cool neon",
+    "exposure_compensation": "−0.7 EV",
+    "pose_data": {
+     "Light": "Neon signs and the wet road as a reflector",
+     "Angle": "Eye level, slightly down the street",
+     "Composition": "Person in the lower third, signs above",
+     "Moment": "Figure on a bright puddle, umbrella open",
+     "Motion": "Walking, 1/250 gives no blur"
+    },
+    "editing_data": {
+     "Exposure": "−0.2",
+     "Contrast": "+15",
+     "Saturation": "+10",
+     "Shadows": "+10",
+     "Highlights": "−25"
+    }
+   }
+  },
+  "sort_order": 184,
+  "unsplash_id": "m0A0RswUGJ0",
+  "original_shot": {
+   "camera": "Fujifilm X-T3",
+   "focal_mm": 35.0,
+   "equiv_mm": 52,
+   "aperture": 1.4,
+   "shutter": "1/60",
+   "iso": 320
+  }
+ },
+ {
+  "legacy_id": "us-pUhxoSapPFA",
+  "unsplash_id": "pUhxoSapPFA",
+  "title": "Подбородок вверх",
+  "description": "Мужчина в зелёной футболке и кепке смотрит вдаль, а золотой свет вечера лежит на щеке и бороде. Размытый лес и скалы дают глубину без отвлекающих деталей. Поставьте человека лицом к солнцу чуть боком и попросите смотреть мимо камеры.",
+  "image_url": "https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY3fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY3fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/man-in-cap-and-green-shirt-pUhxoSapPFA",
+  "credit": "Jeffrey Keenan",
+  "creator_url": "https://unsplash.com/@jeffreykeenan",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Portrait",
+  "source_type": "curated",
+  "device_id": "apple-iphone-17-pro",
+  "device": "Apple iPhone 17 Pro / Pro Max",
+  "camera": "Режим Pro, основной объектив, кроп 2×",
+  "focal_length": "48 мм (2×)",
+  "iso": "160",
+  "shutter_speed": "1/800 с",
+  "aperture": "f/1.8 (фикс.), фон размыть режимом «Портрет» ≈ f/2.2",
+  "white_balance": "6500K, тёплый закат",
+  "exposure_compensation": "0 EV",
+  "pose_data": {
+   "Свет": "Золотой час, солнце спереди-сбоку",
+   "Ракурс": "Уровень глаз, лицо в три четверти",
+   "Взгляд": "Вдаль мимо камеры, подбородок вверх",
+   "Фокус": "Тап по ближнему глазу",
+   "Фон": "Лес и скалы в размытии"
+  },
+  "editing_data": {
+   "Пресет": "Золотой час",
+   "Контраст": "+8",
+   "Света": "−15",
+   "Насыщенность": "+10",
+   "Цвет": "теплее 12"
+  },
+  "aspect_ratio": 1.5,
+  "translations": {
+   "en": {
+    "title": "Chin up",
+    "description": "A man in a green tee and cap looks into the distance, with golden evening light on his cheek and beard. The blurred forest and cliffs add depth without distracting detail. Face the subject toward the sun at a slight angle and ask him to look past the camera.",
+    "camera": "Pro mode, main lens, 2× crop",
+    "focal_length": "48 mm (2×)",
+    "iso": "160",
+    "shutter_speed": "1/800 s",
+    "aperture": "f/1.8 (fixed), blur the background with Portrait mode ≈ f/2.2",
+    "white_balance": "6500K, warm sunset",
+    "exposure_compensation": "0 EV",
+    "pose_data": {
+     "Light": "Golden hour, sun from front and side",
+     "Angle": "Eye level, face in three-quarter view",
+     "Gaze": "Into the distance past the camera, chin up",
+     "Focus": "Tap the nearer eye",
+     "Background": "Forest and cliffs in blur"
+    },
+    "editing_data": {
+     "Preset": "Golden hour",
+     "Contrast": "+8",
+     "Highlights": "−15",
+     "Saturation": "+10",
+     "Color": "warmer 12"
+    }
+   }
+  },
+  "sort_order": 185,
+  "original_shot": {
+   "camera": "Sony ILCE-6500",
+   "focal_mm": 35.0,
+   "equiv_mm": 52,
+   "aperture": 2.2,
+   "shutter": "1/800",
+   "iso": 250
+  }
+ },
+ {
+  "legacy_id": "us-y0fjfgD2bLg",
+  "unsplash_id": "y0fjfgD2bLg",
+  "title": "Чашка кофе у окна",
+  "description": "Белая чашка с чёрным кофе стоит в мягком окне, а на заднем плане — горшок с зеленью и латунный подсвечник. Контровой свет из окна даёт дымку и тёплый ореол. Придвиньтесь вплотную и сфокусируйтесь на кромке чашки.",
+  "image_url": "https://images.unsplash.com/photo-1489672155498-1331365e0dcd?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY1fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1489672155498-1331365e0dcd?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY1fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/white-ceramic-cup-filled-with-black-liquid-on-top-of-saucer-y0fjfgD2bLg",
+  "credit": "🇸🇮 Janko Ferlič",
+  "creator_url": "https://unsplash.com/@itfeelslikefilm",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Lifestyle",
+  "source_type": "curated",
+  "device_id": "apple-iphone-17-pro",
+  "device": "Apple iPhone 17 Pro / Pro Max",
+  "camera": "Режим Pro, основной объектив, кроп 2×",
+  "focal_length": "48 мм (2×)",
+  "iso": "160",
+  "shutter_speed": "1/250 с",
+  "aperture": "f/1.8 (фикс.), фон размыть режимом «Портрет» ≈ f/1.8, дистанция до чашки 25–30 см",
+  "white_balance": "5800K, чуть теплее дневного",
+  "exposure_compensation": "+0,3 EV",
+  "pose_data": {
+   "Свет": "Окно сзади-справа, мягкая дымка",
+   "Ракурс": "Чуть выше уровня чашки, вертикально",
+   "Фокус": "Тап по кромке чашки",
+   "Фон": "Горшок и подсвечник в размытии",
+   "Дистанция": "25–30 см"
+  },
+  "editing_data": {
+   "Пресет": "Тёплый, мягкий",
+   "Контраст": "−8",
+   "Света": "−15",
+   "Насыщенность": "+5",
+   "Цвет": "теплее 8"
+  },
+  "aspect_ratio": 0.973,
+  "translations": {
+   "en": {
+    "title": "A cup of coffee by the window",
+    "description": "A white cup of black coffee sits in a soft window glow, with a pot of greenery and a brass candlestick behind it. Backlight from the window adds haze and a warm halo. Move in close and focus on the rim of the cup.",
+    "camera": "Pro mode, main lens, 2× crop",
+    "focal_length": "48 mm (2×)",
+    "iso": "160",
+    "shutter_speed": "1/250 s",
+    "aperture": "f/1.8 (fixed), blur the background with Portrait mode ≈ f/1.8, keep 25–30 cm to the cup",
+    "white_balance": "5800K, slightly warmer than daylight",
+    "exposure_compensation": "+0.3 EV",
+    "pose_data": {
+     "Light": "Window behind and to the right, soft haze",
+     "Angle": "Slightly above cup level, vertical",
+     "Focus": "Tap the rim of the cup",
+     "Background": "Pot and candlestick in blur",
+     "Distance": "25–30 cm"
+    },
+    "editing_data": {
+     "Preset": "Warm, soft",
+     "Contrast": "−8",
+     "Highlights": "−15",
+     "Saturation": "+5",
+     "Color": "warmer 8"
+    }
+   }
+  },
+  "sort_order": 186,
+  "original_shot": {
+   "camera": "NIKON D810",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 1.4,
+   "shutter": "1/250",
+   "iso": 100
+  }
+ },
+ {
+  "legacy_id": "us-abDg_WVYyXQ",
+  "title": "Поезд сквозь кадр",
+  "description": "Смазанный состав пересекает чёткий переезд, а белые линии дороги ведут к нему, как стрелка. Ставьте телефон на опору, ждите поезд и подберите выдержку, чтобы вагоны слились, а столб остался резким.",
+  "image_url": "https://images.unsplash.com/photo-1703222156184-7e9bf9d43300?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUzfA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1703222156184-7e9bf9d43300?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUzfA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/a-train-is-coming-down-the-tracks-in-the-city-abDg_WVYyXQ",
+  "credit": "LIM ENG",
+  "creator_url": "https://unsplash.com/@shadoweng93",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Street",
+  "source_type": "curated",
+  "device_id": "apple-iphone-14-pro",
+  "device": "Apple iPhone 14 Pro / Pro Max",
+  "camera": "Режим Pro (сторонняя Pro-камера), основная камера с кропом 2×, вертикально",
+  "focal_length": "48 мм (2×)",
+  "iso": "50",
+  "shutter_speed": "1/10 с, со штатива или опоры",
+  "aperture": "f/1.78 (фикс.), резкость по всей глубине, диафрагма не нужна",
+  "white_balance": "5600K, нейтральный",
+  "exposure_compensation": "−1,0 EV",
+  "pose_data": {
+   "Свет": "Мягкое вечернее небо, без прямого солнца",
+   "Ракурс": "Уровень глаз, камера по центру дороги",
+   "Композиция": "Белая линия — ведущая, столб слева якорем",
+   "Движение": "Поезд смазан, всё остальное — неподвижно",
+   "Момент": "Когда вагоны закрывают весь горизонт"
+  },
+  "editing_data": {
+   "Пресет": "Приглушённые тона",
+   "Экспозиция": "−0,2",
+   "Контраст": "+10",
+   "Насыщенность": "−12",
+   "Зерно": "Лёгкое, +10"
+  },
+  "aspect_ratio": 0.667,
+  "translations": {
+   "en": {
+    "title": "Train through the frame",
+    "description": "A blurred train crosses a sharp level crossing, and the white road lines lead to it like an arrow. Rest the phone on a support, wait for the train and set a shutter that blurs the cars while the pole stays sharp.",
+    "camera": "Pro mode (third-party Pro camera app), main camera with 2× crop, vertical",
+    "focal_length": "48 mm (2×)",
+    "iso": "50",
+    "shutter_speed": "1/10 s, from a tripod or a stable support",
+    "aperture": "f/1.78 (fixed), sharp throughout, no aperture change needed",
+    "white_balance": "5600K, neutral",
+    "exposure_compensation": "−1.0 EV",
+    "pose_data": {
+     "Light": "Soft evening sky, no direct sun",
+     "Angle": "Eye level, camera on the road centre line",
+     "Composition": "White line leads in, pole on the left as an anchor",
+     "Motion": "The train blurs, everything else is still",
+     "Moment": "When the cars cover the whole horizon"
+    },
+    "editing_data": {
+     "Preset": "Muted tones",
+     "Exposure": "−0.2",
+     "Contrast": "+10",
+     "Saturation": "−12",
+     "Grain": "Light, +10"
+    }
+   }
+  },
+  "sort_order": 186,
+  "unsplash_id": "abDg_WVYyXQ",
+  "original_shot": {
+   "camera": "Fujifilm X-T30 II",
+   "focal_mm": 35.0,
+   "equiv_mm": 52,
+   "aperture": 14.0,
+   "shutter": "1/10",
+   "iso": 80
+  }
+ },
+ {
+  "legacy_id": "us-pkvecakeQjo",
+  "unsplash_id": "pkvecakeQjo",
+  "title": "Закат над серпантином",
+  "description": "Спорткар уходит по пустой дороге к морю, а небо над ним горит розово-оранжевым. Дорога ведёт взгляд прямо к задним огням. Ждите минут 10 после захода солнца и ставьте телефон низко, чтобы дорога заняла нижнюю треть.",
+  "image_url": "https://images.unsplash.com/photo-1732624697571-e877b2b4f5ba?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY4fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1732624697571-e877b2b4f5ba?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY4fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/a-car-driving-down-a-road-with-a-sunset-in-the-background-pkvecakeQjo",
+  "credit": "Jack White",
+  "creator_url": "https://unsplash.com/@jackwhite2803",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Car",
+  "source_type": "curated",
+  "device_id": "google-pixel-10",
+  "device": "Google Pixel 10 / 10 Pro / 10 Pro XL",
+  "camera": "Режим Pro, основной объектив, кроп 2×",
+  "focal_length": "48 мм (2×)",
+  "iso": "160",
+  "shutter_speed": "1/1600 с",
+  "aperture": "f/1.7 (фикс.), резкость по всей сцене — это нормально для пейзажного кадра",
+  "white_balance": "7000K, тёплый закат",
+  "exposure_compensation": "−1,0 EV",
+  "pose_data": {
+   "Свет": "Закатное небо, дорога уже в синей тени",
+   "Ракурс": "Низко, телефон в 30–40 см от асфальта",
+   "Композиция": "Дорога S-образно к машине, горизонт на верхней трети",
+   "Фокус": "Тап по машине, затем сдвиньте яркость вниз",
+   "Момент": "Огни включены, небо ещё яркое"
+  },
+  "editing_data": {
+   "Пресет": "Закат, мягкий",
+   "Экспозиция": "−0,3",
+   "Тени": "+15",
+   "Насыщенность": "+12",
+   "Цвет": "теплее 15"
+  },
+  "aspect_ratio": 1.5,
+  "translations": {
+   "en": {
+    "title": "Sunset over the winding road",
+    "description": "A sports car heads down an empty road toward the sea while the sky glows pink and orange. The road leads the eye straight to the tail lights. Wait about 10 minutes after sunset and hold the phone low so the road fills the bottom third.",
+    "camera": "Pro mode, main lens, 2× crop",
+    "focal_length": "48 mm (2×)",
+    "iso": "160",
+    "shutter_speed": "1/1600 s",
+    "aperture": "f/1.7 (fixed), sharp across the whole scene, which is right for a landscape-style frame",
+    "white_balance": "7000K, warm sunset",
+    "exposure_compensation": "−1.0 EV",
+    "pose_data": {
+     "Light": "Sunset sky, the road already in blue shade",
+     "Angle": "Low, phone 30–40 cm above the asphalt",
+     "Composition": "The road curving in an S to the car, horizon on the upper third",
+     "Focus": "Tap the car, then slide brightness down",
+     "Moment": "Lights on while the sky is still bright"
+    },
+    "editing_data": {
+     "Preset": "Sunset, soft",
+     "Exposure": "−0.3",
+     "Shadows": "+15",
+     "Saturation": "+12",
+     "Color": "warmer 15"
+    }
+   }
+  },
+  "sort_order": 187,
+  "original_shot": {
+   "camera": "Panasonic DC-GH5M2",
+   "focal_mm": 25.0,
+   "equiv_mm": 50,
+   "aperture": 2.0,
+   "shutter": "1/1600",
+   "iso": 200
+  }
+ },
+ {
+  "legacy_id": "us-eJ4ZAswgHiU",
+  "unsplash_id": "eJ4ZAswgHiU",
+  "title": "Рука в руке, спиной",
+  "description": "Пара уходит по дороге, держась за руки, а длинный телевик превращает лес в мягкий зелёный фон. Контраст чёрной футболки и клетчатой рубашки читается даже издали. Нужен длинный зум, поэтому отойдите на 15–20 м и просите идти неспешно.",
+  "image_url": "https://images.unsplash.com/photo-1602039855133-b4d18d4c1d45?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODcwfA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1602039855133-b4d18d4c1d45?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODcwfA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/man-and-woman-walking-on-road-during-daytime-eJ4ZAswgHiU",
+  "credit": "Tim Mossholder",
+  "creator_url": "https://unsplash.com/@timmossholder",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Couple",
+  "source_type": "curated",
+  "device_id": "samsung-s26-ultra",
+  "device": "Samsung Galaxy S26 Ultra",
+  "camera": "Режим Pro, перископ 5× и цифровой зум 10×",
+  "focal_length": "230 мм (10×)",
+  "iso": "50",
+  "shutter_speed": "1/500 с",
+  "aperture": "f/3.4 (фикс. на 5×), фон уже размыт за счёт длинного фокуса",
+  "white_balance": "6000K, пасмурный день",
+  "exposure_compensation": "−0,3 EV",
+  "pose_data": {
+   "Свет": "Пасмурное небо, ровный свет без теней",
+   "Ракурс": "Сзади, камера на уровне груди",
+   "Поза": "Идут рядом, держась за руки",
+   "Фон": "Размытая зелень склона, дорога без людей",
+   "Дистанция": "15–20 м, телевик 10×"
+  },
+  "editing_data": {
+   "Пресет": "Приглушённый",
+   "Контраст": "+10",
+   "Насыщенность": "−8",
+   "Тени": "+10",
+   "Зерно": "+8"
+  },
+  "aspect_ratio": 0.667,
+  "translations": {
+   "en": {
+    "title": "Hand in hand, from behind",
+    "description": "The couple walks away down the road holding hands, and the long telephoto turns the forest into a soft green backdrop. The contrast of the black tee and plaid shirt reads even from far away. You need long zoom, so step back 15–20 m and ask them to walk slowly.",
+    "camera": "Pro mode, 5× periscope plus 10× digital zoom",
+    "focal_length": "230 mm (10×)",
+    "iso": "50",
+    "shutter_speed": "1/500 s",
+    "aperture": "f/3.4 (fixed at 5×), the background is already blurred by the long focal length",
+    "white_balance": "6000K, overcast day",
+    "exposure_compensation": "−0.3 EV",
+    "pose_data": {
+     "Light": "Overcast sky, even light without shadows",
+     "Angle": "From behind, camera at chest height",
+     "Pose": "Walking side by side, holding hands",
+     "Background": "Blurred green hillside, an empty road",
+     "Distance": "15–20 m, 10× telephoto"
+    },
+    "editing_data": {
+     "Preset": "Muted",
+     "Contrast": "+10",
+     "Saturation": "−8",
+     "Shadows": "+10",
+     "Grain": "+8"
+    }
+   }
+  },
+  "sort_order": 188,
+  "original_shot": {
+   "camera": "NIKON D850",
+   "focal_mm": 300.0,
+   "equiv_mm": 300,
+   "aperture": 5.6,
+   "shutter": "1/160",
+   "iso": 40
+  }
+ },
+ {
+  "legacy_id": "us-DYTsXcfMz78",
+  "title": "Оранжевый на бирюзе",
+  "description": "Оранжевый костюм и белая накидка контрастируют с холодной бирюзовой плиткой и стеклом, а ступени уводят взгляд к лицу. Встаньте на ступень ниже и снимайте телевиком, чтобы ноги были в кадре.",
+  "image_url": "https://images.unsplash.com/photo-1651828854868-902ed78c1571?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUwfA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1651828854868-902ed78c1571?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUwfA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/a-person-posing-for-a-picture-DYTsXcfMz78",
+  "credit": "Ali Ahmadi",
+  "creator_url": "https://unsplash.com/@aliahmadin",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Full Body",
+  "source_type": "curated",
+  "device_id": "xiaomi-17-ultra",
+  "device": "Xiaomi 17 Ultra",
+  "camera": "Режим Pro, перископический объектив 3,5×",
+  "focal_length": "80 мм (3,5×)",
+  "iso": "100",
+  "shutter_speed": "1/320 с",
+  "aperture": "f/2.5 (фикс.), фон размыть дистанцией до фона ≈ f/2.8",
+  "white_balance": "5800K, чуть теплее дневного",
+  "exposure_compensation": "−0,3 EV",
+  "pose_data": {
+   "Свет": "Мягкая тень, рассеянный дневной свет",
+   "Ракурс": "Чуть снизу, телефон на уровне пояса",
+   "Поза": "Одна рука на стекле, вес на задней ноге",
+   "Композиция": "Фигура по центру, ступени ведут к ногам",
+   "Фокус": "Тап по лицу, затем сделать серию"
+  },
+  "editing_data": {
+   "Пресет": "Холодный тил-оранж",
+   "Контраст": "+12",
+   "Насыщенность": "+10",
+   "Тени": "−10",
+   "Цвет": "холоднее −8"
+  },
+  "aspect_ratio": 0.8,
+  "translations": {
+   "en": {
+    "title": "Orange on teal",
+    "description": "The orange outfit and white wrap contrast with the cool teal tile and glass, and the steps lead the eye up to the face. Stand one step lower and use the telephoto so the feet stay in the frame.",
+    "camera": "Pro mode, 3.5× periscope lens",
+    "focal_length": "80 mm (3.5×)",
+    "iso": "100",
+    "shutter_speed": "1/320 s",
+    "aperture": "f/2.5 (fixed), blur the background by keeping distance to it ≈ f/2.8",
+    "white_balance": "5800K, slightly warmer than daylight",
+    "exposure_compensation": "−0.3 EV",
+    "pose_data": {
+     "Light": "Open shade, soft diffused daylight",
+     "Angle": "Slightly low, phone at waist height",
+     "Pose": "One hand on the glass, weight on the back leg",
+     "Composition": "Figure centred, steps leading to the feet",
+     "Focus": "Tap on the face, then shoot a burst"
+    },
+    "editing_data": {
+     "Preset": "Cool teal-orange",
+     "Contrast": "+12",
+     "Saturation": "+10",
+     "Shadows": "−10",
+     "Color": "cooler −8"
+    }
+   }
+  },
+  "sort_order": 188,
+  "unsplash_id": "DYTsXcfMz78",
+  "original_shot": {
+   "camera": "Canon EOS 700D",
+   "focal_mm": 50.0,
+   "equiv_mm": 80,
+   "aperture": 2.8,
+   "shutter": "1/320",
+   "iso": 100
+  }
+ },
+ {
+  "legacy_id": "us-9JmFv2Q6TXE",
+  "title": "Лаконичный набор",
+  "description": "Фотоаппарат, часы и планшет лежат на сером столе строгой сеткой, а тёмные предметы читаются на светлом фоне. Снимайте строго сверху и выровняйте предметы по линиям кадра.",
+  "image_url": "https://images.unsplash.com/photo-1511995158749-ea62a8a8b81e?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODYxfA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1511995158749-ea62a8a8b81e?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODYxfA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/black-point-and-shoot-camera-and-round-black-analog-watch-with-fabric-band-9JmFv2Q6TXE",
+  "credit": "Alexander Andrews",
+  "creator_url": "https://unsplash.com/@alex_andrews",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Product",
+  "source_type": "curated",
+  "device_id": "samsung-s22-ultra",
+  "device": "Samsung Galaxy S22 Ultra",
+  "camera": "Режим Pro, основная камера с кропом 2×, строго сверху",
+  "focal_length": "46 мм (2×)",
+  "iso": "100",
+  "shutter_speed": "1/60 с",
+  "aperture": "f/1.8 (фикс.), все предметы на одной плоскости, размытие не нужно",
+  "white_balance": "5600K, нейтральный",
+  "exposure_compensation": "+0,3 EV",
+  "pose_data": {
+   "Свет": "Мягкий свет от окна, без прямого солнца",
+   "Ракурс": "Строго сверху, телефон параллельно столу",
+   "Композиция": "Предметы на сетке, поля одинаковые",
+   "Фон": "Ровный светло-серый стол",
+   "Фокус": "Тап по центру часов"
+  },
+  "editing_data": {
+   "Экспозиция": "+0,2",
+   "Контраст": "+8",
+   "Насыщенность": "−10",
+   "Тени": "+10",
+   "Цвет": "холоднее −3"
+  },
+  "aspect_ratio": 1.0,
+  "translations": {
+   "en": {
+    "title": "A tidy kit",
+    "description": "A camera, a watch and a tablet sit on a grey table in a strict grid, and the dark objects read clearly against the pale background. Shoot straight down and align the objects to the frame lines.",
+    "camera": "Pro mode, main camera with 2× crop, straight down",
+    "focal_length": "46 mm (2×)",
+    "iso": "100",
+    "shutter_speed": "1/60 s",
+    "aperture": "f/1.8 (fixed), all objects on one plane, no blur needed",
+    "white_balance": "5600K, neutral",
+    "exposure_compensation": "+0.3 EV",
+    "pose_data": {
+     "Light": "Soft window light, no direct sun",
+     "Angle": "Straight down, phone parallel to the table",
+     "Composition": "Objects on a grid, even margins",
+     "Background": "Even light-grey table",
+     "Focus": "Tap on the centre of the watch"
+    },
+    "editing_data": {
+     "Exposure": "+0.2",
+     "Contrast": "+8",
+     "Saturation": "−10",
+     "Shadows": "+10",
+     "Color": "cooler −3"
+    }
+   }
+  },
+  "sort_order": 189,
+  "unsplash_id": "9JmFv2Q6TXE",
+  "original_shot": {
+   "camera": "NIKON D810",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 8.0,
+   "shutter": "1/60",
+   "iso": 64
+  }
+ },
+ {
+  "legacy_id": "us-9xHVAI8ud4I",
+  "title": "Город, который не спит",
+  "description": "Тёмное небо и россыпь окон делают кадр графичным, а холодный бирюзовый тон выделяет подсвеченные башни. Поставьте телефон на опору, снимайте с телеобъектива и держите горизонт ровным.",
+  "image_url": "https://images.unsplash.com/photo-1569169507605-f91e088ce91a?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU5fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1569169507605-f91e088ce91a?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU5fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/lighted-high-rise-buildigns-9xHVAI8ud4I",
+  "credit": "SiravitPlug",
+  "creator_url": "https://unsplash.com/@siravitplug",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Night",
+  "source_type": "curated",
+  "device_id": "xiaomi-14",
+  "device": "Xiaomi 14",
+  "camera": "Режим Pro, телеобъектив 3×",
+  "focal_length": "75 мм (3×)",
+  "iso": "200",
+  "shutter_speed": "10 с, со штатива или опоры",
+  "aperture": "f/2.0 (фикс.), диафрагму не менять, резкость даёт дистанция",
+  "white_balance": "4300K, холодный городской",
+  "exposure_compensation": "−0,7 EV",
+  "pose_data": {
+   "Свет": "Освещённые окна башен на чёрном небе",
+   "Ракурс": "С крыши или высокого балкона, горизонт ровно",
+   "Композиция": "Небо — верхняя треть, город — нижние две",
+   "Фокус": "Ручной фокус по самой яркой башне",
+   "Дистанция": "Телеобъектив сжимает здания в плотную стену"
+  },
+  "editing_data": {
+   "Экспозиция": "−0,2",
+   "Контраст": "+12",
+   "Насыщенность": "+10",
+   "Тени": "+5",
+   "Цвет": "холоднее −10"
+  },
+  "aspect_ratio": 1.499,
+  "translations": {
+   "en": {
+    "title": "The city that never sleeps",
+    "description": "A dark sky and a spray of lit windows make the frame graphic, and the cool teal tone highlights the illuminated towers. Rest the phone on a support, use the telephoto and keep the horizon level.",
+    "camera": "Pro mode, 3× telephoto lens",
+    "focal_length": "75 mm (3×)",
+    "iso": "200",
+    "shutter_speed": "10 s, from a tripod or a stable support",
+    "aperture": "f/2.0 (fixed), leave the aperture alone, distance gives the sharpness",
+    "white_balance": "4300K, cool city night",
+    "exposure_compensation": "−0.7 EV",
+    "pose_data": {
+     "Light": "Lit tower windows on a black sky",
+     "Angle": "From a roof or high balcony, level horizon",
+     "Composition": "Sky takes the top third, city the bottom two",
+     "Focus": "Manual focus on the brightest tower",
+     "Distance": "The telephoto compresses buildings into a dense wall"
+    },
+    "editing_data": {
+     "Exposure": "−0.2",
+     "Contrast": "+12",
+     "Saturation": "+10",
+     "Shadows": "+5",
+     "Color": "cooler −10"
+    }
+   }
+  },
+  "sort_order": 190,
+  "unsplash_id": "9xHVAI8ud4I",
+  "original_shot": {
+   "camera": "Sony ILCE-7RM2",
+   "focal_mm": 60.0,
+   "equiv_mm": 60,
+   "aperture": 4.0,
+   "shutter": "10",
+   "iso": 200
+  }
+ },
+ {
+  "legacy_id": "us-549he2c175s",
+  "title": "Лицо в полосе света",
+  "description": "Чёрно-белый портрет держится на одном световом пятне: оно освещает глаза и губы, а остальное уходит в тень. Попросите смотреть чуть вверх и снимайте снизу, не добавляя второго света.",
+  "image_url": "https://images.unsplash.com/photo-1574526783053-c3afac70d448?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODYzfA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1574526783053-c3afac70d448?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODYzfA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/greyscale-photography-of-woman-549he2c175s",
+  "credit": "Letizia Agosta",
+  "creator_url": "https://unsplash.com/@adnonda",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Portrait",
+  "source_type": "curated",
+  "device_id": "xiaomi-14",
+  "device": "Xiaomi 14",
+  "camera": "Режим Pro, телеобъектив 3×, вертикально",
+  "focal_length": "75 мм (3×)",
+  "iso": "400",
+  "shutter_speed": "1/500 с",
+  "aperture": "f/2.0 (фикс.), фон размыть режимом «Портрет» ≈ f/2.8",
+  "white_balance": "5200K, нейтральный",
+  "exposure_compensation": "−0,7 EV",
+  "pose_data": {
+   "Свет": "Узкая полоса от окна на глаза и губы",
+   "Ракурс": "Чуть снизу, подбородок вверх",
+   "Взгляд": "Мимо камеры, вверх к источнику света",
+   "Композиция": "Лицо в верхней половине, голова чуть наклонена",
+   "Фокус": "Тап по ближнему глазу"
+  },
+  "editing_data": {
+   "Пресет": "Ч/Б",
+   "Контраст": "+25",
+   "Тени": "−20",
+   "Света": "−15",
+   "Зерно": "Среднее, +15"
+  },
+  "aspect_ratio": 0.667,
+  "translations": {
+   "en": {
+    "title": "A face in the light",
+    "description": "The black-and-white portrait relies on a single patch of light: it lights the eyes and lips while the rest falls into shadow. Ask her to look slightly up and shoot from below without adding a second light.",
+    "camera": "Pro mode, 3× telephoto lens, vertical",
+    "focal_length": "75 mm (3×)",
+    "iso": "400",
+    "shutter_speed": "1/500 s",
+    "aperture": "f/2.0 (fixed), blur the background with Portrait mode ≈ f/2.8",
+    "white_balance": "5200K, neutral",
+    "exposure_compensation": "−0.7 EV",
+    "pose_data": {
+     "Light": "A narrow shaft from a window on the eyes and lips",
+     "Angle": "Slightly from below, chin up",
+     "Gaze": "Past the camera, up toward the light",
+     "Composition": "Face in the top half, head slightly tilted",
+     "Focus": "Tap on the nearer eye"
+    },
+    "editing_data": {
+     "Preset": "B&W",
+     "Contrast": "+25",
+     "Shadows": "−20",
+     "Highlights": "−15",
+     "Grain": "Medium, +15"
+    }
+   }
+  },
+  "sort_order": 191,
+  "unsplash_id": "549he2c175s",
+  "original_shot": {
+   "camera": "NIKON D3500",
+   "focal_mm": 50.0,
+   "equiv_mm": 75,
+   "aperture": 9.0,
+   "shutter": "1/500",
+   "iso": 400
+  }
+ },
+ {
+  "legacy_id": "us-8FNgM0nN76s",
+  "title": "Эспрессо и книга",
+  "description": "Тёмная чашка на светлой книге и белый столик создают спокойный минималистичный кадр, а лист фикуса оживляет угол. Снимайте чуть сверху и сфокусируйтесь на кофе: фон должен остаться мягким.",
+  "image_url": "https://images.unsplash.com/photo-1545319261-f3760f9dd64d?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUyfA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1545319261-f3760f9dd64d?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUyfA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/shallow-focus-photo-of-black-ceramic-mug-and-saucer-on-white-book-8FNgM0nN76s",
+  "credit": "Adam Stefanca",
+  "creator_url": "https://unsplash.com/@adam_stefanca",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Lifestyle",
+  "source_type": "curated",
+  "device_id": "google-pixel-9",
+  "device": "Google Pixel 9 / 9 Pro / 9 Pro XL",
+  "camera": "Режим Pro, основная камера с кропом 2,5×",
+  "focal_length": "62 мм (2,5×)",
+  "iso": "800",
+  "shutter_speed": "1/160 с",
+  "aperture": "f/1.68 (фикс.), фон размыть дистанцией ≈ f/4",
+  "white_balance": "5200K, нейтральный",
+  "exposure_compensation": "+0,3 EV",
+  "pose_data": {
+   "Свет": "Мягкий оконный свет сбоку",
+   "Ракурс": "Под углом 45° сверху",
+   "Композиция": "Чашка в верхней трети, растение справа",
+   "Фокус": "Тап по краю чашки",
+   "Фон": "Пустая комната, без ярких пятен"
+  },
+  "editing_data": {
+   "Пресет": "Светлый минимализм",
+   "Экспозиция": "+0,2",
+   "Контраст": "−5",
+   "Насыщенность": "−10",
+   "Тени": "+15"
+  },
+  "aspect_ratio": 0.734,
+  "translations": {
+   "en": {
+    "title": "Espresso and a book",
+    "description": "A dark cup on a light book and a white table make a calm, minimalist frame, and the ficus leaves enliven the corner. Shoot slightly from above and focus on the coffee so the background stays soft.",
+    "camera": "Pro mode, main camera with 2.5× crop",
+    "focal_length": "62 mm (2.5×)",
+    "iso": "800",
+    "shutter_speed": "1/160 s",
+    "aperture": "f/1.68 (fixed), blur the background by distance ≈ f/4",
+    "white_balance": "5200K, neutral",
+    "exposure_compensation": "+0.3 EV",
+    "pose_data": {
+     "Light": "Soft window light from the side",
+     "Angle": "About 45° from above",
+     "Composition": "Cup in the upper third, plant on the right",
+     "Focus": "Tap on the cup rim",
+     "Background": "Empty room, no bright spots"
+    },
+    "editing_data": {
+     "Preset": "Bright minimalism",
+     "Exposure": "+0.2",
+     "Contrast": "−5",
+     "Saturation": "−10",
+     "Shadows": "+15"
+    }
+   }
+  },
+  "sort_order": 191,
+  "unsplash_id": "8FNgM0nN76s",
+  "original_shot": {
+   "camera": "Sony ILCE-7M2",
+   "focal_mm": 61.0,
+   "equiv_mm": 61,
+   "aperture": 5.6,
+   "shutter": "1/160",
+   "iso": 2500
+  }
+ },
+ {
+  "legacy_id": "us-YXog_rL_Fho",
+  "title": "Велосипедист в световом пятне",
+  "description": "Одинокий велосипедист пересекает полосу солнца, а жёлтая разметка и тёмные тени задают графичный ритм. Выберите перекрёсток с контрастным светом, экспонируйте по пятну и ждите, когда человек окажется в нём.",
+  "image_url": "https://images.unsplash.com/photo-1570587726545-494e2bcc2f9f?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTYxfA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1570587726545-494e2bcc2f9f?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTYxfA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/man-riding-bike-YXog_rL_Fho",
+  "credit": "Kin Li",
+  "creator_url": "https://unsplash.com/@kinli",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Street",
+  "source_type": "curated",
+  "device_id": "samsung-s24-ultra",
+  "device": "Samsung Galaxy S24 Ultra",
+  "camera": "Режим Pro, основная камера, сверху с пешеходного моста",
+  "focal_length": "24 мм (1×)",
+  "iso": "100",
+  "shutter_speed": "1/500 с",
+  "aperture": "f/1.7 (фикс.), глубина резкости большая за счёт широкого угла",
+  "white_balance": "5600K, нейтральный дневной",
+  "exposure_compensation": "−1,3 EV",
+  "pose_data": {
+   "Свет": "Резкое солнечное пятно, остальное в тени",
+   "Ракурс": "Сверху, с моста или лестницы",
+   "Композиция": "Фигура в центре пятна, разметка — диагонали",
+   "Момент": "Велосипедист в самом ярком пятне",
+   "Движение": "1/500 — без смаза при движении"
+  },
+  "editing_data": {
+   "Экспозиция": "−0,2",
+   "Контраст": "+20",
+   "Насыщенность": "+10",
+   "Тени": "−20",
+   "Света": "−15"
+  },
+  "aspect_ratio": 1.427,
+  "translations": {
+   "en": {
+    "title": "Cyclist in a pool of light",
+    "description": "A lone cyclist crosses a strip of sun while the yellow road markings and deep shadows set a graphic rhythm. Pick a crossing with contrasty light, expose for the bright patch and wait for the rider to enter it.",
+    "camera": "Pro mode, main camera, from a pedestrian bridge",
+    "focal_length": "24 mm (1×)",
+    "iso": "100",
+    "shutter_speed": "1/500 s",
+    "aperture": "f/1.7 (fixed), deep depth of field thanks to the wide angle",
+    "white_balance": "5600K, neutral daylight",
+    "exposure_compensation": "−1.3 EV",
+    "pose_data": {
+     "Light": "Hard sun patch, the rest in shadow",
+     "Angle": "From above, from a bridge or stairs",
+     "Composition": "Figure in the centre of the patch, markings as diagonals",
+     "Moment": "Cyclist in the brightest patch",
+     "Motion": "1/500 keeps the motion free of blur"
+    },
+    "editing_data": {
+     "Exposure": "−0.2",
+     "Contrast": "+20",
+     "Saturation": "+10",
+     "Shadows": "−20",
+     "Highlights": "−15"
+    }
+   }
+  },
+  "sort_order": 192,
+  "unsplash_id": "YXog_rL_Fho",
+  "original_shot": {
+   "camera": "Pentax Ricoh Imaging GR",
+   "focal_mm": 13.7,
+   "equiv_mm": 27,
+   "aperture": 7.1,
+   "shutter": "1/200",
+   "iso": 200
+  }
+ },
+ {
+  "legacy_id": "us-B3Ugluq-woI",
+  "title": "Красный во тьме",
+  "description": "Машина вырезана из чёрного фона одним боковым светом: блики бегут по крылу и колёсным аркам, остальное тонет в тени. Снимайте в тёмном помещении или ночью под одним источником сбоку и экспонируйте по бликам, а не по фону.",
+  "image_url": "https://images.unsplash.com/photo-1616451920295-630b96a9d480?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU0fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1616451920295-630b96a9d480?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU0fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/red-ferrari-458-italia-on-black-background-B3Ugluq-woI",
+  "credit": "Jakob Rosen",
+  "creator_url": "https://unsplash.com/@jakobnoahrosen",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Car",
+  "source_type": "curated",
+  "device_id": "oppo-find-x8-pro",
+  "device": "Oppo Find X8 Pro",
+  "camera": "Режим Pro, телеобъектив 3×",
+  "focal_length": "73 мм (3×)",
+  "iso": "1600",
+  "shutter_speed": "1/200 с",
+  "aperture": "f/2.6 (фикс.), фон и так чёрный, размытие не нужно",
+  "white_balance": "4800K, чуть холоднее дневного",
+  "exposure_compensation": "−1,3 EV",
+  "pose_data": {
+   "Свет": "Один жёсткий источник сбоку, всё остальное в тени",
+   "Ракурс": "Чуть ниже уровня капота, три четверти",
+   "Композиция": "Машина смещена вправо, слева — чёрная пустота",
+   "Фокус": "Тап по блику на арке колеса",
+   "Дистанция": "6–8 м, на телеобъективе без искажений"
+  },
+  "editing_data": {
+   "Экспозиция": "−0,3",
+   "Контраст": "+25",
+   "Насыщенность": "+10",
+   "Тени": "−35",
+   "Виньетка": "Лёгкая, −15"
+  },
+  "aspect_ratio": 0.667,
+  "translations": {
+   "en": {
+    "title": "Red out of the dark",
+    "description": "The car is carved out of a black background by a single side light: highlights run along the wing and wheel arches while the rest sinks into shadow. Shoot in a dark space or at night under one side source and expose for the highlights, not the background.",
+    "camera": "Pro mode, 3× telephoto lens",
+    "focal_length": "73 mm (3×)",
+    "iso": "1600",
+    "shutter_speed": "1/200 s",
+    "aperture": "f/2.6 (fixed), the background is black anyway, no blur needed",
+    "white_balance": "4800K, slightly cooler than daylight",
+    "exposure_compensation": "−1.3 EV",
+    "pose_data": {
+     "Light": "A single hard source from the side, everything else in shadow",
+     "Angle": "Slightly below hood level, three-quarter view",
+     "Composition": "Car shifted right, black emptiness on the left",
+     "Focus": "Tap on the highlight of the wheel arch",
+     "Distance": "6–8 m away, tele lens to avoid distortion"
+    },
+    "editing_data": {
+     "Exposure": "−0.3",
+     "Contrast": "+25",
+     "Saturation": "+10",
+     "Shadows": "−35",
+     "Vignette": "Light, −15"
+    }
+   }
+  },
+  "sort_order": 193,
+  "unsplash_id": "B3Ugluq-woI",
+  "original_shot": {
+   "camera": "Canon EOS 90D",
+   "focal_mm": 35.0,
+   "equiv_mm": 56,
+   "aperture": 1.8,
+   "shutter": "1/200",
+   "iso": 1600
+  }
+ },
+ {
+  "legacy_id": "us-QjO6ZTV2EoQ",
+  "title": "Щека к щеке",
+  "description": "Пара прижалась друг к другу, закатный свет мягко заполняет лица, а размытый горизонт не отвлекает. Снимайте на уровне глаз и попросите их повернуться чуть к свету, а не к камере.",
+  "image_url": "https://images.unsplash.com/photo-1653765000011-de1f5cad4fba?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU4fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1653765000011-de1f5cad4fba?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU4fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/a-man-and-a-woman-posing-for-a-picture-QjO6ZTV2EoQ",
+  "credit": "Brooke Cagle",
+  "creator_url": "https://unsplash.com/@brookecagle",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Couple",
+  "source_type": "curated",
+  "device_id": "apple-iphone-14-pro",
+  "device": "Apple iPhone 14 Pro / Pro Max",
+  "camera": "Фото, основная камера с кропом 2×, портретный режим",
+  "focal_length": "48 мм (2×)",
+  "iso": "160",
+  "shutter_speed": "1/800 с",
+  "aperture": "f/1.78 (фикс.), фон размыть режимом «Портрет» ≈ f/2.0",
+  "white_balance": "6200K, тёплый закат",
+  "exposure_compensation": "+0,3 EV",
+  "pose_data": {
+   "Свет": "Закат лицом к паре, мягкий свет без теней",
+   "Ракурс": "Уровень глаз, камера строго напротив",
+   "Поза": "Головы касаются, плечи слегка развёрнуты к камере",
+   "Взгляд": "В камеру, улыбка уже началась",
+   "Фон": "Размытый горизонт, пустое пространство"
+  },
+  "editing_data": {
+   "Экспозиция": "+0,2",
+   "Контраст": "−5",
+   "Насыщенность": "−8",
+   "Цвет": "теплее +10",
+   "Зерно": "Лёгкое, +10"
+  },
+  "aspect_ratio": 1.5,
+  "translations": {
+   "en": {
+    "title": "Cheek to cheek",
+    "description": "The couple leans in together, sunset light softly fills their faces and the blurred horizon stays out of the way. Shoot at eye level and ask them to turn slightly toward the light rather than the camera.",
+    "camera": "Photo, main camera with 2× crop, Portrait mode",
+    "focal_length": "48 mm (2×)",
+    "iso": "160",
+    "shutter_speed": "1/800 s",
+    "aperture": "f/1.78 (fixed), blur the background with Portrait mode ≈ f/2.0",
+    "white_balance": "6200K, warm sunset",
+    "exposure_compensation": "+0.3 EV",
+    "pose_data": {
+     "Light": "Sunset light on the faces, soft and shadowless",
+     "Angle": "Eye level, camera straight in front",
+     "Pose": "Heads touching, shoulders turned slightly toward the camera",
+     "Gaze": "At the camera, mid-smile",
+     "Background": "Blurred horizon, open space"
+    },
+    "editing_data": {
+     "Exposure": "+0.2",
+     "Contrast": "−5",
+     "Saturation": "−8",
+     "Color": "warmer +10",
+     "Grain": "Light, +10"
+    }
+   }
+  },
+  "sort_order": 193,
+  "unsplash_id": "QjO6ZTV2EoQ",
+  "original_shot": {
+   "camera": "Canon EOS R",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 2.0,
+   "shutter": "1/800",
+   "iso": 160
+  }
+ },
+ {
+  "legacy_id": "us-kxT9F_7XPFY",
+  "title": "Платок у колонн",
+  "description": "Девушка опирается на старый каменный выступ, а рифлёные колонны тянут линии в глубину; оранжевая сумка собирает весь цвет в нижней части кадра. Подойдите ближе к колонне и снимайте на телеобъектив, чтобы фон сжался.",
+  "image_url": "https://images.unsplash.com/photo-1607778002144-15e6d87673ba?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU2fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1607778002144-15e6d87673ba?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU2fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/woman-in-white-long-sleeve-shirt-holding-orange-handbag-kxT9F_7XPFY",
+  "credit": "Asal Mshk",
+  "creator_url": "https://unsplash.com/@asalmashkoori",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Full Body",
+  "source_type": "curated",
+  "device_id": "honor-magic7-pro",
+  "device": "Honor Magic7 Pro",
+  "camera": "Режим Pro, перископический объектив 3×",
+  "focal_length": "70 мм (3×)",
+  "iso": "100",
+  "shutter_speed": "1/125 с",
+  "aperture": "f/2.6 (фикс.), фон размыть ближе к модели ≈ f/3.5",
+  "white_balance": "5600K, нейтральный дневной",
+  "exposure_compensation": "−0,3 EV",
+  "pose_data": {
+   "Свет": "Мягкий пасмурный свет, без жёстких теней",
+   "Ракурс": "Чуть снизу, колонны вертикальны",
+   "Поза": "Лёгкий наклон к колонне, рука у платка",
+   "Взгляд": "В камеру, подбородок чуть вниз",
+   "Руки": "Одна у лица, другая держит сумку"
+  },
+  "editing_data": {
+   "Экспозиция": "−0,1",
+   "Контраст": "+8",
+   "Насыщенность": "+10",
+   "Тени": "+10",
+   "Виньетка": "Лёгкая, −10"
+  },
+  "aspect_ratio": 1.052,
+  "translations": {
+   "en": {
+    "title": "Headscarf by the columns",
+    "description": "The woman leans on an old stone ledge while the fluted columns pull lines into the distance; the orange handbag collects all the colour at the bottom. Step close to a column and use the telephoto so the background compresses.",
+    "camera": "Pro mode, 3× periscope lens",
+    "focal_length": "70 mm (3×)",
+    "iso": "100",
+    "shutter_speed": "1/125 s",
+    "aperture": "f/2.6 (fixed), blur the background by moving closer to the subject ≈ f/3.5",
+    "white_balance": "5600K, neutral daylight",
+    "exposure_compensation": "−0.3 EV",
+    "pose_data": {
+     "Light": "Soft overcast light, no hard shadows",
+     "Angle": "Slightly low, columns kept vertical",
+     "Pose": "Light lean on the column, hand at the scarf",
+     "Gaze": "At the camera, chin slightly down",
+     "Hands": "One near the face, the other holds the bag"
+    },
+    "editing_data": {
+     "Exposure": "−0.1",
+     "Contrast": "+8",
+     "Saturation": "+10",
+     "Shadows": "+10",
+     "Vignette": "Light, −10"
+    }
+   }
+  },
+  "sort_order": 194,
+  "unsplash_id": "kxT9F_7XPFY",
+  "original_shot": {
+   "camera": "Canon EOS 60D",
+   "focal_mm": 50.0,
+   "equiv_mm": 80,
+   "aperture": 3.5,
+   "shutter": "1/125",
+   "iso": 100
+  }
+ },
+ {
+  "legacy_id": "us-8OFlZLESduM",
+  "title": "Книга и тёплый свет",
+  "description": "Тёмная книга на геометрическом фоне из бумаги, косая тень делит кадр пополам, а плетёный плед и листья добавляют фактуру. Разложите предметы по диагонали и поймайте прямую полосу света.",
+  "image_url": "https://images.unsplash.com/photo-1632425033037-2f2310d26e93?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY1fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1632425033037-2f2310d26e93?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY1fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/a-persons-feet-covered-in-a-knitted-sock-next-to-a-book-and-8OFlZLESduM",
+  "credit": "Ashley Lewis",
+  "creator_url": "https://unsplash.com/@ashleylewis",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Product",
+  "source_type": "curated",
+  "device_id": "apple-iphone-17",
+  "device": "Apple iPhone 17",
+  "camera": "Режим Pro, основная камера, строго сверху",
+  "focal_length": "26 мм (1×)",
+  "iso": "50",
+  "shutter_speed": "1/640 с",
+  "aperture": "f/1.6 (фикс.), все предметы на одной плоскости, размытие не нужно",
+  "white_balance": "5800K, слегка тёплый",
+  "exposure_compensation": "−0,3 EV",
+  "pose_data": {
+   "Свет": "Прямое солнце через окно, жёсткая диагональная тень",
+   "Ракурс": "Строго сверху, телефон параллельно плоскости",
+   "Композиция": "Книга по центру, плед и листья по углам",
+   "Фон": "Три цвета бумаги: рыжий, бежевый, светлый",
+   "Фокус": "Тап по краю книги"
+  },
+  "editing_data": {
+   "Пресет": "Тёплый матовый",
+   "Экспозиция": "−0,2",
+   "Контраст": "+5",
+   "Насыщенность": "−10",
+   "Тени": "+20"
+  },
+  "aspect_ratio": 1.0,
+  "translations": {
+   "en": {
+    "title": "A book in warm light",
+    "description": "A dark book on a geometric paper background, a diagonal shadow splits the frame in two, and a chunky knit and leaves add texture. Lay the items out on a diagonal and catch a direct streak of light.",
+    "camera": "Pro mode, main camera, straight down",
+    "focal_length": "26 mm (1×)",
+    "iso": "50",
+    "shutter_speed": "1/640 s",
+    "aperture": "f/1.6 (fixed), all items on one plane, no blur needed",
+    "white_balance": "5800K, slightly warm",
+    "exposure_compensation": "−0.3 EV",
+    "pose_data": {
+     "Light": "Direct sun through a window, hard diagonal shadow",
+     "Angle": "Straight down, phone parallel to the surface",
+     "Composition": "Book in the centre, knit and leaves in the corners",
+     "Background": "Three paper tones: rust, beige, pale",
+     "Focus": "Tap on the edge of the book"
+    },
+    "editing_data": {
+     "Preset": "Warm matte",
+     "Exposure": "−0.2",
+     "Contrast": "+5",
+     "Saturation": "−10",
+     "Shadows": "+20"
+    }
+   }
+  },
+  "sort_order": 195,
+  "unsplash_id": "8OFlZLESduM",
+  "original_shot": {
+   "camera": "Apple iPhone 7 Plus",
+   "focal_mm": 4.0,
+   "equiv_mm": 28,
+   "aperture": 1.8,
+   "shutter": "1/640",
+   "iso": 20
+  }
+ },
+ {
+  "legacy_id": "us-YKYrNgx0TIo",
+  "title": "Синий неоновый бульвар",
+  "description": "Холодный синий ночной бульвар с неоновыми вывесками уходит в дымку, а красные точки светофоров дают акценты. Выдержка рисует световые полосы машин и держит весь кадр резким. Поставьте телефон на опору на уровне груди посередине тротуара.",
+  "image_url": "https://images.unsplash.com/photo-1601803994202-59703e72917c?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUxfA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1601803994202-59703e72917c?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUxfA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/red-and-white-lighted-building-during-night-time-YKYrNgx0TIo",
+  "credit": "Ryunosuke Kikuno",
+  "creator_url": "https://unsplash.com/@ryunosuke_kikuno",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Night",
+  "source_type": "curated",
+  "device_id": "google-pixel-8",
+  "device": "Google Pixel 8 / 8 Pro",
+  "camera": "Режим Pro, основной объектив, зум 1,5×, на опоре",
+  "focal_length": "38 мм (1,5×)",
+  "iso": "100",
+  "shutter_speed": "1/4 с, со штатива или опоры",
+  "aperture": "f/1.7 (фикс.), глубина резкости большая, как у оригинала; для полос света включите Ночной режим",
+  "white_balance": "3800K, холодный синий ночной",
+  "exposure_compensation": "−0,7 EV",
+  "pose_data": {
+   "Свет": "Неон и уличные фонари, смешанный холодный свет",
+   "Ракурс": "Посередине тротуара, камера на уровне груди, вертикально",
+   "Композиция": "Улица сходится к башне с часами, провода дают линии",
+   "Фокус": "Тап по башне, затем блокировка AF/AE",
+   "Момент": "Ждите проезда машины для полосы света"
+  },
+  "editing_data": {
+   "Пресет": "Неон ночной",
+   "Экспозиция": "−0,3",
+   "Контраст": "+15",
+   "Тени": "+15",
+   "Цвет": "холоднее 15"
+  },
+  "aspect_ratio": 0.668,
+  "translations": {
+   "en": {
+    "title": "Blue neon boulevard",
+    "description": "A cold blue night boulevard with neon signs dissolves into haze while red traffic lights add accents. The exposure paints light trails from cars and keeps the whole frame sharp. Put the phone on a support at chest height in the middle of the pavement.",
+    "camera": "Pro mode, main lens, 1.5× zoom, on a support",
+    "focal_length": "38 mm (1.5×)",
+    "iso": "100",
+    "shutter_speed": "1/4 s, from a tripod or support",
+    "aperture": "f/1.7 (fixed), deep depth of field as in the original; use Night mode for light trails",
+    "white_balance": "3800K, cold blue night",
+    "exposure_compensation": "−0.7 EV",
+    "pose_data": {
+     "Light": "Neon and street lamps, mixed cool light",
+     "Angle": "Middle of the pavement, camera at chest height, vertical",
+     "Composition": "Street converging on the clock tower, wires adding lines",
+     "Focus": "Tap the tower, then lock AF/AE",
+     "Moment": "Wait for a car to pass for a streak of light"
+    },
+    "editing_data": {
+     "Preset": "Night neon",
+     "Exposure": "−0.3",
+     "Contrast": "+15",
+     "Shadows": "+15",
+     "Color": "Cooler 15"
+    }
+   }
+  },
+  "sort_order": 195,
+  "unsplash_id": "YKYrNgx0TIo",
+  "original_shot": {
+   "camera": "NIKON D750",
+   "focal_mm": 35.0,
+   "equiv_mm": 35,
+   "aperture": 13.0,
+   "shutter": "13",
+   "iso": 100
+  }
+ },
+ {
+  "legacy_id": "us-JRa8lCQQhSs",
+  "title": "Тишина в глазах",
+  "description": "Тусклый серый фон, мягкий свет сбоку и тёмный свитер оставляют на кадре только лицо и взгляд в сторону. Подвиньте модель ближе к окну, чтобы свет шёл сбоку, и снимайте на телеобъектив.",
+  "image_url": "https://images.unsplash.com/photo-1667053508464-eb11b394df83?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY5fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1667053508464-eb11b394df83?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY5fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/a-woman-with-a-straight-face-JRa8lCQQhSs",
+  "credit": "Dmitry Ganin",
+  "creator_url": "https://unsplash.com/@ganinph",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Portrait",
+  "source_type": "curated",
+  "device_id": "samsung-s26",
+  "device": "Samsung Galaxy S26 / S26+",
+  "camera": "Режим Pro, телеобъектив 3×, вертикально",
+  "focal_length": "70 мм (3×)",
+  "iso": "1600",
+  "shutter_speed": "1/400 с",
+  "aperture": "f/2.9 (фикс.), фон размыть расстоянием до стены ≈ f/4",
+  "white_balance": "5000K, слегка холодный",
+  "exposure_compensation": "−0,3 EV",
+  "pose_data": {
+   "Свет": "Мягкий оконный свет сбоку, тени на второй щеке",
+   "Ракурс": "На уровне глаз, три четверти",
+   "Взгляд": "В сторону от камеры, спокойный",
+   "Композиция": "Голова в верхней трети, плечи заполняют низ",
+   "Фон": "Серая стена без деталей"
+  },
+  "editing_data": {
+   "Экспозиция": "−0,1",
+   "Контраст": "+10",
+   "Насыщенность": "−15",
+   "Тени": "+5",
+   "Виньетка": "Лёгкая, −12"
+  },
+  "aspect_ratio": 0.8,
+  "translations": {
+   "en": {
+    "title": "Quiet in the eyes",
+    "description": "A dull grey background, soft side light and a dark sweater leave only the face and the sideways gaze. Move the model near a window so the light comes from the side and use the telephoto.",
+    "camera": "Pro mode, 3× telephoto lens, vertical",
+    "focal_length": "70 mm (3×)",
+    "iso": "1600",
+    "shutter_speed": "1/400 s",
+    "aperture": "f/2.9 (fixed), blur the background with distance to the wall ≈ f/4",
+    "white_balance": "5000K, slightly cool",
+    "exposure_compensation": "−0.3 EV",
+    "pose_data": {
+     "Light": "Soft window light from the side, shadow on the far cheek",
+     "Angle": "Eye level, three-quarter view",
+     "Gaze": "Away from the camera, calm",
+     "Composition": "Head in the upper third, shoulders fill the bottom",
+     "Background": "Plain grey wall without details"
+    },
+    "editing_data": {
+     "Exposure": "−0.1",
+     "Contrast": "+10",
+     "Saturation": "−15",
+     "Shadows": "+5",
+     "Vignette": "Light, −12"
+    }
+   }
+  },
+  "sort_order": 196,
+  "unsplash_id": "JRa8lCQQhSs",
+  "original_shot": {
+   "camera": "NIKON Z 6",
+   "focal_mm": 70.0,
+   "equiv_mm": 70,
+   "aperture": 4.0,
+   "shutter": "1/400",
+   "iso": 2000
+  }
+ },
+ {
+  "legacy_id": "us-g86airJZ4Gs",
+  "title": "Кофе вдвоём",
+  "description": "Руки на деревянном столе и две чашки рассказывают историю свидания без единого лица; тёплое дерево и джинсовая куртка собирают палитру. Снимайте с высоты стола и ждите, когда руки коснутся друг друга.",
+  "image_url": "https://images.unsplash.com/photo-1542338332-76971ae8c292?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTYwfA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1542338332-76971ae8c292?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTYwfA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/two-mugs-with-coffee-on-table-g86airJZ4Gs",
+  "credit": "Priscilla Du Preez 🇨🇦",
+  "creator_url": "https://unsplash.com/@priscilladupreez",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Lifestyle",
+  "source_type": "curated",
+  "device_id": "apple-iphone-17",
+  "device": "Apple iPhone 17",
+  "camera": "Режим Pro, основная камера с кропом 2×",
+  "focal_length": "52 мм (2×)",
+  "iso": "250",
+  "shutter_speed": "1/500 с",
+  "aperture": "f/1.6 (фикс.), фон размыть режимом «Портрет» ≈ f/2.2",
+  "white_balance": "4800K, тёплое кафе",
+  "exposure_compensation": "+0,3 EV",
+  "pose_data": {
+   "Свет": "Мягкий дневной свет от окна",
+   "Ракурс": "Уровень стола, чуть сбоку",
+   "Руки": "Ладони почти касаются, пальцы расслаблены",
+   "Фокус": "Тап по ближайшей чашке",
+   "Момент": "Когда она тянется к его руке"
+  },
+  "editing_data": {
+   "Экспозиция": "+0,2",
+   "Контраст": "−5",
+   "Насыщенность": "−8",
+   "Цвет": "теплее +8",
+   "Зерно": "Лёгкое, +10"
+  },
+  "aspect_ratio": 1.5,
+  "translations": {
+   "en": {
+    "title": "Coffee for two",
+    "description": "Hands on a wooden table and two cups tell the story of a date without a single face; warm wood and a denim jacket build the palette. Shoot from table height and wait for the moment when the hands touch.",
+    "camera": "Pro mode, main camera with 2× crop",
+    "focal_length": "52 mm (2×)",
+    "iso": "250",
+    "shutter_speed": "1/500 s",
+    "aperture": "f/1.6 (fixed), blur the background with Portrait mode ≈ f/2.2",
+    "white_balance": "4800K, warm café",
+    "exposure_compensation": "+0.3 EV",
+    "pose_data": {
+     "Light": "Soft daylight from the window",
+     "Angle": "Table level, slightly from the side",
+     "Hands": "Hands almost touching, fingers relaxed",
+     "Focus": "Tap on the nearest cup",
+     "Moment": "As she reaches for his hand"
+    },
+    "editing_data": {
+     "Exposure": "+0.2",
+     "Contrast": "−5",
+     "Saturation": "−8",
+     "Color": "warmer +8",
+     "Grain": "Light, +10"
+    }
+   }
+  },
+  "sort_order": 197,
+  "unsplash_id": "g86airJZ4Gs",
+  "original_shot": {
+   "camera": "Canon EOS 6D",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 2.2,
+   "shutter": "1/500",
+   "iso": 250
+  }
+ },
+ {
+  "legacy_id": "us-3ReknLCBfeU",
+  "title": "Нью-Йорк на закате",
+  "description": "Телеобъектив сжимает улицу в плотную стену машин, пешеходов и небоскрёбов, а жёлтое такси становится ярким центром. Встаньте посреди перехода и ловите момент, когда все участники в кадре.",
+  "image_url": "https://images.unsplash.com/photo-1508798179027-a00aa5326443?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY3fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1508798179027-a00aa5326443?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY3fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/people-walking-on-pedestrian-near-vehicles-3ReknLCBfeU",
+  "credit": "Jp Valery",
+  "creator_url": "https://unsplash.com/@jpvalery",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Street",
+  "source_type": "curated",
+  "device_id": "xiaomi-17-ultra",
+  "device": "Xiaomi 17 Ultra",
+  "camera": "Режим Pro, перископический объектив 3,5×",
+  "focal_length": "80 мм (3,5×)",
+  "iso": "400",
+  "shutter_speed": "1/320 с",
+  "aperture": "f/2.5 (фикс.), глубина сжата телеобъективом",
+  "white_balance": "6500K, тёплый закат",
+  "exposure_compensation": "−0,7 EV",
+  "pose_data": {
+   "Свет": "Закат сзади, небо светлее улицы",
+   "Ракурс": "Центр улицы на уровне глаз",
+   "Композиция": "Такси в центре, небоскрёбы по бокам",
+   "Момент": "Когда пешеходы проходят перед такси",
+   "Дистанция": "Телеобъектив сжимает улицу в стену"
+  },
+  "editing_data": {
+   "Экспозиция": "−0,2",
+   "Контраст": "+12",
+   "Насыщенность": "+8",
+   "Тени": "+15",
+   "Цвет": "теплее +8"
+  },
+  "aspect_ratio": 1.333,
+  "translations": {
+   "en": {
+    "title": "New York at sunset",
+    "description": "The telephoto squeezes the street into a dense wall of cars, pedestrians and skyscrapers, and the yellow taxi becomes the bright centre. Stand at the middle of the crossing and wait for all the participants to be in the frame.",
+    "camera": "Pro mode, 3.5× periscope lens",
+    "focal_length": "80 mm (3.5×)",
+    "iso": "400",
+    "shutter_speed": "1/320 s",
+    "aperture": "f/2.5 (fixed), depth compressed by the telephoto",
+    "white_balance": "6500K, warm sunset",
+    "exposure_compensation": "−0.7 EV",
+    "pose_data": {
+     "Light": "Sunset behind, the sky brighter than the street",
+     "Angle": "Centre of the street at eye level",
+     "Composition": "Taxi in the centre, skyscrapers on the sides",
+     "Moment": "When pedestrians cross in front of the taxi",
+     "Distance": "The telephoto compresses the street into a wall"
+    },
+    "editing_data": {
+     "Exposure": "−0.2",
+     "Contrast": "+12",
+     "Saturation": "+8",
+     "Shadows": "+15",
+     "Color": "warmer +8"
+    }
+   }
+  },
+  "sort_order": 197,
+  "unsplash_id": "3ReknLCBfeU",
+  "original_shot": {
+   "camera": "Olympus E-M10MarkII",
+   "focal_mm": 40.0,
+   "equiv_mm": 80,
+   "aperture": 10.0,
+   "shutter": "1/60",
+   "iso": 3200
+  }
+ },
+ {
+  "legacy_id": "us-KynjrTZ3JO4",
+  "title": "Серебро на закате",
+  "description": "Светлый купе стоит на фоне тёплого неба, и закат красит всю сцену в золото; три четверти спереди подчёркивают линию кузова. Ждите, когда солнце коснётся горизонта, и снимайте с низкой точки с телеобъектива.",
+  "image_url": "https://images.unsplash.com/photo-1602702102352-caad4c241565?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY0fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1602702102352-caad4c241565?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY0fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/silver-bmw-m-3-coupe-KynjrTZ3JO4",
+  "credit": "Stephan Louis",
+  "creator_url": "https://unsplash.com/@stephanlouis",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Car",
+  "source_type": "curated",
+  "device_id": "samsung-s24-ultra",
+  "device": "Samsung Galaxy S24 Ultra",
+  "camera": "Режим Pro, перископический объектив 5×",
+  "focal_length": "111 мм (5×)",
+  "iso": "100",
+  "shutter_speed": "1/80 с",
+  "aperture": "f/3.4 (фикс.), фон мягкий за счёт дистанции",
+  "white_balance": "6800K, тёплый закат",
+  "exposure_compensation": "−0,7 EV",
+  "pose_data": {
+   "Свет": "Низкое солнце за машиной, небо светлее кузова",
+   "Ракурс": "Колени на земле, камера на уровне фар",
+   "Композиция": "Машина по центру, горизонт на трети кадра",
+   "Фон": "Ровное небо и сухая степь без людей",
+   "Дистанция": "10–15 м, перекрыть заметные номера"
+  },
+  "editing_data": {
+   "Экспозиция": "−0,2",
+   "Тени": "+20",
+   "Света": "−30",
+   "Цвет": "теплее +12",
+   "Контраст": "+8"
+  },
+  "aspect_ratio": 1.5,
+  "translations": {
+   "en": {
+    "title": "Silver at sunset",
+    "description": "A light coupe sits against a warm sky and the sunset paints the whole scene gold; the front three-quarter angle shows off the body line. Wait for the sun to touch the horizon and shoot from a low point with the telephoto.",
+    "camera": "Pro mode, 5× periscope lens",
+    "focal_length": "111 mm (5×)",
+    "iso": "100",
+    "shutter_speed": "1/80 s",
+    "aperture": "f/3.4 (fixed), soft background thanks to distance",
+    "white_balance": "6800K, warm sunset",
+    "exposure_compensation": "−0.7 EV",
+    "pose_data": {
+     "Light": "Low sun behind the car, sky brighter than the body",
+     "Angle": "Kneel down, camera at headlight level",
+     "Composition": "Car in the centre, horizon on the lower third",
+     "Background": "Smooth sky and dry plain, no people",
+     "Distance": "10–15 m away, hide or crop the plate"
+    },
+    "editing_data": {
+     "Exposure": "−0.2",
+     "Shadows": "+20",
+     "Highlights": "−30",
+     "Color": "warmer +12",
+     "Contrast": "+8"
+    }
+   }
+  },
+  "sort_order": 198,
+  "unsplash_id": "KynjrTZ3JO4",
+  "original_shot": {
+   "camera": "Canon EOS R",
+   "focal_mm": 105.0,
+   "equiv_mm": 105,
+   "aperture": 4.0,
+   "shutter": "1/80",
+   "iso": 100
+  }
+ },
+ {
+  "legacy_id": "us-mbgsdI6eZwg",
+  "title": "Двое у резных дверей",
+  "description": "Свадебная пара стоит у огромных резных дверей: красный сари и светлая шервани отделяются от тёмного дерева, а арка рамкой собирает кадр. Поставьте пару в нижней трети, а арку оставьте симметричной.",
+  "image_url": "https://images.unsplash.com/photo-1730476513367-16fe58a8a653?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY0fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1730476513367-16fe58a8a653?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY0fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/a-man-and-woman-standing-in-front-of-a-wooden-door-mbgsdI6eZwg",
+  "credit": "Sabesh Photography LTD",
+  "creator_url": "https://unsplash.com/@sabesh",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Couple",
+  "source_type": "curated",
+  "device_id": "samsung-s26",
+  "device": "Samsung Galaxy S26 / S26+",
+  "camera": "Режим Pro, основная камера с кропом 2×, вертикально",
+  "focal_length": "48 мм (2×)",
+  "iso": "800",
+  "shutter_speed": "1/200 с",
+  "aperture": "f/1.8 (фикс.), дверь резкая, размытие не нужно",
+  "white_balance": "5600K, нейтральный дневной",
+  "exposure_compensation": "−0,3 EV",
+  "pose_data": {
+   "Свет": "Мягкая тень у входа, свет рассеянный",
+   "Ракурс": "Вертикаль на уровне груди, без наклона",
+   "Поза": "Плечом к плечу, она касается его руки",
+   "Композиция": "Пара в нижней трети, арка симметрична",
+   "Взгляд": "Оба смотрят вбок, в одну сторону"
+  },
+  "editing_data": {
+   "Экспозиция": "−0,1",
+   "Контраст": "+10",
+   "Насыщенность": "+8",
+   "Тени": "+15",
+   "Цвет": "теплее +5"
+  },
+  "aspect_ratio": 0.667,
+  "translations": {
+   "en": {
+    "title": "Two before carved doors",
+    "description": "A wedding couple stands in front of huge carved doors: the red sari and light sherwani separate from the dark wood, and the arch frames the shot. Place the pair in the lower third and keep the arch symmetrical.",
+    "camera": "Pro mode, main camera with 2× crop, vertical",
+    "focal_length": "48 mm (2×)",
+    "iso": "800",
+    "shutter_speed": "1/200 s",
+    "aperture": "f/1.8 (fixed), the door stays sharp, no blur needed",
+    "white_balance": "5600K, neutral daylight",
+    "exposure_compensation": "−0.3 EV",
+    "pose_data": {
+     "Light": "Soft shade at the entrance, diffused light",
+     "Angle": "Vertical, chest height, no tilt",
+     "Pose": "Shoulder to shoulder, she touches his arm",
+     "Composition": "Pair in the lower third, arch symmetrical",
+     "Gaze": "Both look off to the same side"
+    },
+    "editing_data": {
+     "Exposure": "−0.1",
+     "Contrast": "+10",
+     "Saturation": "+8",
+     "Shadows": "+15",
+     "Color": "warmer +5"
+    }
+   }
+  },
+  "sort_order": 199,
+  "unsplash_id": "mbgsdI6eZwg",
+  "original_shot": {
+   "camera": "Canon EOS R5",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 2.8,
+   "shutter": "1/200",
+   "iso": 800
+  }
+ },
+ {
+  "legacy_id": "us-p3LS4OSLOJ4",
+  "title": "Парень в арке",
+  "description": "Фигура в полный рост стоит ровно в арке, а длинный фокус размывает стены и превращает проём в светлую рамку. Встаньте далеко, на телеобъектив, и совместите голову с центром арки.",
+  "image_url": "https://images.unsplash.com/photo-1759423491599-4e417fc46cc3?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODYzfA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1759423491599-4e417fc46cc3?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODYzfA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/young-man-standing-in-an-archway-p3LS4OSLOJ4",
+  "credit": "Tarikul Raana",
+  "creator_url": "https://unsplash.com/@tarikulxraana",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Full Body",
+  "source_type": "curated",
+  "device_id": "samsung-s22-ultra",
+  "device": "Samsung Galaxy S22 Ultra",
+  "camera": "Режим Pro, перископический объектив 10×, вертикально",
+  "focal_length": "230 мм (10×)",
+  "iso": "320",
+  "shutter_speed": "1/80 с, упереть локти или поставить телефон на опору",
+  "aperture": "f/4,9 (фикс.), фон мягкий от дистанции",
+  "white_balance": "5800K, чуть теплее дневного",
+  "exposure_compensation": "−0,3 EV",
+  "pose_data": {
+   "Свет": "Мягкий вечерний свет, арка светлее стен",
+   "Ракурс": "Камера на уровне груди, строго по оси арки",
+   "Поза": "Стоит ровно, одна рука в кармане, ноги скрестить",
+   "Дистанция": "Стать в 15–20 м от модели",
+   "Фокус": "Тап по лицу, зафиксировать AE/AF"
+  },
+  "editing_data": {
+   "Экспозиция": "−0,2",
+   "Контраст": "+8",
+   "Насыщенность": "−5",
+   "Тени": "+10",
+   "Виньетка": "Лёгкая, −12"
+  },
+  "aspect_ratio": 0.718,
+  "translations": {
+   "en": {
+    "title": "Young man in the arch",
+    "description": "A full-length figure stands right in the arch, while the long focal length melts the walls and turns the opening into a bright frame. Stand far back, use the telephoto and align the head with the centre of the arch.",
+    "camera": "Pro mode, 10× periscope lens, vertical",
+    "focal_length": "230 mm (10×)",
+    "iso": "320",
+    "shutter_speed": "1/80 s, brace your elbows or rest the phone on a support",
+    "aperture": "f/4.9 (fixed), soft background from distance",
+    "white_balance": "5800K, slightly warmer than daylight",
+    "exposure_compensation": "−0.3 EV",
+    "pose_data": {
+     "Light": "Soft evening light, the arch brighter than the walls",
+     "Angle": "Camera at chest height, exactly on the arch axis",
+     "Pose": "Standing straight, one hand in the pocket, feet crossed",
+     "Distance": "Stand 15–20 m from the subject",
+     "Focus": "Tap on the face and lock AE/AF"
+    },
+    "editing_data": {
+     "Exposure": "−0.2",
+     "Contrast": "+8",
+     "Saturation": "−5",
+     "Shadows": "+10",
+     "Vignette": "Light, −12"
+    }
+   }
+  },
+  "sort_order": 200,
+  "unsplash_id": "p3LS4OSLOJ4",
+  "original_shot": {
+   "camera": "NIKON D5500",
+   "focal_mm": 200.0,
+   "equiv_mm": 300,
+   "aperture": 5.3,
+   "shutter": "1/80",
+   "iso": 320
+  }
+ },
+ {
+  "legacy_id": "us-tm60qg7Q0S8",
+  "title": "Рваные края",
+  "description": "Стопка рваных бумажных кругов в мягком рассеянном свете: чёрно-белый тон и нежные края делают кадр тактильным. Подойдите вплотную и наводите фокус только на края верхних листов — остальное уйдёт в дымку.",
+  "image_url": "https://images.unsplash.com/photo-1633000116224-4e872f873061?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY1fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1633000116224-4e872f873061?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY1fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/a-stack-of-papers-sitting-on-top-of-a-table-tm60qg7Q0S8",
+  "credit": "Kasia Sikorska",
+  "creator_url": "https://unsplash.com/@kasiasikorska",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Product",
+  "source_type": "curated",
+  "device_id": "samsung-s22",
+  "device": "Samsung Galaxy S22 / S22+",
+  "camera": "Режим Pro, основной объектив, зум 1,5×",
+  "focal_length": "35 мм (1,5×)",
+  "iso": "320",
+  "shutter_speed": "1/500 с",
+  "aperture": "f/1.8 (фикс.), такую узкую глубину не повторить; подойдите на 15–20 см ≈ f/2,0",
+  "white_balance": "5300K, нейтральный",
+  "exposure_compensation": "+0,7 EV",
+  "pose_data": {
+   "Свет": "Мягкий свет окна, рассеянный занавеской",
+   "Ракурс": "На уровне стопки, строго сбоку",
+   "Композиция": "Стопка в нижней трети, сверху свободный воздух",
+   "Фокус": "Тап по рваному краю среднего листа",
+   "Фон": "Белая драпировка и белый стол"
+  },
+  "editing_data": {
+   "Пресет": "Ч/Б",
+   "Экспозиция": "+0,3",
+   "Контраст": "−5",
+   "Тени": "+10",
+   "Зерно": "10"
+  },
+  "aspect_ratio": 0.667,
+  "translations": {
+   "en": {
+    "title": "Torn edges",
+    "description": "A stack of torn paper discs in soft diffused light: the black-and-white tone and delicate edges make the frame tactile. Move in close and focus only on the edges of the top sheets — everything else drifts into haze.",
+    "camera": "Pro mode, main lens, 1.5× zoom",
+    "focal_length": "35 mm (1.5×)",
+    "iso": "320",
+    "shutter_speed": "1/500 s",
+    "aperture": "f/1.8 (fixed), such shallow depth cannot be matched; move in to 15–20 cm ≈ f/2.0",
+    "white_balance": "5300K, neutral",
+    "exposure_compensation": "+0.7 EV",
+    "pose_data": {
+     "Light": "Soft window light diffused by a curtain",
+     "Angle": "At stack level, strictly from the side",
+     "Composition": "Stack in the lower third, free air above",
+     "Focus": "Tap the torn edge of a middle sheet",
+     "Background": "White drapery and a white table"
+    },
+    "editing_data": {
+     "Preset": "B&W",
+     "Exposure": "+0.3",
+     "Contrast": "−5",
+     "Shadows": "+10",
+     "Grain": "10"
+    }
+   }
+  },
+  "sort_order": 200,
+  "unsplash_id": "tm60qg7Q0S8",
+  "original_shot": {
+   "camera": "Canon EOS 5D Mark III",
+   "focal_mm": 35.0,
+   "equiv_mm": 35,
+   "aperture": 1.4,
+   "shutter": "1/500",
+   "iso": 320
+  }
+ },
+ {
+  "legacy_id": "us--Lp7uKt4Xl0",
+  "title": "Розовый переулок",
+  "description": "Тёмный переулок, где розовая вывеска и бирюзовые лампы красят стены, а одинокий скутер задаёт масштаб. Кадр держится на двух цветах и глубоких тенях. Экспонируйтесь по лампам и не вытягивайте тени.",
+  "image_url": "https://images.unsplash.com/photo-1624075250557-9e020cecaaf6?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY0fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1624075250557-9e020cecaaf6?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY0fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/red-and-white-store-front-during-night-time--Lp7uKt4Xl0",
+  "credit": "Hiep Duong",
+  "creator_url": "https://unsplash.com/@hiepdaiduong93",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Night",
+  "source_type": "curated",
+  "device_id": "oneplus-12",
+  "device": "OnePlus 12",
+  "camera": "Режим Pro, основной объектив, зум 2×",
+  "focal_length": "46 мм (2×)",
+  "iso": "200",
+  "shutter_speed": "1/250 с",
+  "aperture": "f/1.6 (фикс.), задний план мягкий при съёмке с 3–4 м ≈ f/1,8",
+  "white_balance": "3600K, холодный неон",
+  "exposure_compensation": "−1,3 EV",
+  "pose_data": {
+   "Свет": "Неоновая вывеска слева, бирюзовые лампы над входом",
+   "Ракурс": "На уровне глаз, с края переулка, горизонтально",
+   "Композиция": "Скутер в нижней трети, свет уходит вглубь",
+   "Фокус": "Тап по лампам, экспозицию заблокировать",
+   "Момент": "Пустой переулок, без прохожих"
+  },
+  "editing_data": {
+   "Пресет": "Неон",
+   "Экспозиция": "−0,5",
+   "Контраст": "+20",
+   "Насыщенность": "+15",
+   "Цвет": "холоднее 10"
+  },
+  "aspect_ratio": 1.5,
+  "translations": {
+   "en": {
+    "title": "Pink alley",
+    "description": "A dark alley where a pink sign and turquoise lamps tint the walls and a lone scooter gives scale. The frame rests on two colours and deep shadows. Meter off the lamps and do not lift the shadows.",
+    "camera": "Pro mode, main lens, 2× zoom",
+    "focal_length": "46 mm (2×)",
+    "iso": "200",
+    "shutter_speed": "1/250 s",
+    "aperture": "f/1.6 (fixed), background is soft when shooting from 3–4 m ≈ f/1.8",
+    "white_balance": "3600K, cold neon",
+    "exposure_compensation": "−1.3 EV",
+    "pose_data": {
+     "Light": "Neon sign on the left, turquoise lamps over the entrance",
+     "Angle": "At eye level, from the mouth of the alley, horizontal",
+     "Composition": "Scooter in the lower third, light leading into the depth",
+     "Focus": "Tap the lamps, lock exposure",
+     "Moment": "Empty alley, no passers-by"
+    },
+    "editing_data": {
+     "Preset": "Neon",
+     "Exposure": "−0.5",
+     "Contrast": "+20",
+     "Saturation": "+15",
+     "Color": "Cooler 10"
+    }
+   }
+  },
+  "sort_order": 201,
+  "unsplash_id": "-Lp7uKt4Xl0",
+  "original_shot": {
+   "camera": "Sony ILCE-6000",
+   "focal_mm": 30.0,
+   "equiv_mm": 45,
+   "aperture": 1.4,
+   "shutter": "1/250",
+   "iso": 200
+  }
+ },
+ {
+  "legacy_id": "us-k8AWNNCry-0",
+  "title": "Тихий профиль",
+  "description": "Профиль девушки с зачёсанными назад волосами на спокойном серо-бежевом фоне: мягкий боковой свет лепит скулу и подбородок, а взгляд уходит в сторону. Окно сбоку, лицо в три четверти, без вспышки. Попросите её чуть опустить подбородок и смотреть мимо камеры.",
+  "image_url": "https://images.unsplash.com/photo-1643932919088-53349a7c3385?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU3fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1643932919088-53349a7c3385?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU3fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/a-woman-with-a-ponytail-is-posing-for-a-picture-k8AWNNCry-0",
+  "credit": "see plus",
+  "creator_url": "https://unsplash.com/@seeplus",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Portrait",
+  "source_type": "curated",
+  "device_id": "google-pixel-8",
+  "device": "Google Pixel 8 / 8 Pro",
+  "camera": "Режим Pro, основной объектив, зум 1,5×",
+  "focal_length": "38 мм (1,5×)",
+  "iso": "50",
+  "shutter_speed": "1/60 с",
+  "aperture": "f/1.7 (фикс.), фон размыть режимом «Портрет» ≈ f/2,8",
+  "white_balance": "5300K, нейтральный, тёплая кожа",
+  "exposure_compensation": "−0,3 EV",
+  "pose_data": {
+   "Свет": "Мягкое окно сбоку, фон на ступень темнее лица",
+   "Ракурс": "На уровне глаз, поворот в три четверти",
+   "Поза": "Корпус развёрнут, плечо ближе к камере, шея вытянута",
+   "Взгляд": "Мимо камеры, в сторону окна",
+   "Фон": "Однотонный серо-бежевый, стена в 1,5 м позади",
+   "Композиция": "Лицо в верхней половине, воздух по направлению взгляда"
+  },
+  "editing_data": {
+   "Пресет": "Мягкий портрет",
+   "Экспозиция": "−0,2",
+   "Контраст": "−5",
+   "Тени": "+10",
+   "Цвет": "теплее 4"
+  },
+  "aspect_ratio": 0.785,
+  "translations": {
+   "en": {
+    "title": "Quiet profile",
+    "description": "A girl in profile with her hair pulled back against a calm grey-beige backdrop: soft side light sculpts the cheekbone and chin while her gaze drifts away. Window light from the side, face at three-quarters, no flash. Ask her to drop her chin slightly and look past the camera.",
+    "camera": "Pro mode, main lens, 1.5× zoom",
+    "focal_length": "38 mm (1.5×)",
+    "iso": "50",
+    "shutter_speed": "1/60 s",
+    "aperture": "f/1.7 (fixed), blur the background with Portrait mode ≈ f/2.8",
+    "white_balance": "5300K, neutral, warm skin",
+    "exposure_compensation": "−0.3 EV",
+    "pose_data": {
+     "Light": "Soft window light from the side, background a stop darker than the face",
+     "Angle": "At eye level, turned three-quarters",
+     "Pose": "Torso turned, shoulder nearer the camera, neck lengthened",
+     "Gaze": "Past the camera, toward the window",
+     "Background": "Plain grey-beige wall 1.5 m behind",
+     "Composition": "Face in the upper half, air in the direction of the gaze"
+    },
+    "editing_data": {
+     "Preset": "Soft portrait",
+     "Exposure": "−0.2",
+     "Contrast": "−5",
+     "Shadows": "+10",
+     "Color": "Warmer 4"
+    }
+   }
+  },
+  "sort_order": 202,
+  "unsplash_id": "k8AWNNCry-0",
+  "original_shot": {
+   "camera": "Sony ILCE-7RM4",
+   "focal_mm": 35.0,
+   "equiv_mm": 35,
+   "aperture": 2.8,
+   "shutter": "1/60",
+   "iso": 50
+  }
+ },
+ {
+  "legacy_id": "us-LMewGSn3Gk0",
+  "title": "Веточка эвкалипта",
+  "description": "Рука с сухой веткой на фоне светлой шторы: мягкий оконный свет, пастельная палитра и размытый передний план создают тихое настроение. Держите ветку ближе к камере, а руку — чуть дальше, чтобы глубина читалась.",
+  "image_url": "https://images.unsplash.com/photo-1552855320-058ea690fcc8?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY2fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1552855320-058ea690fcc8?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY2fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/person-holding-green-leafed-plant-LMewGSn3Gk0",
+  "credit": "Ellie Ellien",
+  "creator_url": "https://unsplash.com/@ellienelie",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Lifestyle",
+  "source_type": "curated",
+  "device_id": "apple-iphone-16e",
+  "device": "Apple iPhone 16e",
+  "camera": "Фото, основная камера с кропом 2×, портретный режим, вертикально",
+  "focal_length": "52 мм (2×)",
+  "iso": "500",
+  "shutter_speed": "1/125 с",
+  "aperture": "f/1.6 (фикс.), фон и передний план размыть режимом «Портрет» ≈ f/2.2",
+  "white_balance": "5200K, нейтральный",
+  "exposure_compensation": "+0,3 EV",
+  "pose_data": {
+   "Свет": "Окно сбоку, шторы работают как рассеиватель",
+   "Ракурс": "Вертикаль на уровне руки",
+   "Руки": "Кисть расслаблена, пальцы чуть согнуты",
+   "Фокус": "Тап по листьям ближе к пальцам",
+   "Фон": "Светлая штора без складок и пятен"
+  },
+  "editing_data": {
+   "Пресет": "Пастель",
+   "Экспозиция": "+0,3",
+   "Контраст": "−10",
+   "Насыщенность": "−12",
+   "Зерно": "Лёгкое, +12"
+  },
+  "aspect_ratio": 0.667,
+  "translations": {
+   "en": {
+    "title": "A sprig of eucalyptus",
+    "description": "A hand with a dry sprig against a pale curtain: soft window light, a pastel palette and a blurred foreground make a quiet mood. Hold the sprig closer to the camera and the hand slightly further back so depth reads.",
+    "camera": "Photo, main camera with 2× crop, Portrait mode, vertical",
+    "focal_length": "52 mm (2×)",
+    "iso": "500",
+    "shutter_speed": "1/125 s",
+    "aperture": "f/1.6 (fixed), blur the background and foreground with Portrait mode ≈ f/2.2",
+    "white_balance": "5200K, neutral",
+    "exposure_compensation": "+0.3 EV",
+    "pose_data": {
+     "Light": "Window to the side, curtains act as a diffuser",
+     "Angle": "Vertical, at hand level",
+     "Hands": "Relaxed hand, fingers slightly curled",
+     "Focus": "Tap on the leaves near the fingers",
+     "Background": "Pale curtain without folds or spots"
+    },
+    "editing_data": {
+     "Preset": "Pastel",
+     "Exposure": "+0.3",
+     "Contrast": "−10",
+     "Saturation": "−12",
+     "Grain": "Light, +12"
+    }
+   }
+  },
+  "sort_order": 202,
+  "unsplash_id": "LMewGSn3Gk0",
+  "original_shot": {
+   "camera": "Canon EOS 6D",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 2.2,
+   "shutter": "1/125",
+   "iso": 500
+  }
+ },
+ {
+  "legacy_id": "us-P8-n8rTHuN0",
+  "title": "Одинокий прохожий",
+  "description": "Маленькая фигура идёт вдоль белой стены, а огромное поле асфальта и две диагонали теней превращают прохожего в точку на графике. Не гонитесь за героем: выстройте кадр и ждите, пока он дойдёт до нужной точки.",
+  "image_url": "https://images.unsplash.com/photo-1507215487789-6f9492e16a88?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU3fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1507215487789-6f9492e16a88?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU3fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/person-walking-near-white-wall-P8-n8rTHuN0",
+  "credit": "Simon L",
+  "creator_url": "https://unsplash.com/@simonlaunay",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Street",
+  "source_type": "curated",
+  "device_id": "apple-iphone-15-pro-max",
+  "device": "Apple iPhone 15 Pro Max",
+  "camera": "Режим Pro, основной объектив, зум 1,5×",
+  "focal_length": "36 мм (1,5×)",
+  "iso": "200",
+  "shutter_speed": "1/500 с",
+  "aperture": "f/1.78 (фикс.), фон резкий, как и в оригинале",
+  "white_balance": "5400K, нейтральный дневной",
+  "exposure_compensation": "−0,7 EV",
+  "pose_data": {
+   "Свет": "Жёсткий дневной, длинные тени по асфальту",
+   "Ракурс": "С уровня груди, телефон строго горизонтально",
+   "Композиция": "Прохожий в верхней правой трети, белая линия на дороге делит кадр",
+   "Фокус": "Зафиксировать AF на линии разметки",
+   "Момент": "Жмите, когда он на чистом белом фоне"
+  },
+  "editing_data": {
+   "Пресет": "Приглушённый городской",
+   "Экспозиция": "−0,3",
+   "Контраст": "+15",
+   "Насыщенность": "−20",
+   "Тени": "+10"
+  },
+  "aspect_ratio": 1.5,
+  "translations": {
+   "en": {
+    "title": "A lone walker",
+    "description": "A small figure walks along a white wall, while the vast field of asphalt and two diagonals of shadow turn the pedestrian into a dot on a graph. Do not chase the subject: set the frame and wait for him to reach the right spot.",
+    "camera": "Pro mode, main lens, 1.5× zoom",
+    "focal_length": "36 mm (1.5×)",
+    "iso": "200",
+    "shutter_speed": "1/500 s",
+    "aperture": "f/1.78 (fixed), background stays sharp, as in the original",
+    "white_balance": "5400K, neutral daylight",
+    "exposure_compensation": "−0.7 EV",
+    "pose_data": {
+     "Light": "Hard daylight, long shadows across the asphalt",
+     "Angle": "From chest height, phone strictly level",
+     "Composition": "Walker in the upper right third, the white road line splits the frame",
+     "Focus": "Lock AF on the road marking",
+     "Moment": "Press when he is against clean white wall"
+    },
+    "editing_data": {
+     "Preset": "Muted urban",
+     "Exposure": "−0.3",
+     "Contrast": "+15",
+     "Saturation": "−20",
+     "Shadows": "+10"
+    }
+   }
+  },
+  "sort_order": 203,
+  "unsplash_id": "P8-n8rTHuN0",
+  "original_shot": {
+   "camera": "Fujifilm X-T2",
+   "focal_mm": 23.0,
+   "equiv_mm": 34,
+   "aperture": 4.0,
+   "shutter": "1/500",
+   "iso": 800
+  }
+ },
+ {
+  "legacy_id": "us-DJ56UkwiCsE",
+  "title": "Звезда на капоте",
+  "description": "Белый капот с оранжевым номером и хромовой эмблемой снят сверху и сбоку: линия крыла диагональю ведёт взгляд к звезде. Мягкий рассеянный свет не даёт бликов на хроме. Подойдите на 1–1,5 м и поставьте эмблему в нижнюю треть кадра.",
+  "image_url": "https://images.unsplash.com/photo-1610531527133-02c4e1c43194?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU3fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1610531527133-02c4e1c43194?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU3fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/white-and-orange-car-door-DJ56UkwiCsE",
+  "credit": "George Bale",
+  "creator_url": "https://unsplash.com/@georgebale",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Car",
+  "source_type": "curated",
+  "device_id": "samsung-s24",
+  "device": "Samsung Galaxy S24 / S24+",
+  "camera": "Режим Pro, основной объектив, зум 2×",
+  "focal_length": "48 мм (2×)",
+  "iso": "100",
+  "shutter_speed": "1/4000 с",
+  "aperture": "f/1.7 (фикс.), фон размыть близкой дистанцией ≈ f/2,0",
+  "white_balance": "5400K, нейтральный дневной",
+  "exposure_compensation": "−0,7 EV",
+  "pose_data": {
+   "Свет": "Мягкий рассеянный, без прямого солнца, блики на хроме приглушены",
+   "Ракурс": "Сверху и сбоку, телефон наклонён вниз градусов на 40",
+   "Композиция": "Эмблема и цифра в нижней трети, линия крыла идёт диагональю",
+   "Фокус": "Тап по звезде, асфальт на фоне остаётся мягким",
+   "Дистанция": "1–1,5 м, зум 2× вместо шага вперёд"
+  },
+  "editing_data": {
+   "Пресет": "Натуральный",
+   "Экспозиция": "−0,3",
+   "Контраст": "+10",
+   "Насыщенность": "+8, оранжевый акцент",
+   "Света": "−25"
+  },
+  "aspect_ratio": 0.668,
+  "translations": {
+   "en": {
+    "title": "A star on the bonnet",
+    "description": "A white bonnet with an orange race number and a chrome badge, shot from above and to the side: the curve of the wing leads the eye to the star. Soft diffused light keeps reflections off the chrome. Step in to 1–1.5 m and place the badge in the lower third of the frame.",
+    "camera": "Pro mode, main lens, 2× zoom",
+    "focal_length": "48 mm (2×)",
+    "iso": "100",
+    "shutter_speed": "1/4000 s",
+    "aperture": "f/1.7 (fixed), blur the background by shooting close ≈ f/2.0",
+    "white_balance": "5400K, neutral daylight",
+    "exposure_compensation": "−0.7 EV",
+    "pose_data": {
+     "Light": "Soft and diffused, no direct sun, chrome reflections subdued",
+     "Angle": "From above and to the side, phone tilted down about 40°",
+     "Composition": "Badge and number in the lower third, wing line running diagonally",
+     "Focus": "Tap the star, the asphalt behind stays soft",
+     "Distance": "1–1.5 m, use 2× zoom instead of stepping forward"
+    },
+    "editing_data": {
+     "Preset": "Natural",
+     "Exposure": "−0.3",
+     "Contrast": "+10",
+     "Saturation": "+8, orange accent",
+     "Highlights": "−25"
+    }
+   }
+  },
+  "sort_order": 204,
+  "unsplash_id": "DJ56UkwiCsE",
+  "original_shot": {
+   "camera": "NIKON D750",
+   "focal_mm": 50.0,
+   "equiv_mm": 50,
+   "aperture": 2.0,
+   "shutter": "1/4000",
+   "iso": 100
+  }
+ },
+ {
+  "legacy_id": "us-B-1ctxGCefE",
+  "title": "Голова на плече",
+  "description": "Девушка кладёт голову на плечо партнёра, стоящего спиной: тёплый полумрак и тёмная одежда оставляют в кадре только её лицо и взгляд. Поставьте пару у однотонной стены с мягким боковым светом и попросите её смотреть в камеру, а не на партнёра.",
+  "image_url": "https://images.unsplash.com/photo-1763713518951-758e184992f8?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUwfA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1763713518951-758e184992f8?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUwfA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/woman-resting-head-on-mans-shoulder-B-1ctxGCefE",
+  "credit": "Hanna Lazar",
+  "creator_url": "https://unsplash.com/@potokvarte",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Couple",
+  "source_type": "curated",
+  "device_id": "apple-iphone-15-pro-max",
+  "device": "Apple iPhone 15 Pro Max",
+  "camera": "Режим Pro, основной объектив, зум 2×",
+  "focal_length": "48 мм (2×)",
+  "iso": "3200",
+  "shutter_speed": "1/640 с",
+  "aperture": "f/1.78 (фикс.), стена за парой и так уйдёт в мягкость ≈ f/2,8",
+  "white_balance": "5800K, тёплый оливковый полумрак",
+  "exposure_compensation": "−0,3 EV",
+  "pose_data": {
+   "Свет": "Мягкий боковой свет из окна, лампы выключены",
+   "Ракурс": "На уровне глаз девушки, телефон чуть сбоку",
+   "Поза": "Голова на плече, партнёр спиной к камере",
+   "Взгляд": "Она смотрит прямо в объектив, спокойно",
+   "Фон": "Ровная оливковая стена без предметов",
+   "Композиция": "Лицо в нижней трети, сверху свободный воздух"
+  },
+  "editing_data": {
+   "Пресет": "Плёнка, тёплая",
+   "Экспозиция": "+0,3",
+   "Контраст": "−10",
+   "Тени": "+20",
+   "Цвет": "теплее 12"
+  },
+  "aspect_ratio": 0.721,
+  "translations": {
+   "en": {
+    "title": "Head on his shoulder",
+    "description": "She rests her head on her partner's shoulder while he faces away: warm dim light and dark clothes leave only her face and gaze in the frame. Stand the pair against a plain wall with soft side light and ask her to look into the lens, not at him.",
+    "camera": "Pro mode, main lens, 2× zoom",
+    "focal_length": "48 mm (2×)",
+    "iso": "3200",
+    "shutter_speed": "1/640 s",
+    "aperture": "f/1.78 (fixed), the wall behind the pair goes soft on its own ≈ f/2.8",
+    "white_balance": "5800K, warm olive dimness",
+    "exposure_compensation": "−0.3 EV",
+    "pose_data": {
+     "Light": "Soft side light from a window, lamps off",
+     "Angle": "At her eye level, phone slightly to the side",
+     "Pose": "Head on his shoulder, partner with his back to the camera",
+     "Gaze": "She looks straight into the lens, calmly",
+     "Background": "Plain olive wall with no objects",
+     "Composition": "Face in the lower third, free air above"
+    },
+    "editing_data": {
+     "Preset": "Warm film",
+     "Exposure": "+0.3",
+     "Contrast": "−10",
+     "Shadows": "+20",
+     "Color": "Warmer 12"
+    }
+   }
+  },
+  "sort_order": 204,
+  "unsplash_id": "B-1ctxGCefE",
+  "original_shot": {
+   "camera": "Canon EOS 80D",
+   "focal_mm": 35.0,
+   "equiv_mm": 56,
+   "aperture": 4.5,
+   "shutter": "1/640",
+   "iso": 6400
+  }
+ },
+ {
+  "legacy_id": "us-doHuO19nrPY",
+  "title": "У деревянного зеркала",
+  "description": "Модель в оранжево-белом образе опирается на деревянную панель рядом с зеркалом, и отражение удваивает кадр. Цвета одежды и камня совпадают, поэтому картинка выглядит цельной. Снимайте с 4–5 м на телеобъектив и держите ноги целиком в кадре.",
+  "image_url": "https://images.unsplash.com/photo-1651828855258-3141f05f00b0?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUwfA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1651828855258-3141f05f00b0?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTUwfA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/a-person-in-a-white-suit-doHuO19nrPY",
+  "credit": "Ali Ahmadi",
+  "creator_url": "https://unsplash.com/@aliahmadin",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Full Body",
+  "source_type": "curated",
+  "device_id": "samsung-s22",
+  "device": "Samsung Galaxy S22 / S22+",
+  "camera": "Режим Pro, телеобъектив 3×",
+  "focal_length": "69 мм (3×)",
+  "iso": "100",
+  "shutter_speed": "1/250 с",
+  "aperture": "f/2.4 (фикс.), фон размыть расстоянием: встаньте в 4–5 м от модели ≈ f/2,8",
+  "white_balance": "5600K, чуть теплее дневного",
+  "exposure_compensation": "−0,3 EV",
+  "pose_data": {
+   "Свет": "Рассеянный дневной под навесом, без жёстких теней",
+   "Ракурс": "Камера на уровне груди, телефон вертикально",
+   "Поза": "Рука над головой, корпус опирается на панель, одна нога согнута",
+   "Фон": "Зеркало справа удваивает фигуру, цветы слева",
+   "Фокус": "Тап по лицу, экспозиция по белой куртке"
+  },
+  "editing_data": {
+   "Пресет": "Тёплый яркий",
+   "Экспозиция": "−0,2",
+   "Контраст": "+10",
+   "Насыщенность": "+12",
+   "Цвет": "теплее 10"
+  },
+  "aspect_ratio": 0.8,
+  "translations": {
+   "en": {
+    "title": "By the wooden mirror",
+    "description": "The model in an orange-and-white outfit leans on a wooden panel beside a mirror, and the reflection doubles the frame. The clothes and the stone share the same warm tones, so the picture feels unified. Shoot from 4–5 m on the telephoto and keep her feet fully in frame.",
+    "camera": "Pro mode, 3× telephoto lens",
+    "focal_length": "69 mm (3×)",
+    "iso": "100",
+    "shutter_speed": "1/250 s",
+    "aperture": "f/2.4 (fixed), blur the background with distance: stand 4–5 m from the model ≈ f/2.8",
+    "white_balance": "5600K, slightly warmer than daylight",
+    "exposure_compensation": "−0.3 EV",
+    "pose_data": {
+     "Light": "Diffused daylight under an awning, no harsh shadows",
+     "Angle": "Camera at chest height, phone vertical",
+     "Pose": "Arm above the head, body leaning on the panel, one knee bent",
+     "Background": "Mirror on the right doubles the figure, flowers on the left",
+     "Focus": "Tap the face, meter off the white jacket"
+    },
+    "editing_data": {
+     "Preset": "Warm vivid",
+     "Exposure": "−0.2",
+     "Contrast": "+10",
+     "Saturation": "+12",
+     "Color": "Warmer 10"
+    }
+   }
+  },
+  "sort_order": 205,
+  "unsplash_id": "doHuO19nrPY",
+  "original_shot": {
+   "camera": "Canon EOS 700D",
+   "focal_mm": 50.0,
+   "equiv_mm": 80,
+   "aperture": 2.8,
+   "shutter": "1/250",
+   "iso": 100
+  }
+ },
+ {
+  "legacy_id": "us-UJiNrJ3tTsw",
+  "title": "Рабочий стол сверху",
+  "description": "Вид сверху: смартфон, часы, блокнот и кружка выстроены на светлом дереве, а цветные обои на экране дают единственный яркий акцент. Плоская раскладка держится на ровных промежутках между предметами и мягком свете окна. Снимайте строго сверху, камера параллельна столу.",
+  "image_url": "https://images.unsplash.com/photo-1571127434756-9d1340c674ea?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY5fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1571127434756-9d1340c674ea?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY5fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/black-smartphone-between-watch-and-cup-UJiNrJ3tTsw",
+  "credit": "Andrew M",
+  "creator_url": "https://unsplash.com/@andymant",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Product",
+  "source_type": "curated",
+  "device_id": "xiaomi-13-ultra",
+  "device": "Xiaomi 13 Ultra",
+  "camera": "Режим Pro, телеобъектив, на опоре",
+  "focal_length": "75 мм (3,3×)",
+  "iso": "200",
+  "shutter_speed": "1/10 с, со штатива или опоры",
+  "aperture": "f/1.9 (фикс.), все предметы в одной плоскости, резкость по всему кадру; «Портрет» не включайте",
+  "white_balance": "5000K, нейтральный",
+  "exposure_compensation": "0 EV",
+  "pose_data": {
+   "Свет": "Мягкий свет окна сбоку, без прямого солнца",
+   "Ракурс": "Строго сверху, телефон параллельно столу",
+   "Композиция": "Смартфон по центру, часы и кружка по краям, растение сверху",
+   "Фокус": "Тап по часам, глубины хватит на всё",
+   "Фон": "Светлое дерево без лишних предметов"
+  },
+  "editing_data": {
+   "Пресет": "Яркий лёгкий",
+   "Экспозиция": "+0,3",
+   "Контраст": "+8",
+   "Насыщенность": "+10",
+   "Цвет": "теплее 5"
+  },
+  "aspect_ratio": 1.0,
+  "translations": {
+   "en": {
+    "title": "Desk from above",
+    "description": "A top-down view: smartphone, watch, notebook and cup arranged on pale wood, with the colourful wallpaper on the screen as the only bright accent. The flat lay holds on even gaps between objects and soft window light. Shoot straight down with the camera parallel to the table.",
+    "camera": "Pro mode, telephoto lens, on a support",
+    "focal_length": "75 mm (3.3×)",
+    "iso": "200",
+    "shutter_speed": "1/10 s, from a tripod or support",
+    "aperture": "f/1.9 (fixed), all objects sit in one plane so everything is sharp; do not use Portrait",
+    "white_balance": "5000K, neutral",
+    "exposure_compensation": "0 EV",
+    "pose_data": {
+     "Light": "Soft window light from the side, no direct sun",
+     "Angle": "Straight down, phone parallel to the table",
+     "Composition": "Smartphone in the centre, watch and cup at the edges, plant on top",
+     "Focus": "Tap the watch, depth covers everything",
+     "Background": "Pale wood with no stray objects"
+    },
+    "editing_data": {
+     "Preset": "Bright and light",
+     "Exposure": "+0.3",
+     "Contrast": "+8",
+     "Saturation": "+10",
+     "Color": "Warmer 5"
+    }
+   }
+  },
+  "sort_order": 206,
+  "unsplash_id": "UJiNrJ3tTsw",
+  "original_shot": {
+   "camera": "Canon EOS 60D",
+   "focal_mm": 50.0,
+   "equiv_mm": 80,
+   "aperture": 9.0,
+   "shutter": "1/10",
+   "iso": 800
+  }
+ },
+ {
+  "legacy_id": "us-q7hsIjri5PE",
+  "title": "Фонари в тумане",
+  "description": "Пустая туманная улица: ряды оранжевых фонарей растворяются в дымке, а припаркованные машины ведут взгляд вглубь. Туман сам даёт воздух и глубину, вам нужны только неподвижность и экспозиция по фонарям. Поставьте телефон на низкую опору посередине дороги.",
+  "image_url": "https://images.unsplash.com/photo-1606944568600-56ea07065fb7?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY5fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1606944568600-56ea07065fb7?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY5fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/cars-parked-on-side-of-the-road-during-night-time-q7hsIjri5PE",
+  "credit": "Grooveland Designs",
+  "creator_url": "https://unsplash.com/@groovelanddesigns",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Night",
+  "source_type": "curated",
+  "device_id": "oppo-find-x7-ultra",
+  "device": "Oppo Find X7 Ultra",
+  "camera": "Режим Pro, основной объектив, зум 2×, на опоре",
+  "focal_length": "46 мм (2×)",
+  "iso": "200",
+  "shutter_speed": "1/4 с, со штатива или опоры",
+  "aperture": "f/1.8 (фикс.), глубины больше, чем у оригинала, но туман всё равно смягчит даль",
+  "white_balance": "6800K, тёплый свет натриевых ламп",
+  "exposure_compensation": "−1,0 EV",
+  "pose_data": {
+   "Свет": "Натриевые фонари, мягкое свечение сквозь туман",
+   "Ракурс": "Из центра дороги, камера на уровне пояса, вертикально",
+   "Композиция": "Фонари сходятся в точку, дорога занимает нижнюю треть",
+   "Фокус": "Тап по дальним машинам, затем блокировка",
+   "Момент": "Ждите, пока на улице никого нет"
+  },
+  "editing_data": {
+   "Пресет": "Тёплый ночной",
+   "Экспозиция": "−0,3",
+   "Контраст": "+10",
+   "Света": "−30",
+   "Цвет": "теплее 12"
+  },
+  "aspect_ratio": 0.643,
+  "translations": {
+   "en": {
+    "title": "Lamps in the fog",
+    "description": "An empty foggy street: rows of orange lamps dissolve into the haze while parked cars lead the eye into the depth. The fog supplies air and depth by itself, so all you need is stillness and exposure metered off the lamps. Set the phone on a low support in the middle of the road.",
+    "camera": "Pro mode, main lens, 2× zoom, on a support",
+    "focal_length": "46 mm (2×)",
+    "iso": "200",
+    "shutter_speed": "1/4 s, from a tripod or support",
+    "aperture": "f/1.8 (fixed), deeper focus than the original, but the fog still softens the distance",
+    "white_balance": "6800K, warm sodium-lamp glow",
+    "exposure_compensation": "−1.0 EV",
+    "pose_data": {
+     "Light": "Sodium street lamps, soft glow through fog",
+     "Angle": "From the middle of the road, camera at waist height, vertical",
+     "Composition": "Lamps converging to a point, road filling the lower third",
+     "Focus": "Tap the distant cars, then lock",
+     "Moment": "Wait until the street is empty"
+    },
+    "editing_data": {
+     "Preset": "Warm night",
+     "Exposure": "−0.3",
+     "Contrast": "+10",
+     "Highlights": "−30",
+     "Color": "Warmer 12"
+    }
+   }
+  },
+  "sort_order": 207,
+  "unsplash_id": "q7hsIjri5PE",
+  "original_shot": {
+   "camera": "Panasonic DC-G9",
+   "focal_mm": 25.0,
+   "equiv_mm": 50,
+   "aperture": 1.7,
+   "shutter": "1/4",
+   "iso": 200
+  }
+ },
+ {
+  "legacy_id": "us-zy--gDmDI7s",
+  "title": "Кофе и взгляд",
+  "description": "Девушка пьёт кофе и смотрит прямо в объектив поверх чашки: очки, голубые глаза и симметрия кадра забирают внимание на взгляд. Холодный зернистый тон кафе делает снимок плёночным. Посадите героиню по центру и попросите поднять чашку к лицу.",
+  "image_url": "https://images.unsplash.com/photo-1542033474370-d28774f3338d?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU2fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1542033474370-d28774f3338d?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU2fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/woman-wearing-glasses-holding-black-ceramic-mug-zy--gDmDI7s",
+  "credit": "Hunter Newton",
+  "creator_url": "https://unsplash.com/@r7studios",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Lifestyle",
+  "source_type": "curated",
+  "device_id": "xiaomi-13-ultra",
+  "device": "Xiaomi 13 Ultra",
+  "camera": "Режим Pro, основной объектив, зум 1,5×",
+  "focal_length": "35 мм (1,5×)",
+  "iso": "800",
+  "shutter_speed": "1/125 с",
+  "aperture": "f/1.9 (фикс.), фон размыть режимом «Портрет» ≈ f/2,8",
+  "white_balance": "4800K, прохладный интерьер",
+  "exposure_compensation": "0 EV",
+  "pose_data": {
+   "Свет": "Мягкий свет кафе с боковым окном",
+   "Ракурс": "На уровне глаз, точно по центру",
+   "Поза": "Обе руки держат чашку у лица, плечи расслаблены",
+   "Взгляд": "Прямо в камеру поверх чашки",
+   "Фон": "Окна кафе, размыть режимом «Портрет»"
+  },
+  "editing_data": {
+   "Пресет": "Плёнка, холодная",
+   "Контраст": "+8",
+   "Насыщенность": "−10",
+   "Цвет": "холоднее 8",
+   "Зерно": "25"
+  },
+  "aspect_ratio": 0.75,
+  "translations": {
+   "en": {
+    "title": "Coffee and a look",
+    "description": "A girl sips coffee and looks straight into the lens over the cup: glasses, blue eyes and a symmetrical frame pull attention to the gaze. The cool grainy tone of the cafe gives the shot a film feel. Seat her in the centre and ask her to raise the cup to her face.",
+    "camera": "Pro mode, main lens, 1.5× zoom",
+    "focal_length": "35 mm (1.5×)",
+    "iso": "800",
+    "shutter_speed": "1/125 s",
+    "aperture": "f/1.9 (fixed), blur the background with Portrait mode ≈ f/2.8",
+    "white_balance": "4800K, cool interior",
+    "exposure_compensation": "0 EV",
+    "pose_data": {
+     "Light": "Soft cafe light with a side window",
+     "Angle": "At eye level, exactly centred",
+     "Pose": "Both hands hold the cup at her face, shoulders relaxed",
+     "Gaze": "Straight into the camera over the cup",
+     "Background": "Cafe windows, blur them with Portrait mode"
+    },
+    "editing_data": {
+     "Preset": "Cool film",
+     "Contrast": "+8",
+     "Saturation": "−10",
+     "Color": "Cooler 8",
+     "Grain": "25"
+    }
+   }
+  },
+  "sort_order": 207,
+  "unsplash_id": "zy--gDmDI7s",
+  "original_shot": {
+   "camera": "Canon EOS REBEL SL1",
+   "focal_mm": 24.0,
+   "equiv_mm": 38,
+   "aperture": 2.8,
+   "shutter": "1/125",
+   "iso": 1600
+  }
+ },
+ {
+  "legacy_id": "us-O2qC1O33RbE",
+  "title": "Проводка у граффити",
+  "description": "Размытая проходящая женщина на фоне гигантских нарисованных глаз: контраст движения и неподвижного граффити превращает улицу в историю. Снимайте с проводкой на 1/10 с с упора, а граффити останется резким. Делайте серию и выберите кадр, где её силуэт перекрывает центральный глаз.",
+  "image_url": "https://images.unsplash.com/photo-1625921765718-40e14ee8641c?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODYzfA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1625921765718-40e14ee8641c?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODYzfA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/womans-face-with-black-hair-and-black-eye-shadow-O2qC1O33RbE",
+  "credit": "masahiro miyagi",
+  "creator_url": "https://unsplash.com/@masamasa3",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Street",
+  "source_type": "curated",
+  "device_id": "apple-iphone-14",
+  "device": "Apple iPhone 14 / 14 Plus",
+  "camera": "Режим Pro, основной объектив",
+  "focal_length": "26 мм (1×)",
+  "iso": "50",
+  "shutter_speed": "1/10 с, с опоры или упора, проводка за прохожей",
+  "aperture": "f/1.5 (фикс.), всё резко, кроме героини в движении",
+  "white_balance": "5200K, нейтральный",
+  "exposure_compensation": "−0,7 EV",
+  "pose_data": {
+   "Свет": "Ровный рассеянный свет под навесом",
+   "Ракурс": "Спереди и чуть ниже, телефон на уровне пояса",
+   "Композиция": "Глаза граффити по горизонтали, героиня на среднем",
+   "Движение": "Проводка камеры за шагом, серия кадров",
+   "Момент": "Её силуэт перекрывает центр граффити"
+  },
+  "editing_data": {
+   "Пресет": "Ч/Б",
+   "Экспозиция": "−0,3",
+   "Контраст": "+30",
+   "Тени": "−15",
+   "Зерно": "20"
+  },
+  "aspect_ratio": 1.51,
+  "translations": {
+   "en": {
+    "title": "Panning past graffiti",
+    "description": "A blurred woman passes in front of giant painted eyes: the contrast of motion and still graffiti turns the street into a story. Shoot a pan at 1/10 s braced against something, and the graffiti stays sharp. Fire a burst and pick the frame where her silhouette covers the middle eye.",
+    "camera": "Pro mode, main lens",
+    "focal_length": "26 mm (1×)",
+    "iso": "50",
+    "shutter_speed": "1/10 s, braced on a support, panning with the passer-by",
+    "aperture": "f/1.5 (fixed), everything is sharp except the moving woman",
+    "white_balance": "5200K, neutral",
+    "exposure_compensation": "−0.7 EV",
+    "pose_data": {
+     "Light": "Even diffused light under a canopy",
+     "Angle": "From the front and slightly low, phone at waist height",
+     "Composition": "Graffiti eyes running horizontally, the woman over the middle one",
+     "Motion": "Pan the camera with her stride, shoot a burst",
+     "Moment": "Her silhouette covers the centre of the graffiti"
+    },
+    "editing_data": {
+     "Preset": "B&W",
+     "Exposure": "−0.3",
+     "Contrast": "+30",
+     "Shadows": "−15",
+     "Grain": "20"
+    }
+   }
+  },
+  "sort_order": 208,
+  "unsplash_id": "O2qC1O33RbE",
+  "original_shot": {
+   "camera": "Ricoh Imaging Company, Ltd. GR",
+   "focal_mm": 18.3,
+   "equiv_mm": 27,
+   "aperture": 5.6,
+   "shutter": "1/10",
+   "iso": 400
+  }
+ },
+ {
+  "legacy_id": "us-iBe9zNwZkl0",
+  "title": "Тёмный салон",
+  "description": "Руль с хромовыми спицами и рычаг коробки тонут в тёмном салоне, а холодный зелёно-серый тон делает кадр кинематографичным. Снимайте через боковое окно и экспонируйтесь по хрому, чтобы чёрное осталось чёрным.",
+  "image_url": "https://images.unsplash.com/photo-1571052822857-9868aaca88e3?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY2fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1571052822857-9868aaca88e3?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY2fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/black-steering-wheel-iBe9zNwZkl0",
+  "credit": "Clayton Tonna",
+  "creator_url": "https://unsplash.com/@claytontonna",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Car",
+  "source_type": "curated",
+  "device_id": "xiaomi-15-ultra",
+  "device": "Xiaomi 15 Ultra",
+  "camera": "Режим Pro, телеобъектив 3×",
+  "focal_length": "70 мм (3×)",
+  "iso": "100",
+  "shutter_speed": "1/1250 с",
+  "aperture": "f/1.8 (фикс.), фон за рулём мягкий за счёт телеобъектива ≈ f/2,0",
+  "white_balance": "4300K, холодная тень салона",
+  "exposure_compensation": "−1,0 EV",
+  "pose_data": {
+   "Свет": "Дневной свет из бокового окна, салон остаётся в тени",
+   "Ракурс": "Через боковое окно, чуть сбоку от руля",
+   "Композиция": "Руль справа, рычаг коробки слева для баланса",
+   "Фокус": "Тап по центру спицы, слежение выключить",
+   "Фон": "Приборная панель размыта; чтобы не было бликов стекла, наденьте тёмную одежду"
+  },
+  "editing_data": {
+   "Пресет": "Кинематографичный холодный",
+   "Экспозиция": "−0,5",
+   "Контраст": "+15",
+   "Тени": "+10",
+   "Цвет": "холоднее 8"
+  },
+  "aspect_ratio": 0.667,
+  "translations": {
+   "en": {
+    "title": "Dark cabin",
+    "description": "A steering wheel with chrome spokes and a gear lever sink into a dark cabin, and the cool green-grey tone makes the frame cinematic. Shoot through the side window and meter for the chrome so the blacks stay black.",
+    "camera": "Pro mode, 3× telephoto lens",
+    "focal_length": "70 mm (3×)",
+    "iso": "100",
+    "shutter_speed": "1/1250 s",
+    "aperture": "f/1.8 (fixed), the background behind the wheel is soft thanks to the telephoto ≈ f/2.0",
+    "white_balance": "4300K, cool cabin shade",
+    "exposure_compensation": "−1.0 EV",
+    "pose_data": {
+     "Light": "Daylight from the side window, the cabin stays in shade",
+     "Angle": "Through the side window, slightly off to the side of the wheel",
+     "Composition": "Wheel on the right, gear lever on the left for balance",
+     "Focus": "Tap the centre of a spoke, turn continuous AF off",
+     "Background": "Dashboard softly blurred; wear dark clothes to avoid glass reflections"
+    },
+    "editing_data": {
+     "Preset": "Cinematic cool",
+     "Exposure": "−0.5",
+     "Contrast": "+15",
+     "Shadows": "+10",
+     "Color": "Cooler 8"
+    }
+   }
+  },
+  "sort_order": 209,
+  "unsplash_id": "iBe9zNwZkl0",
+  "original_shot": {
+   "camera": "NIKON D5300",
+   "focal_mm": 50.0,
+   "equiv_mm": 75,
+   "aperture": 1.8,
+   "shutter": "1/1250",
+   "iso": 100
+  }
+ },
+ {
+  "legacy_id": "us-ZiU9PTLCJJE",
+  "title": "Силуэты в окне",
+  "description": "Пара на подоконнике в контровом свете окон: силуэты складываются в чёрно-белую графику, а решётка рам даёт геометрию. Экспонируйтесь по окнам, чтобы люди ушли в силуэт, и ждите момента, когда они замрут в касании.",
+  "image_url": "https://images.unsplash.com/photo-1626975211668-dd3c196b3d55?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY2fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1626975211668-dd3c196b3d55?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY2fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/man-and-woman-sitting-on-chair-in-grayscale-photography-ZiU9PTLCJJE",
+  "credit": "Toa Heftiba",
+  "creator_url": "https://unsplash.com/@heftiba",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Couple",
+  "source_type": "curated",
+  "device_id": "oppo-find-x7-ultra",
+  "device": "Oppo Find X7 Ultra",
+  "camera": "Режим Pro, основной объектив",
+  "focal_length": "23 мм (1×)",
+  "iso": "160",
+  "shutter_speed": "1/125 с",
+  "aperture": "f/1.8 (фикс.), глубины хватает на весь кадр, как нужно для силуэтов",
+  "white_balance": "5200K, нейтральный",
+  "exposure_compensation": "−1,0 EV",
+  "pose_data": {
+   "Свет": "Контровой свет из больших окон",
+   "Ракурс": "С уровня подоконника, шире, чем кажется нужным",
+   "Поза": "Он склоняется к ней, она касается живота, оба смотрят вниз",
+   "Композиция": "Пара по центру окна, рамы образуют сетку",
+   "Момент": "Ждите, когда они замрут в касании"
+  },
+  "editing_data": {
+   "Пресет": "Ч/Б",
+   "Экспозиция": "−0,3",
+   "Контраст": "+35",
+   "Тени": "−20",
+   "Света": "−15"
+  },
+  "aspect_ratio": 1.47,
+  "translations": {
+   "en": {
+    "title": "Silhouettes in the window",
+    "description": "A couple on a windowsill in backlight: their silhouettes form black-and-white graphics while the window grid adds geometry. Meter for the windows so the people fall into silhouette, and wait for the moment they freeze in a touch.",
+    "camera": "Pro mode, main lens",
+    "focal_length": "23 mm (1×)",
+    "iso": "160",
+    "shutter_speed": "1/125 s",
+    "aperture": "f/1.8 (fixed), depth of field covers the whole frame, which suits silhouettes",
+    "white_balance": "5200K, neutral",
+    "exposure_compensation": "−1.0 EV",
+    "pose_data": {
+     "Light": "Backlight from large windows",
+     "Angle": "From sill height, wider than seems necessary",
+     "Pose": "He leans toward her, she touches her belly, both look down",
+     "Composition": "Pair centred in the window, frames forming a grid",
+     "Moment": "Wait until they freeze in the touch"
+    },
+    "editing_data": {
+     "Preset": "B&W",
+     "Exposure": "−0.3",
+     "Contrast": "+35",
+     "Shadows": "−20",
+     "Highlights": "−15"
+    }
+   }
+  },
+  "sort_order": 209,
+  "unsplash_id": "ZiU9PTLCJJE",
+  "original_shot": {
+   "camera": "Sony ILCE-6300",
+   "focal_mm": 14.0,
+   "equiv_mm": 21,
+   "aperture": 3.2,
+   "shutter": "1/125",
+   "iso": 160
+  }
+ },
+ {
+  "legacy_id": "us-S3uFT_4tVfo",
+  "title": "Под дугой щита",
+  "description": "Фигура целиком под дугой баскетбольного щита: чистое небо и пустая площадка дают воздух и графику. Низкое солнце красит свет тёпло, а линия разметки уводит взгляд к ногам. Отойдите на 5–6 м и поставьте щит так, чтобы дуга обнимала фигуру.",
+  "image_url": "https://images.unsplash.com/photo-1699459607010-6de5fdbc23cc?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU2fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1699459607010-6de5fdbc23cc?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTg4MTU2fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/a-woman-standing-in-front-of-a-basketball-hoop-S3uFT_4tVfo",
+  "credit": "Megan Ruth",
+  "creator_url": "https://unsplash.com/@meganruthphoto",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Full Body",
+  "source_type": "curated",
+  "device_id": "apple-iphone-air",
+  "device": "Apple iPhone Air",
+  "camera": "Режим Pro, основной объектив, зум 1,5×",
+  "focal_length": "39 мм (1,5×)",
+  "iso": "100",
+  "shutter_speed": "1/500 с",
+  "aperture": "f/1.6 (фикс.), фон разместить далеко — небо и поле сами уйдут в мягкость ≈ f/2,8",
+  "white_balance": "6000K, мягкое вечернее солнце",
+  "exposure_compensation": "−0,3 EV",
+  "pose_data": {
+   "Свет": "Низкое вечернее солнце сбоку, тёплые тона",
+   "Ракурс": "Камера на уровне пояса, вертикально",
+   "Поза": "Одна рука с сумкой поднята, взгляд в сторону, ноги на ширине плеч",
+   "Композиция": "Щит над головой, фигура по центру, разметка ведёт к ногам",
+   "Фон": "Небо и поле без людей и машин",
+   "Дистанция": "5–6 м, зум 1,5×"
+  },
+  "editing_data": {
+   "Пресет": "Модный журнальный",
+   "Экспозиция": "−0,2",
+   "Контраст": "+12",
+   "Света": "−20",
+   "Цвет": "теплее 6"
+  },
+  "aspect_ratio": 0.667,
+  "translations": {
+   "en": {
+    "title": "Under the hoop arc",
+    "description": "A full-length figure beneath the arc of a basketball hoop: clear sky and an empty court give air and graphic shape. Low sun warms the light, and the court line leads the eye down to the feet. Step back 5–6 m and place the hoop so the arc embraces the figure.",
+    "camera": "Pro mode, main lens, 1.5× zoom",
+    "focal_length": "39 mm (1.5×)",
+    "iso": "100",
+    "shutter_speed": "1/500 s",
+    "aperture": "f/1.6 (fixed), keep the background far away so sky and field go soft on their own ≈ f/2.8",
+    "white_balance": "6000K, soft evening sun",
+    "exposure_compensation": "−0.3 EV",
+    "pose_data": {
+     "Light": "Low evening sun from the side, warm tones",
+     "Angle": "Camera at waist height, vertical",
+     "Pose": "One hand with the bag raised, gaze to the side, feet shoulder-width apart",
+     "Composition": "Hoop above the head, figure centred, court line leading to the feet",
+     "Background": "Sky and field with no people or cars",
+     "Distance": "5–6 m, 1.5× zoom"
+    },
+    "editing_data": {
+     "Preset": "Fashion editorial",
+     "Exposure": "−0.2",
+     "Contrast": "+12",
+     "Highlights": "−20",
+     "Color": "Warmer 6"
+    }
+   }
+  },
+  "sort_order": 210,
+  "unsplash_id": "S3uFT_4tVfo",
+  "original_shot": {
+   "camera": "Fujifilm X-H2",
+   "focal_mm": 26.0,
+   "equiv_mm": 39,
+   "aperture": 2.8,
+   "shutter": "1/500",
+   "iso": 100
+  }
+ },
+ {
+  "legacy_id": "us-gja_f0uDmzM",
+  "title": "Розовый флэтлей",
+  "description": "Розово-белый новогодний флэтлей: крупная вязка в нижнем углу и подарок с ножницами в верхнем создают диагональ, а середина доски остаётся пустой под текст. Держите одну палитру и воздух. Снимайте строго сверху, оставляя пустое поле по центру.",
+  "image_url": "https://images.unsplash.com/photo-1670421434232-c4d00772d912?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY0fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1670421434232-c4d00772d912?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY0fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/a-pair-of-scissors-and-a-flower-gja_f0uDmzM",
+  "credit": "Emma Matthews Digital Content Production",
+  "creator_url": "https://unsplash.com/@emmamatthews",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Product",
+  "source_type": "curated",
+  "device_id": "samsung-s25-ultra",
+  "device": "Samsung Galaxy S25 Ultra",
+  "camera": "Режим Pro, основной объектив, зум 1×",
+  "focal_length": "24 мм (1×)",
+  "iso": "100",
+  "shutter_speed": "1/80 с",
+  "aperture": "f/1.7 (фикс.), строго сверху всё резко, как у оригинала на f/10",
+  "white_balance": "5200K, нейтральный белый",
+  "exposure_compensation": "+0,7 EV",
+  "pose_data": {
+   "Свет": "Мягкий дневной свет сбоку, тени очень светлые",
+   "Ракурс": "Строго сверху, вертикально",
+   "Композиция": "Вязка в нижнем углу, подарок в верхнем, пустое поле по диагонали",
+   "Фокус": "Тап по ножницам, глубины хватит на весь кадр",
+   "Фон": "Белые доски без лишних предметов"
+  },
+  "editing_data": {
+   "Пресет": "Светлый воздушный",
+   "Экспозиция": "+0,4",
+   "Контраст": "−5",
+   "Насыщенность": "−5",
+   "Света": "−10"
+  },
+  "aspect_ratio": 0.562,
+  "translations": {
+   "en": {
+    "title": "Pink flat lay",
+    "description": "A pink-and-white Christmas flat lay: a chunky knit in the lower corner and a gift with scissors in the upper one form a diagonal, while the middle of the boards stays empty for text. Keep to one palette and keep the air. Shoot straight down, leaving the centre empty.",
+    "camera": "Pro mode, main lens, 1× zoom",
+    "focal_length": "24 mm (1×)",
+    "iso": "100",
+    "shutter_speed": "1/80 s",
+    "aperture": "f/1.7 (fixed), shooting straight down keeps everything sharp, like the original at f/10",
+    "white_balance": "5200K, neutral white",
+    "exposure_compensation": "+0.7 EV",
+    "pose_data": {
+     "Light": "Soft daylight from the side, very light shadows",
+     "Angle": "Straight down, vertical",
+     "Composition": "Knit in the lower corner, gift in the upper one, empty space on the diagonal",
+     "Focus": "Tap the scissors, depth covers the whole frame",
+     "Background": "White boards with no stray objects"
+    },
+    "editing_data": {
+     "Preset": "Light and airy",
+     "Exposure": "+0.4",
+     "Contrast": "−5",
+     "Saturation": "−5",
+     "Highlights": "−10"
+    }
+   }
+  },
+  "sort_order": 211,
+  "unsplash_id": "gja_f0uDmzM",
+  "original_shot": {
+   "camera": "Canon EOS 5D Mark IV",
+   "focal_mm": 24.0,
+   "equiv_mm": 24,
+   "aperture": 10.0,
+   "shutter": "1/80",
+   "iso": 100
+  }
+ },
+ {
+  "legacy_id": "us-pgVvMfsv8EM",
+  "title": "Пар на свету",
+  "description": "Пар над кружкой с совой подсвечен низким утренним солнцем из окна: контровой свет превращает его в светящиеся нити. Тёплый фон и корзинка с булочкой дополняют уют. Поставьте кружку против окна и экспонируйтесь по пару, чтобы свет не выгорел.",
+  "image_url": "https://images.unsplash.com/photo-1454916286212-0ea211dc68d6?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODYzfA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1454916286212-0ea211dc68d6?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODYzfA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/green-and-white-mug-pgVvMfsv8EM",
+  "credit": "Julian Hochgesang",
+  "creator_url": "https://unsplash.com/@julianhochgesang",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Lifestyle",
+  "source_type": "curated",
+  "device_id": "samsung-s24",
+  "device": "Samsung Galaxy S24 / S24+",
+  "camera": "Режим Pro, телеобъектив 3×",
+  "focal_length": "70 мм (3×)",
+  "iso": "100",
+  "shutter_speed": "1/100 с",
+  "aperture": "f/2.4 (фикс.), фон мягкий за счёт телеобъектива ≈ f/2,8",
+  "white_balance": "6500K, тёплое утреннее солнце",
+  "exposure_compensation": "−0,7 EV",
+  "pose_data": {
+   "Свет": "Контровой утренний свет из окна справа",
+   "Ракурс": "На уровне кружки, чуть ниже кромки",
+   "Композиция": "Кружка в нижней трети, булочка слева как противовес",
+   "Фокус": "Тап по этикетке чая, пар остаётся лёгким",
+   "Момент": "Когда пар самый густой"
+  },
+  "editing_data": {
+   "Пресет": "Тёплый уютный",
+   "Экспозиция": "−0,3",
+   "Света": "−35",
+   "Тени": "+15",
+   "Цвет": "теплее 15"
+  },
+  "aspect_ratio": 1.5,
+  "translations": {
+   "en": {
+    "title": "Steam in the light",
+    "description": "Steam over an owl mug is lit by low morning sun from the window: the backlight turns it into glowing threads. A warm background and a basket with a bread roll add comfort. Put the mug against the window and meter off the steam so the light does not burn out.",
+    "camera": "Pro mode, 3× telephoto lens",
+    "focal_length": "70 mm (3×)",
+    "iso": "100",
+    "shutter_speed": "1/100 s",
+    "aperture": "f/2.4 (fixed), the background is soft thanks to the telephoto ≈ f/2.8",
+    "white_balance": "6500K, warm morning sun",
+    "exposure_compensation": "−0.7 EV",
+    "pose_data": {
+     "Light": "Morning backlight from the window on the right",
+     "Angle": "At mug level, just below the rim",
+     "Composition": "Mug in the lower third, bread roll on the left as a counterweight",
+     "Focus": "Tap the tea tag, the steam stays airy",
+     "Moment": "When the steam is at its thickest"
+    },
+    "editing_data": {
+     "Preset": "Warm cosy",
+     "Exposure": "−0.3",
+     "Highlights": "−35",
+     "Shadows": "+15",
+     "Color": "Warmer 15"
+    }
+   }
+  },
+  "sort_order": 211,
+  "unsplash_id": "pgVvMfsv8EM",
+  "original_shot": {
+   "camera": "Canon EOS 600D",
+   "focal_mm": 55.0,
+   "equiv_mm": 88,
+   "aperture": 5.6,
+   "shutter": "1/100",
+   "iso": 160
+  }
+ },
+ {
+  "legacy_id": "us-jiOH-1ur7Nc",
+  "title": "Тёплая улица вечером",
+  "description": "Узкая улица в тёплом вечернем свете: кованые балконы, кафе, вывески и прохожие на брусчатке. Слоёв много, но взгляд цепляет женщина справа и тёплые окна внизу. Встаньте у начала улицы и сожмите перспективу зумом.",
+  "image_url": "https://images.unsplash.com/photo-1611608789326-10beac1c8f56?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY5fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1611608789326-10beac1c8f56?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY5fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/brown-and-white-concrete-building-jiOH-1ur7Nc",
+  "credit": "Volkan Buyukvardar",
+  "creator_url": "https://unsplash.com/@vardarious",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Street",
+  "source_type": "curated",
+  "device_id": "samsung-s25-ultra",
+  "device": "Samsung Galaxy S25 Ultra",
+  "camera": "Режим Pro, основной объектив, зум 2×",
+  "focal_length": "48 мм (2×)",
+  "iso": "100",
+  "shutter_speed": "1/30 с",
+  "aperture": "f/1.7 (фикс.), резкость по всему кадру, как у оригинала на f/5",
+  "white_balance": "6800K, тёплый свет заката",
+  "exposure_compensation": "−0,7 EV",
+  "pose_data": {
+   "Свет": "Тёплый вечерний свет, жёлтые окна в тенях",
+   "Ракурс": "Чуть снизу, вертикально, вертикали не заваливать",
+   "Композиция": "Улица уходит вверх справа, балкон слева, прохожая в углу",
+   "Момент": "Когда женщина входит в светлое пятно справа",
+   "Фон": "Кафе и вывески не убирать, они создают атмосферу"
+  },
+  "editing_data": {
+   "Пресет": "Тёплый город",
+   "Экспозиция": "−0,3",
+   "Контраст": "+15",
+   "Тени": "+15",
+   "Цвет": "теплее 10"
+  },
+  "aspect_ratio": 0.662,
+  "translations": {
+   "en": {
+    "title": "Warm street at dusk",
+    "description": "A narrow street in warm evening light: wrought-iron balconies, cafes, signs and pedestrians on cobbles. There are many layers, but the eye catches the woman on the right and the warm windows below. Stand at the start of the street and compress the perspective with zoom.",
+    "camera": "Pro mode, main lens, 2× zoom",
+    "focal_length": "48 mm (2×)",
+    "iso": "100",
+    "shutter_speed": "1/30 s",
+    "aperture": "f/1.7 (fixed), sharp across the frame, like the original at f/5",
+    "white_balance": "6800K, warm sunset glow",
+    "exposure_compensation": "−0.7 EV",
+    "pose_data": {
+     "Light": "Warm evening light, yellow windows in the shadows",
+     "Angle": "Slightly low, vertical, keep the verticals upright",
+     "Composition": "Street rising to the right, balcony on the left, passer-by in the corner",
+     "Moment": "When the woman steps into the bright patch on the right",
+     "Background": "Keep the cafes and signs, they create the atmosphere"
+    },
+    "editing_data": {
+     "Preset": "Warm city",
+     "Exposure": "−0.3",
+     "Contrast": "+15",
+     "Shadows": "+15",
+     "Color": "Warmer 10"
+    }
+   }
+  },
+  "sort_order": 212,
+  "unsplash_id": "jiOH-1ur7Nc",
+  "original_shot": {
+   "camera": "NIKON D5100",
+   "focal_mm": 34.0,
+   "equiv_mm": 51,
+   "aperture": 5.0,
+   "shutter": "1/30",
+   "iso": 900
+  }
+ },
+ {
+  "legacy_id": "us-5zoIpDzLbE4",
+  "title": "Угол для чтения",
+  "description": "Оранжевая подушка, папоротник и полосатый коврик собраны в одной тёплой палитре. Мягкий боковой свет через жалюзи лепит объём без жёстких теней. Поставьте телефон на уровень пола в 2 м от угла и не меняйте расстояние, пока не выстроите композицию.",
+  "image_url": "https://images.unsplash.com/photo-1567113463686-c2253e8210db?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY4fA&ixlib=rb-4.1.0&w=1600&q=80&fm=jpg&fit=max",
+  "thumb_url": "https://images.unsplash.com/photo-1567113463686-c2253e8210db?ixid=M3wxMTMzNzgzfDB8MXxhbGx8fHx8fHx8fHwxNzk1MTkxODY4fA&ixlib=rb-4.1.0&w=600&q=75&fm=jpg&fit=max",
+  "source_page": "https://unsplash.com/photos/orange-throw-pillow-5zoIpDzLbE4",
+  "credit": "Sarah Brown",
+  "creator_url": "https://unsplash.com/@sweetpagesco",
+  "license": "Unsplash License",
+  "license_url": "https://unsplash.com/license",
+  "category": "Lifestyle",
+  "source_type": "curated",
+  "device_id": "oneplus-12",
+  "device": "OnePlus 12",
+  "camera": "Режим Pro, перископный объектив 3×",
+  "focal_length": "70 мм (3×)",
+  "iso": "1600",
+  "shutter_speed": "1/2500 с",
+  "aperture": "f/2.6 (фикс.), фон мягкий за счёт телеобъектива с 2 м ≈ f/2,0",
+  "white_balance": "5800K, тёплый дневной",
+  "exposure_compensation": "−0,3 EV",
+  "pose_data": {
+   "Свет": "Мягкий боковой дневной свет из окна слева",
+   "Ракурс": "С уровня пола, вдоль коврика",
+   "Композиция": "Подушка справа, папоротник слева, коврик по диагонали",
+   "Фон": "Светлая стена, окно с жалюзи размыто",
+   "Фокус": "Тап по листьям папоротника"
+  },
+  "editing_data": {
+   "Пресет": "Тёплый домашний",
+   "Экспозиция": "+0,2",
+   "Насыщенность": "+10",
+   "Света": "−15",
+   "Цвет": "теплее 8"
+  },
+  "aspect_ratio": 1.5,
+  "translations": {
+   "en": {
+    "title": "Reading nook",
+    "description": "An orange pillow, a fern and a striped rug share one warm palette. Soft side light through the blinds models volume without harsh shadows. Put the phone at floor level 2 m from the corner and keep that distance while you build the composition.",
+    "camera": "Pro mode, 3× periscope lens",
+    "focal_length": "70 mm (3×)",
+    "iso": "1600",
+    "shutter_speed": "1/2500 s",
+    "aperture": "f/2.6 (fixed), the background is soft thanks to the telephoto from 2 m ≈ f/2.0",
+    "white_balance": "5800K, warm daylight",
+    "exposure_compensation": "−0.3 EV",
+    "pose_data": {
+     "Light": "Soft side daylight from the window on the left",
+     "Angle": "From floor level, along the rug",
+     "Composition": "Pillow on the right, fern on the left, rug on the diagonal",
+     "Background": "Pale wall, window with blinds blurred",
+     "Focus": "Tap the fern leaves"
+    },
+    "editing_data": {
+     "Preset": "Warm home",
+     "Exposure": "+0.2",
+     "Saturation": "+10",
+     "Highlights": "−15",
+     "Color": "Warmer 8"
+    }
+   }
+  },
+  "sort_order": 213,
+  "unsplash_id": "5zoIpDzLbE4",
+  "original_shot": {
+   "camera": "NIKON D3300",
+   "focal_mm": 50.0,
+   "equiv_mm": 75,
+   "aperture": 2.0,
+   "shutter": "1/2500",
+   "iso": 1600
+  }
+ }
+]
