@@ -69,7 +69,7 @@ Phone lenses (equivalent focal length and aperture, typical specs) are in `phone
    ```
 
 3. Add `original_shot` to each row with `tool/original_shot.py` (from the photo's EXIF), save the result as `supabase/seed/unsplash_batch_NN.json` and push it to GitHub.
-4. Insert the rows into `photos`. The SQL editor can load the JSON with `extensions.http_get` from the file's raw GitHub URL.
+4. Insert the rows into `photos` (`INSERT ... ON CONFLICT (unsplash_id) DO NOTHING`). The repository is private, so the raw GitHub URL does not work with `extensions.http_get`. Paste the JSON into the SQL as a dollar-quoted literal and read it with `jsonb_array_elements`, in chunks of about 8 rows.
 5. Rebuild the offline copy from all batches combined:
 
    ```bash
